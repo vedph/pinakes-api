@@ -43,11 +43,11 @@ A work can have a number of related works via:
 
 ### Manuscripts
 
-As for the relationship with works, here the atom is represented by the codicological unit. This belongs to some manuscript.
+As for the relationship with works, here the atom is represented by the codicological unit. This belongs to some manuscript. A manuscript has 1 or more codicological units, and each codicological unit has 1 or more witnesses. So the conceptual relationship is manuscript - codicological unit - witness - [recensio] - work.
 
 Every unit has 0 or more witnesses, which are the sources for works, or recensions. Recensions are used only when a work can be considered to have several states of its text which are considerably different. In most cases, there is just a single work with no recension, and this work is directly connected to the witnesses. When instead we have several recensions, then the witnesses are parted among them: recension A has witnesses X and Y, recension B has witness Z, etc.
 
-- `temoins`: works (or recensions) have 0 or more witnesses (`temoins`). A witness essentially has sheets range, century, date (more granular, with min and max), a title, incipit/desinit, and corresponds to a codicological unit.
+- `temoins`: works (or recensions) have 0 or more witnesses (`temoins`). A witness essentially has sheets range, century, date (more granular, with min and max), a title, incipit/desinit, and corresponds to a codicological unit. The witness is the intersection between object and text. There is a single date per witness corresponding to that of the codicological unit, if specified; so the date to be considered here is the witness' date.
 
 - `unites_codicologiques`: each witness corresponds to a codicological unit via its `id_uc` field, which is the FK for codicological units, `unites_codicologiques`.`id`. A codicological unit too has title, sheet range, century and date with min and max, genre, place, and a parent manuscript.
 
