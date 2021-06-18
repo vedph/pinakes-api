@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>Daniele Fusi</Authors>
+    <Company>Fusi</Company>
+    <Product>Pinakes</Product>
+    <Description>Pinakes index components for Embix.</Description>
+    <Copyright>by Daniele Fusi 2021</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageTags>Pinakes</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Profile.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Profile.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Embix.Core" Version="1.0.13" />
+    <PackageReference Include="Proteus.Core" Version="1.2.5" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,72 @@
+﻿{
+  "FilterChains": [
+    {
+      "Id": "wsp-std",
+      "Filters": [
+        {
+          "Id": "text-filter.whitespace"
+        },
+        {
+          "Id": "text-filter.standard"
+        }
+      ]
+    },
+    {
+      "Id": "stp",
+      "Filters": [
+        {
+          "Id": "text-filter.stopword"
+        }
+      ]
+    }
+  ],
+  "Tokenizers": [
+    {
+      "Id": "std",
+      "TypeId": "string-tokenizer.standard",
+      "FilterChain": "stp"
+    }
+  ],
+  "TokenMultipliers": [
+    {
+      "Id": "rom",
+      "TypeId": "string-token-multiplier.grc-romanizer",
+      "Options": {
+        "TargetTable": "$GtrTarget7",
+        "KsiAsX": true,
+        "KhiAsCh": true,
+        "IncludeIpogegrammeni": false,
+        "GammaPlusVelarAsN": false,
+        "HAfterRR": true,
+        "ConvertPunctuation": true
+      }
+    }
+  ],
+  "TokenFieldLengths": {
+    "value": 100,
+    "language": 5
+  },
+  "OccurrenceFieldLengths": {},
+  "MetadataFields": [],
+  "Documents": [
+    {
+      "Id": "work",
+      "CountSql": "SELECT COUNT(w.id) FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id;",
+      "DataSql": "SELECT w.id AS m_targetid,w.titre AS wkttl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wkcom,ws.titre AS wsttl,k1.keyword AS wkkey,a.nom AS aunam,aa.nom AS aanam,k2.keyword AS aukey FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id ORDER BY w.id LIMIT {1} OFFSET {0};",
+      "TextFilterChains": {
+        "*": "wsp-std"
+      },
+      "Tokenizers": {
+        "*": "std"
+      },
+      "TokenMultipliers": {
+        "wkttl": "rom",
+        "wktit": "rom",
+        "wkinc": "rom",
+        "wkdes": "rom",
+        "aunam": "rom",
+        "aanam": "rom"
+      }
+    }
+  ]
+}
