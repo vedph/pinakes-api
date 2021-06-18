@@ -70,13 +70,13 @@ This way you can look for any word or part of a word in any of the indexed field
 
 The details for text filtering and tokenization pipeline are as follows:
 
-- eventually, tags are removed (is this required? i.e. do we have any HTML/XML tags inside text fields? this happens in some databases).
-- eventually, separators are preprocessed (is this required? this is useful only when we have corner cases where e.g. several variants of a name are entered in a field with a separator like slash, e.g. `Rome/Roma`. In this case, the `/` must be treated as a token separator, otherwise it would just be ignored and `RomeRoma` would be the resulting "word").
+- HTML/XML tags are removed.
+- separators are preprocessed (this is useful only when we have corner cases where e.g. several variants of a name are entered in a field with a separator like slash, e.g. `Rome/Roma`. In this case, the `/` must be treated as a token separator, otherwise it would just be ignored and `RomeRoma` would be the resulting "word").
 - whitespaces are normalized.
 - diacritics are removed.
 - case differences are flattened.
-- tokenization uses whitespaces only as separator. This is usually enough for DB text fields, unless you have special requirements: e.g. in English texts we treat `'` as a separator to split forms like `it's` into `it` and `s`, but I don't know about the details of the languages used, and anyway forms like `it` or `s` would be usually discarded as stopwords.
-- probably, a list of stopwords (e.g. "the", "a", "of"...) can be provided to avoid indexing words which can be treated as irrelevant (rumor) in DB searches for those text fields having a relatively long text, rather than just holding a name. Here of course the list depends on the languages used. For instance, we would typically remove Greek articles from the index.
+- tokenization uses whitespaces and apostrophe (`'`) only as separator. This is usually enough for DB text fields: e.g. in English texts we treat `'` as a separator to split forms like `it's` into `it` and `s`.
+- a list of stopwords (e.g. "the", "a", "of"...) from French, English, Italian, and Greek will be provided to avoid indexing words which can be treated as irrelevant (rumor) in DB searches for those text fields having a relatively long text, rather than just holding a name.
 - Greek words are automatically transliterated, according to the Pinakes convention. This does not mean that Greek is not indexed, but only that for each Greek word, a corresponding transliterated word is added to the index, side to side to the Greek form. The Greek form of course is still subject to all the transformations illustrated above.
 
 ### Search Author
@@ -87,13 +87,12 @@ Filters:
 - aliases (as above): `auteurs_alias.nom`[T].
 - category (yes/no): true if it's a category, false if it's an author; null if not specified.
 - centuryMin, centuryMax: `auteurs.siecle`.
-- dateMin, dateMax: `auteurs.date`: the conventions used here must be listed.
-- keywords (0 or more): `keywords.keyword`[T] via `keywords_auteurs`.
 
 ```sql
 select
 auteurs.id, auteurs.nom, auteurs.siecle, auteurs.dates, auteurs.remarque, auteurs.is_categorie,
 aa.nom as alias,
+-- keywords are not used, but I left them in this sample
 k.keyword as keyword
 from auteurs
 left join auteurs_alias aa on auteurs.id=aa.id_auteur
@@ -110,15 +109,20 @@ Filters:
 
 - subset: this probably would not be exposed in a UI. It filters works according to the value of `equipe_referente` (e.g. `RAP`), so that search is limited even though we have more data.
 - title (any portion): `oeuvres.titre`[T].
+- curator (any portion): TODO: find field.
+- RAP number: `oeuvres.id`.
+- manuscript ID (Diktyon): `cote.id`.
 - aliases (as above): `oeuvres_alias.titre`[T].
 - titulus (as above): `oeuvres.titulus`[T].
 - incipit (as above): `oeuvres.incipit`[T].
 - desinit (as above): `oeuvres.desinit`[T].
 - centuryMin, centuryMax: `oeuvres.siecle`.
-- dateMin, dateMax: `oeuvres.date`: the conventions used here must be listed.
 - place (as above): `oeuvres.lieu`[T].
 - remark: `oeuvres.remarque`[T].
 - keyword (0 or more): `keywords.keyword`[T] via `keywords_oeuvres`.
+- author (any portion): Zotero
+- title (any portion): Zotero
+- having any recensions: any, false, true (check if any record exists for the FK `recensions.id_oeuvre`).
 - having relation (1 optional relation to pick from the list, or just any to match any type of relation). This can be connected with the next filter. Relation is via table `relations`; types of relations are picked from `relations_types`.
 - with work (1 work to pick from a list, or nothing to match any relation target). Field: `relations.id_child`.
 
@@ -141,9 +145,9 @@ where oeuvres.equipe_referente='rap'
 limit 10
 ```
 
-### Bibliography
+Also, title and incipit should be handled as separate Embix documents to treat them as a single token for search purposes.
 
-As for bibliography, first we should define what, if anything, should be included in the search.
+### Bibliography
 
 If we are going to search inside bibliography, and combine this search with data from the DB, we will probably have better get the required bibliographic data from Zotero and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
 
@@ -155,22 +159,22 @@ The text-based index portion of the search engine uses [Embix](https://github.co
 
 ```sql
 SELECT
-	-- work
-	w.id AS m_targetid,
-	w.titre AS wkttl,
-	w.titulus AS wktit,
-	w.incipit AS wkinc,
-	w.desinit AS wkdes,
-	w.lieu AS wkplc,
-	w.remarque AS wkcom,
-	-- work aliases
-	ws.titre AS wsttl,
-	-- work keywords
-	k1.keyword AS wkkey,
-	-- work's authors with their aliases and keywords
-	a.nom AS aunam,
-	aa.nom AS aanam,
-	k2.keyword AS aukey
+ -- work
+ w.id AS m_targetid,
+ w.titre AS wkttl,
+ w.titulus AS wktit,
+ w.incipit AS wkinc,
+ w.desinit AS wkdes,
+ w.lieu AS wkplc,
+ w.remarque AS wkcom,
+ -- work aliases
+ ws.titre AS wsttl,
+ -- work keywords
+ k1.keyword AS wkkey,
+ -- work's authors with their aliases and keywords
+ a.nom AS aunam,
+ aa.nom AS aanam,
+ k2.keyword AS aukey
 FROM oeuvres w
 LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id
 LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id
@@ -218,5 +222,5 @@ These are the Pinakes conventions:
 - `γγ` = `gg`
 - `ευ` = `eu`
 - `μπ` = `mp`
-- `ου` = `ou` 
+- `ου` = `ou`
 - esprit rude = `h`
