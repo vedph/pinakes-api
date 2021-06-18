@@ -70,8 +70,6 @@ This way you can look for any word or part of a word in any of the indexed field
 
 The details for text filtering and tokenization pipeline are as follows:
 
-As a general principle for indexing text fields:
-
 - eventually, tags are removed (is this required? i.e. do we have any HTML/XML tags inside text fields? this happens in some databases).
 - eventually, separators are preprocessed (is this required? this is useful only when we have corner cases where e.g. several variants of a name are entered in a field with a separator like slash, e.g. `Rome/Roma`. In this case, the `/` must be treated as a token separator, otherwise it would just be ignored and `RomeRoma` would be the resulting "word").
 - whitespaces are normalized.
