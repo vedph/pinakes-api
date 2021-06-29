@@ -83,23 +83,15 @@ As a general principle for indexing text fields:
 
 ### Other Metadata
 
-Other metadata need to be preprocessed for indexing:
-
-1. `auteurs.siecle`, `oeuvres.siecle`: the century is a string like:
+Date metadata (for centuries) need to be preprocessed for indexing: in `auteurs.siecle`, `oeuvres.siecle`, the century is a string like:
 
 - `09`
 - `11 (2/2)`
 - `09-10`
 - `13 ex. - 14 in.`
-- `14 ex - 15` (the . may be missing)
+- `14 ex - 15` (the `.` may be missing)
 - `15 (2/2) - 16 (1/4)`
 - `1657-1719` by error; this is not considered, as it should be sporadic.
-
-So the inferred pattern can be: `\s*(?<v>\d{1,2})\s*(?:(?:(?<ie>in|ex)\.?)|(?:\((?<fn>[1-4])\/(?<fd>[1-4])\)))?`, with these named groups for each match (matches can be 1, or 2 for ranges):
-
-- `v`: numeric value
-- `ie`: `in` or `ex`
-- `fn` and `fd` for fraction numerator and denominator.
 
 ### Search Author
 
@@ -136,7 +128,6 @@ Filters:
 - incipit (as above): `oeuvres.incipit`[T].
 - desinit (as above): `oeuvres.desinit`[T].
 - centuryMin, centuryMax: `oeuvres.siecle`.
-- dateMin, dateMax: `oeuvres.date`: the conventions used here must be listed.
 - place (as above): `oeuvres.lieu`[T].
 - remark: `oeuvres.remarque`[T].
 - keyword (0 or more): `keywords.keyword`[T] via `keywords_oeuvres`.
