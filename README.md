@@ -93,6 +93,14 @@ Date metadata (for centuries) need to be preprocessed for indexing: in `auteurs.
 - `15 (2/2) - 16 (1/4)`
 - `1657-1719` by error; this is not considered, as it should be sporadic.
 
+### Subset
+
+This is not exposed in a UI, but is a general filter always applied to get only the RAP data subset.
+
+RAP records are identified in table `identifiants` by `id_type`=234; the `id` supposedly being the work ID. In `remarque` you find the name of the curator (e.g. `Curator: Bucossi 2020`).
+
+So all the work IDs must be JOINed with `identifiants i ON i.id=work ID WHERE id_type=234`.
+
 ### Search Author
 
 Filters:
@@ -121,7 +129,6 @@ From the resulting list of authors, one can open the full list of works for each
 
 Filters:
 
-- subset: this probably would not be exposed in a UI. It filters works according to the value of `equipe_referente` (e.g. `RAP`), so that search is limited even though we have more data.
 - title (any portion): `oeuvres.titre`[T].
 - aliases (as above): `oeuvres_alias.titre`[T].
 - titulus (as above): `oeuvres.titulus`[T].
@@ -130,6 +137,7 @@ Filters:
 - centuryMin, centuryMax: `oeuvres.siecle`.
 - place (as above): `oeuvres.lieu`[T].
 - remark: `oeuvres.remarque`[T].
+- dictyon number: this is equal to `cote.id`, and we get to it via `temoins` (`id_oeuvre`) to `unites_codicologiques` (on `id_materialite_uc`) and its FK `id_cote`.
 - keyword (0 or more): `keywords.keyword`[T] via `keywords_oeuvres`.
 - having relation (1 optional relation to pick from the list, or just any to match any type of relation). This can be connected with the next filter. Relation is via table `relations`; types of relations are picked from `relations_types`.
 - with work (1 work to pick from a list, or nothing to match any relation target). Field: `relations.id_child`.

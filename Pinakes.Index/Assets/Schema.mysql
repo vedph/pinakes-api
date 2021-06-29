@@ -1,0 +1,9 @@
+﻿CREATE TABLE `date` IF NOT EXISTS (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `field` VARCHAR(5) NOT NULL,
+  `targetid` INT NOT NULL,
+  `datetxt` VARCHAR(100) NOT NULL,
+  `dateval` DOUBLE NOT NULL,
+  `source` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `IX_FIELD` (`field` ASC) VISIBLE);
