@@ -43,11 +43,11 @@ A work can have a number of related works via:
 
 ### Manuscripts
 
-As for the relationship with works, here the atom is represented by the codicological unit. This belongs to some manuscript. A manuscript has 1 or more codicological units, and each codicological unit has 1 or more witnesses. So the conceptual relationship is manuscript - codicological unit - witness - [recensio] - work.
+As for the relationship with works, here the atom is represented by the codicological unit. This belongs to some manuscript.
 
 Every unit has 0 or more witnesses, which are the sources for works, or recensions. Recensions are used only when a work can be considered to have several states of its text which are considerably different. In most cases, there is just a single work with no recension, and this work is directly connected to the witnesses. When instead we have several recensions, then the witnesses are parted among them: recension A has witnesses X and Y, recension B has witness Z, etc.
 
-- `temoins`: works (or recensions) have 0 or more witnesses (`temoins`). A witness essentially has sheets range, century, date (more granular, with min and max), a title, incipit/desinit, and corresponds to a codicological unit. The witness is the intersection between object and text. There is a single date per witness corresponding to that of the codicological unit, if specified; so the date to be considered here is the witness' date.
+- `temoins`: works (or recensions) have 0 or more witnesses (`temoins`). A witness essentially has sheets range, century, date (more granular, with min and max), a title, incipit/desinit, and corresponds to a codicological unit.
 
 - `unites_codicologiques`: each witness corresponds to a codicological unit via its `id_uc` field, which is the FK for codicological units, `unites_codicologiques`.`id`. A codicological unit too has title, sheet range, century and date with min and max, genre, place, and a parent manuscript.
 
@@ -70,14 +70,36 @@ This way you can look for any word or part of a word in any of the indexed field
 
 The details for text filtering and tokenization pipeline are as follows:
 
-- HTML/XML tags are removed.
-- separators are preprocessed (this is useful only when we have corner cases where e.g. several variants of a name are entered in a field with a separator like slash, e.g. `Rome/Roma`. In this case, the `/` must be treated as a token separator, otherwise it would just be ignored and `RomeRoma` would be the resulting "word").
+As a general principle for indexing text fields:
+
+- tags are removed (we may have any HTML/XML tags inside text fields).
+- a `/` is treated like a whitespace. This is useful in those cases where e.g. several variants of a name are entered in a field with a separator like slash, e.g. `Rome/Roma`. In this case, the `/` must be treated as a token separator; otherwise, it would just be ignored and `RomeRoma` would be the resulting "word").
 - whitespaces are normalized.
 - diacritics are removed.
 - case differences are flattened.
-- tokenization uses whitespaces and apostrophe (`'`) only as separator. This is usually enough for DB text fields: e.g. in English texts we treat `'` as a separator to split forms like `it's` into `it` and `s`.
-- a list of stopwords (e.g. "the", "a", "of"...) from French, English, Italian, and Greek will be provided to avoid indexing words which can be treated as irrelevant (rumor) in DB searches for those text fields having a relatively long text, rather than just holding a name.
+- tokenization uses whitespaces only as separator. This is usually enough for DB text fields, unless you have special requirements: e.g. in English texts we treat `'` as a separator to split forms like `it's` into `it` and `s`, but I don't know about the details of the languages used, and anyway forms like `it` or `s` would be usually discarded as stopwords.
+- probably, a list of stopwords (e.g. "the", "a", "of"...) can be provided to avoid indexing words which can be treated as irrelevant (rumor) in DB searches for those text fields having a relatively long text, rather than just holding a name. Here of course the list depends on the languages used. For instance, we would typically remove Greek articles from the index. A first indexing anyway will be completed without stopwords, so that we can see which words are present and if stopwords should be removed or not.
 - Greek words are automatically transliterated, according to the Pinakes convention. This does not mean that Greek is not indexed, but only that for each Greek word, a corresponding transliterated word is added to the index, side to side to the Greek form. The Greek form of course is still subject to all the transformations illustrated above.
+
+### Other Metadata
+
+Other metadata need to be preprocessed for indexing:
+
+1. `auteurs.siecle`, `oeuvres.siecle`: the century is a string like:
+
+- `09`
+- `11 (2/2)`
+- `09-10`
+- `13 ex. - 14 in.`
+- `14 ex - 15` (the . may be missing)
+- `15 (2/2) - 16 (1/4)`
+- `1657-1719` by error; this is not considered, as it should be sporadic.
+
+So the inferred pattern can be: `\s*(?<v>\d{1,2})\s*(?:(?:(?<ie>in|ex)\.?)|(?:\((?<fn>[1-4])\/(?<fd>[1-4])\)))?`, with these named groups for each match (matches can be 1, or 2 for ranges):
+
+- `v`: numeric value
+- `ie`: `in` or `ex`
+- `fn` and `fd` for fraction numerator and denominator.
 
 ### Search Author
 
@@ -87,12 +109,12 @@ Filters:
 - aliases (as above): `auteurs_alias.nom`[T].
 - category (yes/no): true if it's a category, false if it's an author; null if not specified.
 - centuryMin, centuryMax: `auteurs.siecle`.
+- keywords (0 or more): `keywords.keyword`[T] via `keywords_auteurs`.
 
 ```sql
 select
 auteurs.id, auteurs.nom, auteurs.siecle, auteurs.dates, auteurs.remarque, auteurs.is_categorie,
 aa.nom as alias,
--- keywords are not used, but I left them in this sample
 k.keyword as keyword
 from auteurs
 left join auteurs_alias aa on auteurs.id=aa.id_auteur
@@ -109,20 +131,15 @@ Filters:
 
 - subset: this probably would not be exposed in a UI. It filters works according to the value of `equipe_referente` (e.g. `RAP`), so that search is limited even though we have more data.
 - title (any portion): `oeuvres.titre`[T].
-- curator (any portion): TODO: find field.
-- RAP number: `oeuvres.id`.
-- manuscript ID (Diktyon): `cote.id`.
 - aliases (as above): `oeuvres_alias.titre`[T].
 - titulus (as above): `oeuvres.titulus`[T].
 - incipit (as above): `oeuvres.incipit`[T].
 - desinit (as above): `oeuvres.desinit`[T].
 - centuryMin, centuryMax: `oeuvres.siecle`.
+- dateMin, dateMax: `oeuvres.date`: the conventions used here must be listed.
 - place (as above): `oeuvres.lieu`[T].
 - remark: `oeuvres.remarque`[T].
 - keyword (0 or more): `keywords.keyword`[T] via `keywords_oeuvres`.
-- author (any portion): Zotero
-- title (any portion): Zotero
-- having any recensions: any, false, true (check if any record exists for the FK `recensions.id_oeuvre`).
 - having relation (1 optional relation to pick from the list, or just any to match any type of relation). This can be connected with the next filter. Relation is via table `relations`; types of relations are picked from `relations_types`.
 - with work (1 work to pick from a list, or nothing to match any relation target). Field: `relations.id_child`.
 
@@ -145,13 +162,22 @@ where oeuvres.equipe_referente='rap'
 limit 10
 ```
 
-Also, title and incipit should be handled as separate Embix documents to treat them as a single token for search purposes.
-
 ### Bibliography
 
+As for bibliography, first we should define what, if anything, should be included in the search.
 If we are going to search inside bibliography, and combine this search with data from the DB, we will probably have better get the required bibliographic data from Zotero and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
 
 So here we should first decide how to use bibliography: if we just have to display it, we can query Zotero. If instead some of its data must become an active part of the search, we must get the subset of data we need, via Zotero API. For instance, the items found at <https://www.zotero.org/groups/44775/manuscripts_on_microfilm_project/library> can be easily retrieved via API calls.
+
+Collection: `irht_grec`.
+
+Zotero fields:
+
+- title
+- author
+- abstract
+
+an item id is just the library ID + the item ID, e.g. <https://www.zotero.org/groups/669969/irht_grec/items/548S2DQW/library>
 
 ### Embix Profile
 

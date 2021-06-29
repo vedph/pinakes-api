@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Embix.Core" Version="1.0.14" />
+    <PackageReference Include="Fusi.Antiquity" Version="1.2.0" />
     <PackageReference Include="Proteus.Core" Version="1.2.5" />
   </ItemGroup>
 </Project>
