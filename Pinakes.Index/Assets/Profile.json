@@ -1,8 +1,17 @@
 ﻿{
   "FilterChains": [
     {
-      "Id": "wsp-std",
+      "Id": "tag-sep-wsp-std",
       "Filters": [
+        {
+          "Id": "text-filter.tag"
+        },
+        {
+          "Id": "text-filter.separator",
+          "Options": {
+            "Separators": "/,"
+          }
+        },
         {
           "Id": "text-filter.whitespace"
         },
@@ -54,7 +63,7 @@
       "CountSql": "SELECT COUNT(w.id) FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id;",
       "DataSql": "SELECT w.id AS m_targetid,w.titre AS wkttl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wkcom,ws.titre AS wsttl,k1.keyword AS wkkey,a.nom AS aunam,aa.nom AS aanam,k2.keyword AS aukey FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id ORDER BY w.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
-        "*": "wsp-std"
+        "*": "tag-sep-wsp-std"
       },
       "Tokenizers": {
         "*": "std"
