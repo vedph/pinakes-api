@@ -16,7 +16,7 @@ namespace Pinix.Cli.Commands
         public static void Configure(CommandLineApplication app, AppOptions options)
         {
             // configure all the app commands here
-            // app.Command("create-db", c => CreateDbCommand.Configure(c, options));
+            app.Command("index-date", c => IndexDateCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {
