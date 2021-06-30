@@ -5,6 +5,7 @@ using SqlKata;
 using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -19,6 +20,7 @@ namespace Pinakes.Search
         private readonly Regex _tokenRegex;
         private readonly QueryTextClauseBuilder _clauseBuilder;
         private readonly CompositeTextFilter _filter;
+        private readonly string[] _authFields;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorQueryBuilder"/>
@@ -32,6 +34,7 @@ namespace Pinakes.Search
             _filter = new CompositeTextFilter(
                 new WhitespaceTextFilter(),
                 new StandardTextFilter());
+            _authFields = new[] { "aunam", "aanam" };
         }
 
         private void AddTextClause(string token, Query query)
@@ -60,10 +63,10 @@ namespace Pinakes.Search
                 _clauseBuilder.AddClause(query, "token.value", op, value);
         }
 
-        private Query GetNonTextQuery(AuthorSearchRequest request, int number)
+        private Query GetNonTextQuery(AuthorSearchRequest request)
         {
-            Query query = QueryFactory.Query("auteurs").As("t" + number)
-                .Select("id").Distinct();
+            Query query = QueryFactory.Query("auteurs AS t")
+                .Select("t.id").Distinct();
 
             if (request.IsCategory.HasValue)
             {
@@ -89,7 +92,7 @@ namespace Pinakes.Search
                 //   where ak.id_auteur=auteurs.id AND ak.id_keyword IN...)
                 query.WhereExists(QueryFactory.Query("keywords_auteurs AS ak")
                     .Select("id_keyword")
-                    .Where("ak.id_auteur", "auteurs.id")
+                    .Where("ak.id_auteur", "t.id")
                     .WhereIn("ak.id_keyword", request.KeywordIds));
             }
 
@@ -98,26 +101,32 @@ namespace Pinakes.Search
 
         private Query GetCountQuery(Query idQuery)
         {
-            return QueryFactory.Query().From(idQuery).AsCount(new[] { "t.id" });
+            Query query = QueryFactory.Query().From(idQuery).AsCount(new[] { "q.id" });
+#if DEBUG
+            Debug.WriteLine("---COUNT:\n" + QueryFactory.Compiler.Compile(query).ToString());
+#endif
+            return query;
         }
 
-        private Query GetResultQuery(AuthorSearchRequest request,
-            Query idQuery)
+        private Query GetResultQuery(AuthorSearchRequest request, Query idQuery)
         {
-            return QueryFactory.Query()
+            Query query = QueryFactory.Query()
                 .From(idQuery)
-                .Join("auteurs", "auteurs.id", "t.id")
-                // .LeftJoin("auteurs_alias", "auteurs_alias.id_auteur", "t.id")
+                .Join("auteurs", "auteurs.id", "q.id")
                 .Select("auteurs.id",
                     "auteurs.nom AS name",
                     "auteurs.siecle AS century",
                     "auteurs.dates",
                     "auteurs.remarque AS note",
                     "auteurs.is_categorie AS iscategory")
-                //    "auteurs_alias.nom AS alias")
                 .OrderBy("auteurs.nom", "auteurs.id")
                 .Offset(request.GetSkipCount())
                 .Limit(request.PageSize);
+
+#if DEBUG
+            Debug.WriteLine("---DATA:\n" + QueryFactory.Compiler.Compile(query).ToString());
+#endif
+            return query;
         }
 
         /// <summary>
@@ -141,10 +150,15 @@ namespace Pinakes.Search
             if (!string.IsNullOrEmpty(request.Text))
             {
                 // text
-                int n = 0;
                 foreach (string token in request.Text.Split())
                 {
-                    Query tokenQuery = GetNonTextQuery(request, ++n);
+                    Query tokenQuery = GetNonTextQuery(request);
+                    tokenQuery.Join("occurrence", "occurrence.targetid", "t.id");
+                    tokenQuery.Join("token", "occurrence.tokenid", "token.id");
+                    if (request.IncludeAlias)
+                        tokenQuery.WhereIn("occurrence.field", _authFields);
+                    else
+                        tokenQuery.Where("occurrence.field", "aunam");
                     AddTextClause(token, tokenQuery);
                     queries.Add(tokenQuery);
                 }
@@ -152,11 +166,11 @@ namespace Pinakes.Search
             else
             {
                 // non-text
-                queries.Add(GetNonTextQuery(request, 1));
+                queries.Add(GetNonTextQuery(request));
             }
 
             // build a concatenated query
-            Query idQuery = queries[0].As("t");
+            Query idQuery = queries[0].As("q");
             if (queries.Count > 1)
             {
                 for (int i = 1; i < queries.Count; i++)
@@ -165,6 +179,10 @@ namespace Pinakes.Search
                     else idQuery.Intersect(queries[i]);
                 }
             }
+
+#if DEBUG
+            Debug.WriteLine("---ID:\n" + QueryFactory.Compiler.Compile(idQuery).ToString());
+#endif
 
             return Tuple.Create(
                 GetResultQuery(request, idQuery),

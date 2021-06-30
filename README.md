@@ -2,6 +2,27 @@
 
 An API wrapping an essential search engine for the RAP subset of the Pinakes database.
 
+## Quick Start
+
+1. have your Pinakes DB imported in MySql under a database named `pinakes`.
+2. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli):
+
+```ps1
+./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
+```
+
+Note that this truncates the target `token` and `occurrence` tables if present; else it creates them.
+
+3. build the dates index using the Pinakes RAP CLI (`pinix` in this solution):
+
+```ps1
+./pinix index-date pinakes
+```
+
+Note that this truncates the target `date` table if present; else it creates it.
+
+Both operations take less than 1 minute in my computer.
+
 ## Pinakes Database
 
 This section empirically describes a subset of the Pinakes DB, as illustrated by this schema:

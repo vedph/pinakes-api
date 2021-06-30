@@ -59,9 +59,25 @@
   "MetadataFields": [],
   "Documents": [
     {
+      "Id": "author",
+      "CountSql": "SELECT COUNT(a.id) FROM auteurs a LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur;",
+      "DataSql": "SELECT a.id AS m_targetid,a.nom AS aunam,a.remarque AS aunot,aa.nom AS aanam FROM auteurs a LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur ORDER BY a.id LIMIT {1} OFFSET {0};",
+      "TextFilterChains": {
+        "*": "tag-sep-wsp-std"
+      },
+      "Tokenizers": {
+        "*": "std"
+      },
+      "TokenMultipliers": {
+        "aunam": "rom",
+        "aanam": "rom",
+        "aunot": "rom"
+      }
+    },
+    {
       "Id": "work",
-      "CountSql": "SELECT COUNT(w.id) FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id;",
-      "DataSql": "SELECT w.id AS m_targetid,w.titre AS wkttl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wkcom,ws.titre AS wsttl,k1.keyword AS wkkey,a.nom AS aunam,aa.nom AS aanam,k2.keyword AS aukey FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id LEFT JOIN keywords k1 ON kw.id_keyword=k1.id LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id LEFT JOIN auteurs a ON a.id=wa.id_auteur LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id LEFT JOIN keywords k2 ON ka.id_keyword=k2.id ORDER BY w.id LIMIT {1} OFFSET {0};",
+      "CountSql": "SELECT COUNT(w.id) FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id;",
+      "DataSql": "SELECT w.id AS m_targetid,w.titre AS wkttl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wknot,ws.titre AS wsttl FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id ORDER BY w.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },
@@ -73,8 +89,9 @@
         "wktit": "rom",
         "wkinc": "rom",
         "wkdes": "rom",
-        "aunam": "rom",
-        "aanam": "rom"
+        "wkplc": "rom",
+        "wknot": "rom",
+        "wsttl": "rom"
       }
     }
   ]
