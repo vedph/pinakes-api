@@ -4,11 +4,20 @@ using System.Collections.Generic;
 
 namespace PinakesApi.Controllers
 {
+    /// <summary>
+    /// Keywords lookup.
+    /// </summary>
+    /// <seealso cref="ControllerBase" />
     [ApiController]
     public class KeywordController : ControllerBase
     {
         private readonly PinakesSearcher _searcher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeywordController"/>
+        /// class.
+        /// </summary>
+        /// <param name="searcher">The searcher.</param>
         public KeywordController(PinakesSearcher searcher)
         {
             _searcher = searcher;

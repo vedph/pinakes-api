@@ -5,11 +5,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PinakesApi.Controllers
 {
+    /// <summary>
+    /// The model for an author search request.
+    /// </summary>
     public sealed class AuthorRequestModel
     {
+        /// <summary>
+        /// The page number (1-N).
+        /// </summary>
         [Range(1, int.MaxValue)]
         public int PageNumber { get; set; }
 
+        /// <summary>
+        /// The size of the page (1-100).
+        /// </summary>
         [Range(1, 100)]
         public int PageSize { get; set; }
 
@@ -36,6 +45,11 @@ namespace PinakesApi.Controllers
         public bool IncludeAlias { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to include author notes.
+        /// </summary>
+        public bool IncludeNotes { get; set; }
+
+        /// <summary>
         /// The category flag to be matched for the author.
         /// </summary>
         public bool? IsCategory { get; set; }
@@ -56,6 +70,10 @@ namespace PinakesApi.Controllers
         /// </summary>
         public List<int> KeywordIds { get; set; }
 
+        /// <summary>
+        /// Converts this model to the corresponding request.
+        /// </summary>
+        /// <returns>Request.</returns>
         public AuthorSearchRequest ToRequest()
         {
             return new AuthorSearchRequest
@@ -65,6 +83,7 @@ namespace PinakesApi.Controllers
                 Text = Text,
                 IsMatchAnyEnabled = IsMatchAnyEnabled,
                 IncludeAlias = IncludeAlias,
+                IncludeNotes = IncludeNotes,
                 IsCategory = IsCategory,
                 CenturyMin = CenturyMin,
                 CenturyMax = CenturyMax

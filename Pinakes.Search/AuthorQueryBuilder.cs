@@ -20,7 +20,6 @@ namespace Pinakes.Search
         private readonly Regex _tokenRegex;
         private readonly QueryTextClauseBuilder _clauseBuilder;
         private readonly CompositeTextFilter _filter;
-        private readonly string[] _authFields;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorQueryBuilder"/>
@@ -34,7 +33,6 @@ namespace Pinakes.Search
             _filter = new CompositeTextFilter(
                 new WhitespaceTextFilter(),
                 new StandardTextFilter());
-            _authFields = new[] { "aunam", "aanam" };
         }
 
         private void AddTextClause(string token, Query query)
@@ -129,6 +127,14 @@ namespace Pinakes.Search
             return query;
         }
 
+        private static IList<string> GetFields(AuthorSearchRequest request)
+        {
+            List<string> fields = new List<string> { "aunam" };
+            if (request.IncludeAlias) fields.Add("aanam");
+            if (request.IncludeNotes) fields.Add("aunot");
+            return fields;
+        }
+
         /// <summary>
         /// Builds the query from the specified request.
         /// </summary>
@@ -155,10 +161,13 @@ namespace Pinakes.Search
                     Query tokenQuery = GetNonTextQuery(request);
                     tokenQuery.Join("occurrence", "occurrence.targetid", "t.id");
                     tokenQuery.Join("token", "occurrence.tokenid", "token.id");
-                    if (request.IncludeAlias)
-                        tokenQuery.WhereIn("occurrence.field", _authFields);
+
+                    IList<string> fields = GetFields(request);
+                    if (fields.Count == 1)
+                        tokenQuery.Where("occurrence.field", fields[0]);
                     else
-                        tokenQuery.Where("occurrence.field", "aunam");
+                        tokenQuery.WhereIn("occurrence.field", fields);
+
                     AddTextClause(token, tokenQuery);
                     queries.Add(tokenQuery);
                 }

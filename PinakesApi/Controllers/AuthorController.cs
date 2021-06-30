@@ -4,11 +4,19 @@ using System.Collections.Generic;
 
 namespace PinakesApi.Controllers
 {
+    /// <summary>
+    /// Authors search.
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [ApiController]
     public class AuthorController : ControllerBase
     {
         private readonly PinakesSearcher _searcher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorController"/> class.
+        /// </summary>
+        /// <param name="searcher">The searcher.</param>
         public AuthorController(PinakesSearcher searcher)
         {
             _searcher = searcher;

@@ -31,6 +31,11 @@ namespace Pinakes.Search
         public bool IncludeAlias { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to include author notes.
+        /// </summary>
+        public bool IncludeNotes { get; set; }
+
+        /// <summary>
         /// Gets or sets the category flag to be matched for the author.
         /// </summary>
         public bool? IsCategory { get; set; }
