@@ -104,6 +104,12 @@ wrk   358      c. 1125 AD    1125    12 (1/2)
 ...
 ```
 
+Invalid dates are listed in the log, like this (referring to an author, Hierotheus (Iohannes) Comnenus Drystrae metr., where the date has been mistakenly inserted in the century field):
+
+```txt
+2021-06-30 07:38:31.047 +02:00 [ERR] Invalid date at aut#3119: "1657-1719"
+```
+
 ### Subset
 
 This is not exposed in a UI, but is a general filter always applied to get only the RAP data subset.

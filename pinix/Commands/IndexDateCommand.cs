@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Pinakes.Index;
 using System;
 using System.Globalization;
@@ -11,11 +12,13 @@ namespace Pinix.Cli.Commands
     public sealed class IndexDateCommand : ICommand
     {
         private readonly IConfiguration _config;
+        private readonly ILogger _logger;
         private readonly string _dbName;
 
         public IndexDateCommand(AppOptions options, string dbName)
         {
             _config = options.Configuration;
+            _logger = options.Logger;
             _dbName = dbName ?? "pinakes";
         }
 
@@ -52,7 +55,11 @@ namespace Pinix.Cli.Commands
                 _config.GetConnectionString("Default"),
                 _dbName);
 
-            PinakesDateIndexer indexer = new PinakesDateIndexer(connString);
+            _logger?.LogInformation("Index date");
+            PinakesDateIndexer indexer = new PinakesDateIndexer(connString)
+            {
+                Logger = _logger
+            };
             indexer.Index(CancellationToken.None, new Progress<int>((count) =>
             {
                 Console.WriteLine(count);

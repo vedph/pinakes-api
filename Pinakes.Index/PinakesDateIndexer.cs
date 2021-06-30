@@ -1,4 +1,5 @@
 ﻿using Fusi.Antiquity.Chronology;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Pinakes.Index
     {
         private readonly string _connString;
         private readonly PinakesCenturyDateAdapter _adapter;
+
+        public ILogger Logger { get; set; }
 
         public PinakesDateIndexer(string connString)
         {
@@ -86,7 +89,12 @@ namespace Pinakes.Index
             foreach (var s in sources)
             {
                 HistoricalDate date = _adapter.GetDate(s.Item2);
-                if (date == null) continue;
+                if (date == null)
+                {
+                    Logger?.LogError(
+                        $"Invalid date at {field}#{s.Item1}: \"{s.Item2}\"");
+                    continue;
+                }
 
                 ((DbParameter)command.Parameters["@field"]).Value = field;
                 ((DbParameter)command.Parameters["@targetid"]).Value = s.Item1;
