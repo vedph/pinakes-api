@@ -42,9 +42,38 @@ namespace Pinakes.Search
             return query.Get<KeywordResult>().ToList();
         }
 
+        /// <summary>
+        /// Gets the authors.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>The authors page.</returns>
         public DataPage<AuthorResult> GetAuthors(AuthorSearchRequest request)
         {
-            throw new NotImplementedException();
+            if (_authorQueryBuilder == null)
+                _authorQueryBuilder = new AuthorQueryBuilder(_connString);
+
+            var t = _authorQueryBuilder.Build(request);
+
+            // count
+            dynamic row = t.Item2.AsCount().First();
+            int total = (int)row.count;
+
+            // data
+            if (total == 0)
+            {
+                return new DataPage<AuthorResult>(
+                    request.PageNumber,
+                    request.PageSize,
+                    0,
+                    Array.Empty<AuthorResult>());
+            }
+
+            List<AuthorResult> authors = t.Item1.Get<AuthorResult>().ToList();
+            return new DataPage<AuthorResult>(
+                request.PageNumber,
+                request.PageSize,
+                total,
+                authors);
         }
     }
 }

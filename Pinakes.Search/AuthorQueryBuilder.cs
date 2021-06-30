@@ -96,15 +96,15 @@ namespace Pinakes.Search
             return query;
         }
 
-        private static Query GetCountQuery(Query idQuery)
+        private Query GetCountQuery(Query idQuery)
         {
-            return new Query().From(idQuery).AsCount(new[] { "t.id" });
+            return QueryFactory.Query().From(idQuery).AsCount(new[] { "t.id" });
         }
 
-        private static Query GetResultQuery(AuthorSearchRequest request,
+        private Query GetResultQuery(AuthorSearchRequest request,
             Query idQuery)
         {
-            return new Query()
+            return QueryFactory.Query()
                 .From(idQuery)
                 .Join("auteurs", "auteurs.id", "t.id")
                 // .LeftJoin("auteurs_alias", "auteurs_alias.id_auteur", "t.id")
