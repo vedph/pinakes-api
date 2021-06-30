@@ -5,7 +5,7 @@ An API wrapping an essential search engine for the RAP subset of the Pinakes dat
 ## Quick Start
 
 1. have your Pinakes DB imported in MySql under a database named `pinakes`.
-2. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli):
+2. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes.profile` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
 
 ```ps1
 ./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
@@ -19,9 +19,15 @@ Note that this truncates the target `token` and `occurrence` tables if present; 
 ./pinix index-date pinakes
 ```
 
-Note that this truncates the target `date` table if present; else it creates it.
+Note that this truncates the target `date` table if present; else it creates it. Also, have a check at the log file created by this process, which might notify you about errors in the source data (or eventually in the parsing algorithm).
 
 Both operations take less than 1 minute in my computer.
+
+4. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
+
+## Deployment
+
+The planned deployment is via Docker. The database will not be included in the image; rather, it will be imported from a zipped dump, which can be put in a Docker volume. On startup, the API will look for the `pinakes` database; if it does not find it, it will create it and then import the data from the directory specified by `Data:SourceDir`, where it expects to find a file named `data.zip`.
 
 ## Pinakes Database
 
