@@ -91,7 +91,7 @@ Date metadata (for centuries) need to be preprocessed for indexing: in `auteurs.
 - `13 ex. - 14 in.`
 - `14 ex - 15` (the `.` may be missing)
 - `15 (2/2) - 16 (1/4)`
-- `1657-1719` by error; this is not considered, as it should be sporadic.
+- `1657-1719` by error; this is not considered valid, as it should be sporadic.
 
 These dates are parsed and inserted into a `date` table which gets filled with the original date expression (`source`), its normalized text value and the corresponding approximate numeric value, and the ID of the source author or work having that date (`field` is used to specify a code representing the source table: `aut` or `wrk`). For instance:
 
@@ -124,8 +124,8 @@ Filters:
 
 - name (any portion): `auteurs.nom`[T].
 - aliases (as above): `auteurs_alias.nom`[T].
-- category (yes/no): true if it's a category, false if it's an author; null if not specified.
-- centuryMin, centuryMax: `auteurs.siecle`.
+- category (yes/no): `auteurs.is_categorie`=0 or 1; the filter can be true for a category author, false for a non-category author, null if not specified.
+- centuryMin, centuryMax: dates in `auteurs.siecle` are indexed into `date` with `field`=`aut`.
 - keywords (0 or more): `keywords.keyword`[T] via `keywords_auteurs`.
 
 ```sql
@@ -151,7 +151,7 @@ Filters:
 - titulus (as above): `oeuvres.titulus`[T].
 - incipit (as above): `oeuvres.incipit`[T].
 - desinit (as above): `oeuvres.desinit`[T].
-- centuryMin, centuryMax: `oeuvres.siecle`.
+- centuryMin, centuryMax: `oeuvres.siecle`: dates in `oeuvres.siecle` are indexed into `date` with `field`=`wrk`.
 - place (as above): `oeuvres.lieu`[T].
 - remark: `oeuvres.remarque`[T].
 - dictyon number: this is equal to `cote.id`, and we get to it via `temoins` (`id_oeuvre`) to `unites_codicologiques` (on `id_materialite_uc`) and its FK `id_cote`.
