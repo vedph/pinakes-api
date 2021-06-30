@@ -113,7 +113,7 @@ namespace Pinakes.Search
                     "auteurs.siecle AS century",
                     "auteurs.dates",
                     "auteurs.remarque AS note",
-                    "auteurs.is_categorie AS category")
+                    "auteurs.is_categorie AS iscategory")
                 //    "auteurs_alias.nom AS alias")
                 .OrderBy("auteurs.nom", "auteurs.id")
                 .Offset(request.GetSkipCount())

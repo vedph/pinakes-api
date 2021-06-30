@@ -1,4 +1,5 @@
-﻿using SqlKata;
+﻿using Fusi.Tools.Data;
+using SqlKata;
 using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Pinakes.Search
     /// </summary>
     public sealed class PinakesSearcher
     {
+        private readonly string _connString;
         private KeywordQueryBuilder _keywordQueryBuilder;
         private AuthorQueryBuilder _authorQueryBuilder;
-        private readonly string _connString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PinakesSearcher"/> class.
@@ -39,6 +40,11 @@ namespace Pinakes.Search
 
             Query query = _keywordQueryBuilder.Build(authors);
             return query.Get<KeywordResult>().ToList();
+        }
+
+        public DataPage<AuthorResult> GetAuthors(AuthorSearchRequest request)
+        {
+            throw new NotImplementedException();
         }
     }
 }
