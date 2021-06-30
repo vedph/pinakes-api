@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "pinix": {
+      "commandName": "Project",
+      "commandLineArgs": "index-date pinakes"
+    }
+  }
+}

@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -65,10 +66,11 @@ namespace Pinakes.Index
             return sources;
         }
 
-        private static void AddParameter(string name, IDbCommand command)
+        private static void AddParameter(string name, IDbCommand command,
+            DbType type)
         {
             var p = command.CreateParameter();
-            p.DbType = DbType.String;
+            p.DbType = type;
             p.ParameterName = name;
             p.Direction = ParameterDirection.Input;
             command.Parameters.Add(p);
@@ -85,11 +87,11 @@ namespace Pinakes.Index
                 HistoricalDate date = _adapter.GetDate(s.Item2);
                 if (date == null) continue;
 
-                command.Parameters["@field"] = "aut";
-                command.Parameters["@targetid"] = s.Item1;
-                command.Parameters["@datetxt"] = date.ToString();
-                command.Parameters["@dateval"] = date.GetSortValue();
-                command.Parameters["@source"] = s.Item2;
+                ((DbParameter)command.Parameters["@field"]).Value = "aut";
+                ((DbParameter)command.Parameters["@targetid"]).Value = s.Item1;
+                ((DbParameter)command.Parameters["@datetxt"]).Value = date.ToString();
+                ((DbParameter)command.Parameters["@dateval"]).Value = date.GetSortValue();
+                ((DbParameter)command.Parameters["@source"]).Value = s.Item2;
                 command.ExecuteNonQuery();
 
                 if (cancel.IsCancellationRequested) break;
@@ -114,7 +116,7 @@ namespace Pinakes.Index
                 "(`field`,`targetid`,`datetxt`,`dateval`,`source`) " +
                 $"VALUES({parameters});";
             foreach (string p in parameters.Split(','))
-                AddParameter(p, cmd);
+                AddParameter(p, cmd, p == "@dateval" ? DbType.Double : DbType.String);
 
             var sources = CollectSources(connection, "auteurs");
             WriteDates(sources, cmd, cancel, progress);
