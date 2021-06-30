@@ -1,0 +1,2975 @@
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: pinakes
+-- ------------------------------------------------------
+-- Server version	8.0.23
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auteurs`
+--
+
+DROP TABLE IF EXISTS `auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auteurs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `dates` varchar(20) DEFAULT NULL,
+  `remarque` text,
+  `remarque_repertoire` text,
+  `is_categorie` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `nom` (`nom`)
+) ENGINE=InnoDB AUTO_INCREMENT=3198 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `auteurs_alias`
+--
+
+DROP TABLE IF EXISTS `auteurs_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auteurs_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_auteur` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `nom` (`nom`),
+  KEY `FK_AUTEURS_idx` (`id_auteur`),
+  KEY `nom_2` (`nom`),
+  CONSTRAINT `FK_4A9AA192236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=966 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `auteurs_oeuvres`
+--
+
+DROP TABLE IF EXISTS `auteurs_oeuvres`;
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `auteurs_oeuvres` AS SELECT 
+ 1 AS `auteur_nom`,
+ 1 AS `auteur_id`,
+ 1 AS `auteur_siecle`,
+ 1 AS `auteur_dates`,
+ 1 AS `auteur_remarque`,
+ 1 AS `oeuvre_titre`,
+ 1 AS `oeuvre_id`,
+ 1 AS `oeuvre_ordo`,
+ 1 AS `oeuvre_remarque`,
+ 1 AS `oeuvre_titulus`,
+ 1 AS `oeuvre_incipit`,
+ 1 AS `oeuvre_desinit`,
+ 1 AS `oeuvre_siecle`,
+ 1 AS `oeuvre_date`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `auteurs_oeuvres_recensions`
+--
+
+DROP TABLE IF EXISTS `auteurs_oeuvres_recensions`;
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres_recensions`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `auteurs_oeuvres_recensions` AS SELECT 
+ 1 AS `auteur_id`,
+ 1 AS `auteur_dates`,
+ 1 AS `auteur_is_categorie`,
+ 1 AS `auteur_nom`,
+ 1 AS `auteur_remarque`,
+ 1 AS `auteur_remarque_repertoire`,
+ 1 AS `auteur_siecle`,
+ 1 AS `oeuvre_date`,
+ 1 AS `oeuvre_date_liturgique`,
+ 1 AS `oeuvre_date_remarque`,
+ 1 AS `oeuvre_desinit`,
+ 1 AS `oeuvre_equipe_referente`,
+ 1 AS `oeuvre_id`,
+ 1 AS `oeuvre_id_texte_noyau`,
+ 1 AS `oeuvre_incipit`,
+ 1 AS `oeuvre_lieu`,
+ 1 AS `oeuvre_lieu_remarque`,
+ 1 AS `oeuvre_ordo`,
+ 1 AS `oeuvre_remarque`,
+ 1 AS `oeuvre_responsable`,
+ 1 AS `oeuvre_siecle`,
+ 1 AS `oeuvre_titre`,
+ 1 AS `oeuvre_titulus`,
+ 1 AS `recension_date`,
+ 1 AS `recension_date_remarque`,
+ 1 AS `recension_desinit`,
+ 1 AS `recension_equipe_referente`,
+ 1 AS `recension_id`,
+ 1 AS `recension_id_texte_noyau`,
+ 1 AS `recension_incipit`,
+ 1 AS `recension_lieu`,
+ 1 AS `recension_lieu_remarque`,
+ 1 AS `recension_numero`,
+ 1 AS `recension_recension`,
+ 1 AS `recension_remarque`,
+ 1 AS `recension_responsable`,
+ 1 AS `recension_siecle`,
+ 1 AS `recension_titulus`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `auteurs_oeuvres_recensions_identifiants`
+--
+
+DROP TABLE IF EXISTS `auteurs_oeuvres_recensions_identifiants`;
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres_recensions_identifiants`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `auteurs_oeuvres_recensions_identifiants` AS SELECT 
+ 1 AS `auteur`,
+ 1 AS `identifiant_auteur`,
+ 1 AS `type_identfiiant_auteur`,
+ 1 AS `remarque_identifiant_auteur`,
+ 1 AS `url_identifiant_auteur`,
+ 1 AS `oeuvre`,
+ 1 AS `identifiant_oeuvre`,
+ 1 AS `type_identfiiant_oeuvre`,
+ 1 AS `remarque_identifiant_oeuvre`,
+ 1 AS `url_identifiant_oeuvre`,
+ 1 AS `recension`,
+ 1 AS `identifiant_recension`,
+ 1 AS `type_identfiiant_recension`,
+ 1 AS `remarque_identifiant_recension`,
+ 1 AS `url_identifiant_recension`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `catalogues_specialises`
+--
+
+DROP TABLE IF EXISTS `catalogues_specialises`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `catalogues_specialises` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `rubrique` varchar(150) NOT NULL,
+  `remarque` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cms_content`
+--
+
+DROP TABLE IF EXISTS `cms_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cms_content` (
+  `id_cmscontent` int NOT NULL AUTO_INCREMENT,
+  `pid` int DEFAULT NULL,
+  `ctype` int DEFAULT '1',
+  `title` text,
+  `body` text,
+  `link` text,
+  `czones` int DEFAULT '1',
+  `rank` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  PRIMARY KEY (`id_cmscontent`),
+  KEY `IDX_A0293FB85550C4ED` (`pid`),
+  KEY `rank` (`rank`)
+) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cms_help`
+--
+
+DROP TABLE IF EXISTS `cms_help`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cms_help` (
+  `id_cmshelp` int NOT NULL AUTO_INCREMENT,
+  `htype` int DEFAULT NULL,
+  `label` int DEFAULT NULL,
+  `title` text,
+  `content` text,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  PRIMARY KEY (`id_cmshelp`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cms_page`
+--
+
+DROP TABLE IF EXISTS `cms_page`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cms_page` (
+  `id_cmspage` int NOT NULL AUTO_INCREMENT,
+  `ptype` int DEFAULT '1',
+  `title` text,
+  `link` text,
+  `pzones` int DEFAULT '1',
+  `rank` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  PRIMARY KEY (`id_cmspage`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `copistes_possesseurs`
+--
+
+DROP TABLE IF EXISTS `copistes_possesseurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `copistes_possesseurs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `dates` varchar(20) DEFAULT NULL,
+  `remarque` text,
+  `personne_morale` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `nom` (`nom`)
+) ENGINE=InnoDB AUTO_INCREMENT=5006 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `copistes_possesseurs_alias`
+--
+
+DROP TABLE IF EXISTS `copistes_possesseurs_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `copistes_possesseurs_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_copo` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_COPISTESPOSSESSEURS_idx` (`id_copo`),
+  CONSTRAINT `FK_8024615C324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1525 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `copistes_possesseurs_cotes`
+--
+
+DROP TABLE IF EXISTS `copistes_possesseurs_cotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `copistes_possesseurs_cotes` (
+  `id_copo` int NOT NULL,
+  `id_cote` int NOT NULL,
+  `nature_relation` varchar(15) NOT NULL DEFAULT 'copiste',
+  `folios` varchar(150) DEFAULT NULL,
+  `commentaire` text,
+  `newId` int NOT NULL,
+  PRIMARY KEY (`id_copo`,`id_cote`,`nature_relation`),
+  KEY `id_copo` (`id_copo`),
+  KEY `id_cote` (`id_cote`),
+  KEY `nature_relation` (`nature_relation`),
+  CONSTRAINT `FK_98C368F5324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`),
+  CONSTRAINT `FK_98C368F5B6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `copistes_possesseurs_identifiants`
+--
+
+DROP TABLE IF EXISTS `copistes_possesseurs_identifiants`;
+/*!50001 DROP VIEW IF EXISTS `copistes_possesseurs_identifiants`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `copistes_possesseurs_identifiants` AS SELECT 
+ 1 AS `nom`,
+ 1 AS `identifiant`,
+ 1 AS `type`,
+ 1 AS `remarque`,
+ 1 AS `url`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `copistes_possesseurs_uc`
+--
+
+DROP TABLE IF EXISTS `copistes_possesseurs_uc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `copistes_possesseurs_uc` (
+  `id_copo` int NOT NULL,
+  `id_uc` int NOT NULL,
+  `nature_relation` varchar(15) NOT NULL DEFAULT 'copiste',
+  `folios` varchar(150) DEFAULT NULL,
+  `commentaire` text,
+  PRIMARY KEY (`id_copo`,`id_uc`,`nature_relation`),
+  KEY `FK_COPOS_UC_idx` (`id_copo`),
+  KEY `FK_UC_COPOS_idx` (`id_uc`),
+  KEY `nature_relation` (`nature_relation`),
+  CONSTRAINT `FK_62D5D310324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`),
+  CONSTRAINT `FK_62D5D31075756A9` FOREIGN KEY (`id_uc`) REFERENCES `unites_codicologiques` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cotes`
+--
+
+DROP TABLE IF EXISTS `cotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cotes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_fond` int DEFAULT NULL,
+  `cote` varchar(250) NOT NULL,
+  `type` varchar(15) DEFAULT 'Actuelle',
+  `titre` varchar(250) DEFAULT NULL,
+  `remarque` text,
+  `cote_catalogue` varchar(250) DEFAULT NULL,
+  `equipe_referente` varchar(10) DEFAULT NULL,
+  `responsable` text,
+  `pui_ptb` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_COTES_FONDS_idx` (`id_fond`),
+  KEY `cote` (`cote`),
+  CONSTRAINT `FK_F98B623D460304B4` FOREIGN KEY (`id_fond`) REFERENCES `fonds` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=77749 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `cotes_attributs`
+--
+
+DROP TABLE IF EXISTS `cotes_attributs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cotes_attributs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cote` int DEFAULT NULL,
+  `id_cote_relation` int DEFAULT NULL,
+  `id_uc` int DEFAULT NULL,
+  `id_uc_relation` int DEFAULT NULL,
+  `commentaire` text,
+  `type` varchar(15) DEFAULT NULL,
+  `partie` tinyint(1) NOT NULL DEFAULT '0',
+  `cote_biblio` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `FK_COTESATTRIBUTS_COTEPARENTS_idx` (`id_cote_relation`),
+  KEY `FK_COTESATTRIBUTS_IDCOTE_idx` (`id_cote`),
+  KEY `FK_COTESATTRIBUTS_IDUC_idx` (`id_uc`),
+  KEY `FK_COTESATTRIBUTS_IDUCREL_idx` (`id_uc_relation`),
+  CONSTRAINT `FK_531DBD9B6C702B5E` FOREIGN KEY (`id_uc_relation`) REFERENCES `unites_codicologiques` (`id`),
+  CONSTRAINT `FK_531DBD9B75756A9` FOREIGN KEY (`id_uc`) REFERENCES `unites_codicologiques` (`id`),
+  CONSTRAINT `FK_531DBD9B8BD62ACC` FOREIGN KEY (`id_cote_relation`) REFERENCES `cotes` (`id`),
+  CONSTRAINT `FK_531DBD9BB6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3847 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `cotes_avec_identifiants_s_ils_existent`
+--
+
+DROP TABLE IF EXISTS `cotes_avec_identifiants_s_ils_existent`;
+/*!50001 DROP VIEW IF EXISTS `cotes_avec_identifiants_s_ils_existent`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `cotes_avec_identifiants_s_ils_existent` AS SELECT 
+ 1 AS `pays`,
+ 1 AS `ville`,
+ 1 AS `depot`,
+ 1 AS `fonds`,
+ 1 AS `cote`,
+ 1 AS `type_cote`,
+ 1 AS `id_cote_pinakes`,
+ 1 AS `cote_catalogue`,
+ 1 AS `remarque_cote`,
+ 1 AS `identifiant`,
+ 1 AS `type_identifiant`,
+ 1 AS `remarque_identifiant`,
+ 1 AS `url_identifiant`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `cotes_backup`
+--
+
+DROP TABLE IF EXISTS `cotes_backup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cotes_backup` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_fond` int DEFAULT NULL,
+  `cote` varchar(250) NOT NULL,
+  `type` varchar(15) DEFAULT 'Actuelle',
+  `titre` varchar(250) DEFAULT NULL,
+  `remarque` text,
+  `cote_catalogue` varchar(250) DEFAULT NULL,
+  `equipe_referente` varchar(10) DEFAULT NULL,
+  `responsable` text,
+  `pui_ptb` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_COTES_FONDS_idx` (`id_fond`),
+  KEY `cote` (`cote`)
+) ENGINE=InnoDB AUTO_INCREMENT=77701 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `date`
+--
+
+DROP TABLE IF EXISTS `date`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `date` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `field` varchar(5) NOT NULL,
+  `targetid` int NOT NULL,
+  `datetxt` varchar(100) NOT NULL,
+  `dateval` double NOT NULL,
+  `source` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IX_FIELD` (`field`)
+) ENGINE=InnoDB AUTO_INCREMENT=1216 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `depots`
+--
+
+DROP TABLE IF EXISTS `depots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `depots` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ville` int DEFAULT NULL,
+  `depot` varchar(250) NOT NULL,
+  `numero` varchar(10) DEFAULT NULL,
+  `remarque` text,
+  PRIMARY KEY (`id`),
+  KEY `villesdepots` (`id_ville`),
+  KEY `depot` (`depot`),
+  CONSTRAINT `FK_D99EA427AD4698F3` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1519 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `depots_alias`
+--
+
+DROP TABLE IF EXISTS `depots_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `depots_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_depot` int NOT NULL,
+  `depot` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_DEPOT_ALIAS` (`id_depot`),
+  KEY `depot` (`depot`),
+  CONSTRAINT `FK_2B9D13F8A911CA8C` FOREIGN KEY (`id_depot`) REFERENCES `depots` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `depots_sans_id_medium`
+--
+
+DROP TABLE IF EXISTS `depots_sans_id_medium`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `depots_sans_id_medium` (
+  `pays` varchar(150) DEFAULT NULL,
+  `ville` varchar(250) DEFAULT NULL,
+  `depot` varchar(250) DEFAULT NULL,
+  `id_depot_pinakes` int DEFAULT NULL,
+  `medium_pays` varchar(255) DEFAULT NULL,
+  `medium_ville` varchar(255) DEFAULT NULL,
+  `medium_etab` varchar(255) DEFAULT NULL,
+  `id_depot_medium` int unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `detail_contenus`
+--
+
+DROP TABLE IF EXISTS `detail_contenus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `detail_contenus` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id_entite` int unsigned NOT NULL,
+  `entite` varchar(100) NOT NULL,
+  `categorie` int unsigned NOT NULL,
+  `contenu` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `remarque` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `rang` int DEFAULT NULL,
+  `complement` tinyint(1) DEFAULT NULL,
+  `creation` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_entite` (`id_entite`,`entite`),
+  KEY `IDX_5B3FC9ED497DD634` (`categorie`),
+  FULLTEXT KEY `contenu` (`contenu`),
+  FULLTEXT KEY `remarque` (`remarque`)
+) ENGINE=MyISAM AUTO_INCREMENT=60899 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `detail_contenus_categories`
+--
+
+DROP TABLE IF EXISTS `detail_contenus_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `detail_contenus_categories` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `categorie` varchar(100) NOT NULL,
+  `aut_complement` tinyint(1) DEFAULT '1',
+  `aut_contenu` tinyint(1) DEFAULT '1',
+  `rang` int DEFAULT NULL,
+  `is_uniprod` tinyint(1) DEFAULT '1',
+  `is_temoin` tinyint(1) DEFAULT '1',
+  `is_oeuvre` tinyint(1) DEFAULT '1',
+  `remarque` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `created` date NOT NULL,
+  `created_by` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `is_uniprod` (`is_uniprod`),
+  KEY `is_temoin` (`is_temoin`),
+  KEY `is_oeuvre` (`is_oeuvre`)
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `detail_contenus_search`
+--
+
+DROP TABLE IF EXISTS `detail_contenus_search`;
+/*!50001 DROP VIEW IF EXISTS `detail_contenus_search`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `detail_contenus_search` AS SELECT 
+ 1 AS `id`,
+ 1 AS `entite`,
+ 1 AS `id_entite`,
+ 1 AS `contenu`,
+ 1 AS `complement`,
+ 1 AS `creation`,
+ 1 AS `remarque`,
+ 1 AS `rang`,
+ 1 AS `categorie`,
+ 1 AS `aut_complement`,
+ 1 AS `aut_contenu`,
+ 1 AS `id_categorie`,
+ 1 AS `equipeReferente`,
+ 1 AS `auteur_id`,
+ 1 AS `auteur`,
+ 1 AS `oeuvre_id`,
+ 1 AS `oeuvre`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `fonds`
+--
+
+DROP TABLE IF EXISTS `fonds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fonds` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_depot` int DEFAULT NULL,
+  `fond` varchar(250) NOT NULL,
+  `numero` varchar(10) NOT NULL DEFAULT '0',
+  `remarque` text,
+  PRIMARY KEY (`id`),
+  KEY `FK_DEPOTS_FONDS_idx` (`id_depot`),
+  KEY `fond` (`fond`),
+  CONSTRAINT `FK_39C1FAAAA911CA8C` FOREIGN KEY (`id_depot`) REFERENCES `depots` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1898 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fonds_alias`
+--
+
+DROP TABLE IF EXISTS `fonds_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fonds_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_fond` int NOT NULL,
+  `fond` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_FONDS_ALIAS_idx` (`id_fond`),
+  KEY `fond` (`fond`),
+  CONSTRAINT `FK_341CAA00460304B4` FOREIGN KEY (`id_fond`) REFERENCES `fonds` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_group`
+--
+
+DROP TABLE IF EXISTS `fos_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `roles` longtext NOT NULL COMMENT '(DC2Type:array)',
+  `description` longtext,
+  `fullname` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4B019DDB5E237E06` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_institution`
+--
+
+DROP TABLE IF EXISTS `fos_institution`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_institution` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `name_complement` varchar(150) DEFAULT NULL,
+  `address` text,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_user`
+--
+
+DROP TABLE IF EXISTS `fos_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `username_canonical` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_canonical` varchar(255) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `salt` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `locked` tinyint(1) NOT NULL,
+  `expired` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `confirmation_token` varchar(255) DEFAULT NULL,
+  `password_requested_at` datetime DEFAULT NULL,
+  `credentials_expired` tinyint(1) NOT NULL,
+  `credentials_expire_at` datetime DEFAULT NULL,
+  `roles` longtext NOT NULL COMMENT '(DC2Type:array)',
+  `firstname` varchar(150) DEFAULT NULL,
+  `lastname` varchar(150) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `summary` longtext,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fos_user_U_1` (`username_canonical`),
+  UNIQUE KEY `fos_user_U_2` (`email_canonical`)
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_user_group`
+--
+
+DROP TABLE IF EXISTS `fos_user_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_user_group` (
+  `fos_user_id` int NOT NULL,
+  `fos_group_id` int NOT NULL,
+  PRIMARY KEY (`fos_user_id`,`fos_group_id`),
+  KEY `fos_user_group_FI_2` (`fos_group_id`),
+  KEY `IDX_583D1F3E8C20A0FB` (`fos_user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_user_institution`
+--
+
+DROP TABLE IF EXISTS `fos_user_institution`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_user_institution` (
+  `fos_user_id` int NOT NULL,
+  `fos_institution_id` int NOT NULL,
+  PRIMARY KEY (`fos_user_id`,`fos_institution_id`),
+  KEY `fos_user_id` (`fos_user_id`),
+  KEY `fos_institution_id` (`fos_institution_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `fos_user_memo`
+--
+
+DROP TABLE IF EXISTS `fos_user_memo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fos_user_memo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `memo` text,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=187 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants`
+--
+
+DROP TABLE IF EXISTS `identifiants`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `identifiant` varchar(150) NOT NULL,
+  `url` text,
+  `remarque` text,
+  `id_type` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_IDENTIFIANTS_TYPES_idx` (`id_type`),
+  CONSTRAINT `FK_B27B65517FE4B2B` FOREIGN KEY (`id_type`) REFERENCES `identifiants_types` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=342381 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_auteurs`
+--
+
+DROP TABLE IF EXISTS `identifiants_auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_auteurs` (
+  `id_identifiant` int NOT NULL,
+  `id_auteur` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_auteur`),
+  KEY `FK_IDENTIFIANTS_AUTEURS_idx` (`id_identifiant`),
+  KEY `FK_AUTEURS_IDENTIFIANTS_idx` (`id_auteur`),
+  CONSTRAINT `FK_527F033B236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`),
+  CONSTRAINT `FK_527F033BD116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_catalogues_specialises`
+--
+
+DROP TABLE IF EXISTS `identifiants_catalogues_specialises`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_catalogues_specialises` (
+  `id_identifiant` int NOT NULL,
+  `id_catspe` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_catspe`),
+  KEY `FK_IDENTIFIANTS_CATSPE_idx` (`id_identifiant`),
+  KEY `FK_CATSPE_IDENTIFIANTS_idx` (`id_catspe`),
+  CONSTRAINT `FK_666F8E6B1DCA3AA4` FOREIGN KEY (`id_catspe`) REFERENCES `catalogues_specialises` (`id`),
+  CONSTRAINT `FK_666F8E6BD116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_copistes_possesseurs`
+--
+
+DROP TABLE IF EXISTS `identifiants_copistes_possesseurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_copistes_possesseurs` (
+  `id_identifiant` int NOT NULL,
+  `id_copo` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_copo`),
+  KEY `FK_IDENTIFIANTS_COPOS_idx` (`id_identifiant`),
+  KEY `FK_COPOS_IDENTIFIANTS_idx` (`id_copo`),
+  CONSTRAINT `FK_8130B4C7324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`),
+  CONSTRAINT `FK_8130B4C7D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_cotes`
+--
+
+DROP TABLE IF EXISTS `identifiants_cotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_cotes` (
+  `id_identifiant` int NOT NULL,
+  `id_cote` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_cote`),
+  KEY `FK_IDENTIFIANTS_COTES_idx` (`id_identifiant`),
+  KEY `FK_COTES_IDENTIFIANTS_idx` (`id_cote`),
+  CONSTRAINT `FK_9F57A02DB6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`),
+  CONSTRAINT `FK_9F57A02DD116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_depots`
+--
+
+DROP TABLE IF EXISTS `identifiants_depots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_depots` (
+  `id_identifiant` int NOT NULL,
+  `id_depot` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_depot`),
+  KEY `FK_DEPOTS_IDENTIFIANTS_idx` (`id_depot`),
+  CONSTRAINT `FK_C44F6881A911CA8C` FOREIGN KEY (`id_depot`) REFERENCES `depots` (`id`),
+  CONSTRAINT `FK_C44F6881D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_fonds`
+--
+
+DROP TABLE IF EXISTS `identifiants_fonds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_fonds` (
+  `id_identifiant` int NOT NULL,
+  `id_fond` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_fond`),
+  KEY `FK_IDENTIFIANTS_FONDS_idx` (`id_identifiant`),
+  KEY `FK_DEPOTS_IDENTIFIANTS_idx` (`id_fond`),
+  CONSTRAINT `FK_5F1D38BA460304B4` FOREIGN KEY (`id_fond`) REFERENCES `fonds` (`id`),
+  CONSTRAINT `FK_5F1D38BAD116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_oeuvres`
+--
+
+DROP TABLE IF EXISTS `identifiants_oeuvres`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_oeuvres` (
+  `id_identifiant` int NOT NULL,
+  `id_oeuvre` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_oeuvre`),
+  KEY `FK_IDENTIFIANTS_OEUVRES_idx` (`id_identifiant`),
+  KEY `FK_OEUVRES_IDENTIFIANTS_idx` (`id_oeuvre`),
+  CONSTRAINT `FK_7E96392F13C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_7E96392FD116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_pays`
+--
+
+DROP TABLE IF EXISTS `identifiants_pays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_pays` (
+  `id_identifiant` int NOT NULL,
+  `id_pays` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_pays`),
+  KEY `FK_PAYS_idx` (`id_pays`),
+  KEY `FK_IDENTIFIANTS_idx` (`id_identifiant`),
+  CONSTRAINT `FK_EE66E674BFBF20AC` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`),
+  CONSTRAINT `FK_EE66E674D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_recensions`
+--
+
+DROP TABLE IF EXISTS `identifiants_recensions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_recensions` (
+  `id_identifiant` int NOT NULL,
+  `id_recension` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_recension`),
+  KEY `FK_IDENTIFIANTS_RECENSIONS_idx` (`id_identifiant`),
+  KEY `FK_RECENSIONS_IDENTIFIANTS_idx` (`id_recension`),
+  CONSTRAINT `FK_30E32A5692E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`),
+  CONSTRAINT `FK_30E32A56D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_saints`
+--
+
+DROP TABLE IF EXISTS `identifiants_saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_saints` (
+  `id_identifiant` int NOT NULL,
+  `id_saint` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_saint`),
+  KEY `FK_IDENTIFIANTS_SAINTS_idx` (`id_identifiant`),
+  KEY `FK_SAINTS_IDENTIFIANTS_idx` (`id_saint`),
+  CONSTRAINT `FK_3CF8E40D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`),
+  CONSTRAINT `FK_3CF8E40FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `identifiants_search`
+--
+
+DROP TABLE IF EXISTS `identifiants_search`;
+/*!50001 DROP VIEW IF EXISTS `identifiants_search`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `identifiants_search` AS SELECT 
+ 1 AS `id`,
+ 1 AS `identifiant`,
+ 1 AS `id_type`,
+ 1 AS `entite`,
+ 1 AS `id_entite`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `identifiants_types`
+--
+
+DROP TABLE IF EXISTS `identifiants_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_types` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) NOT NULL,
+  `numero` varchar(10) DEFAULT NULL,
+  `nom` varchar(250) NOT NULL,
+  `url` text,
+  `remarque` text,
+  `entite` varchar(100) DEFAULT NULL,
+  `entite_parent` longtext COMMENT '(DC2Type:json_array)',
+  PRIMARY KEY (`id`),
+  KEY `entite` (`entite`)
+) ENGINE=InnoDB AUTO_INCREMENT=300 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_unites_codicologiques`
+--
+
+DROP TABLE IF EXISTS `identifiants_unites_codicologiques`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_unites_codicologiques` (
+  `id_identifiant` int NOT NULL,
+  `id_uc` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_uc`),
+  KEY `id_uc` (`id_uc`),
+  CONSTRAINT `FK_AF05323575756A9` FOREIGN KEY (`id_uc`) REFERENCES `unites_codicologiques` (`id`),
+  CONSTRAINT `FK_AF053235D116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `identifiants_villes`
+--
+
+DROP TABLE IF EXISTS `identifiants_villes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `identifiants_villes` (
+  `id_identifiant` int NOT NULL,
+  `id_ville` int NOT NULL,
+  PRIMARY KEY (`id_identifiant`,`id_ville`),
+  KEY `FK_IDENTIFIANTS_VILLES_idx` (`id_identifiant`),
+  KEY `FK_VILLES_IDENTIFIANTS_idx` (`id_ville`),
+  CONSTRAINT `FK_4F1537EAD4698F3` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`),
+  CONSTRAINT `FK_4F1537ED116C41B` FOREIGN KEY (`id_identifiant`) REFERENCES `identifiants` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords`
+--
+
+DROP TABLE IF EXISTS `keywords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_type` int NOT NULL,
+  `keyword` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `is_categorie` tinyint(1) DEFAULT NULL,
+  `remarque` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_AA5FB55E5A93713B` (`keyword`),
+  KEY `IDX_AA5FB55E7FE4B2B` (`id_type`),
+  CONSTRAINT `FK_AA5FB55E7FE4B2B` FOREIGN KEY (`id_type`) REFERENCES `keywords_types` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_auteurs`
+--
+
+DROP TABLE IF EXISTS `keywords_auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_auteurs` (
+  `id_keyword` int NOT NULL,
+  `id_auteur` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_auteur`),
+  KEY `IDX_EC3189B1840ED84B` (`id_keyword`),
+  KEY `IDX_EC3189B1236D04AD` (`id_auteur`),
+  CONSTRAINT `FK_EC3189B1236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`),
+  CONSTRAINT `FK_EC3189B1840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_copistes_possesseurs`
+--
+
+DROP TABLE IF EXISTS `keywords_copistes_possesseurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_copistes_possesseurs` (
+  `id_keyword` int NOT NULL,
+  `id_copo` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_copo`),
+  KEY `IDX_85F4F914840ED84B` (`id_keyword`),
+  KEY `IDX_85F4F914324E12D1` (`id_copo`),
+  CONSTRAINT `FK_85F4F914324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`),
+  CONSTRAINT `FK_85F4F914840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_cotes`
+--
+
+DROP TABLE IF EXISTS `keywords_cotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_cotes` (
+  `id_keyword` int NOT NULL,
+  `id_cote` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_cote`),
+  KEY `IDX_DA91A700840ED84B` (`id_keyword`),
+  KEY `IDX_DA91A700B6F73ECB` (`id_cote`),
+  CONSTRAINT `FK_DA91A700840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`),
+  CONSTRAINT `FK_DA91A700B6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_oeuvres`
+--
+
+DROP TABLE IF EXISTS `keywords_oeuvres`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_oeuvres` (
+  `id_keyword` int NOT NULL,
+  `id_oeuvre` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_oeuvre`),
+  KEY `IDX_C0D8B3A5840ED84B` (`id_keyword`),
+  KEY `IDX_C0D8B3A513C99B13` (`id_oeuvre`),
+  CONSTRAINT `FK_C0D8B3A513C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_C0D8B3A5840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_recensions`
+--
+
+DROP TABLE IF EXISTS `keywords_recensions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_recensions` (
+  `id_keyword` int NOT NULL,
+  `id_recension` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_recension`),
+  KEY `IDX_8C49A8E8840ED84B` (`id_keyword`),
+  KEY `IDX_8C49A8E892E42852` (`id_recension`),
+  CONSTRAINT `FK_8C49A8E8840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`),
+  CONSTRAINT `FK_8C49A8E892E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `keywords_saints`
+--
+
+DROP TABLE IF EXISTS `keywords_saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_saints` (
+  `id_keyword` int NOT NULL,
+  `id_saint` int NOT NULL,
+  PRIMARY KEY (`id_keyword`,`id_saint`),
+  KEY `IDX_46551432840ED84B` (`id_keyword`),
+  KEY `IDX_46551432FE5FBFF7` (`id_saint`),
+  CONSTRAINT `FK_46551432840ED84B` FOREIGN KEY (`id_keyword`) REFERENCES `keywords` (`id`),
+  CONSTRAINT `FK_46551432FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `keywords_search`
+--
+
+DROP TABLE IF EXISTS `keywords_search`;
+/*!50001 DROP VIEW IF EXISTS `keywords_search`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `keywords_search` AS SELECT 
+ 1 AS `id`,
+ 1 AS `keyword`,
+ 1 AS `id_type`,
+ 1 AS `entite`,
+ 1 AS `id_entite`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `keywords_types`
+--
+
+DROP TABLE IF EXISTS `keywords_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `keywords_types` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `numero` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `remarque` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `entite` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `entite_parent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci COMMENT '(DC2Type:json_array)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_7A2A4C0D8CDE5729` (`type`),
+  KEY `entite` (`entite`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen`
+--
+
+DROP TABLE IF EXISTS `mobigen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cle_zotero` varchar(32) DEFAULT NULL,
+  `titre` varchar(250) NOT NULL,
+  `cle_americaine` varchar(250) DEFAULT NULL,
+  `commentaire` text,
+  `zotero` tinyint(1) NOT NULL DEFAULT '0',
+  `id_mobigen_legacy` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `titre` (`titre`),
+  KEY `zotero` (`zotero`)
+) ENGINE=InnoDB AUTO_INCREMENT=36903 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_auteurs`
+--
+
+DROP TABLE IF EXISTS `mobigen_auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_auteurs` (
+  `id_auteur` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_auteur`,`id_mobigen`),
+  KEY `AUTEURS_MOBIGEN` (`id_auteur`),
+  KEY `MOBIGEN_AUTEURS` (`id_mobigen`),
+  KEY `IDX_CEC3CADCFA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_CEC3CADC236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`),
+  CONSTRAINT `FK_CEC3CADCAF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_CEC3CADCFA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_catalogues`
+--
+
+DROP TABLE IF EXISTS `mobigen_catalogues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_catalogues` (
+  `id_catalogue` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_catalogue`,`id_mobigen`),
+  KEY `CATALOGUE_MOBIGEN_idx` (`id_catalogue`),
+  KEY `MOBIGEN_CATALOGUE_idx` (`id_mobigen`),
+  KEY `IDX_A9528B62FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_A9528B62AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_A9528B62D99325D2` FOREIGN KEY (`id_catalogue`) REFERENCES `catalogues_specialises` (`id`),
+  CONSTRAINT `FK_A9528B62FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_copistespossesseurs`
+--
+
+DROP TABLE IF EXISTS `mobigen_copistespossesseurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_copistespossesseurs` (
+  `id_copo` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_copo`,`id_mobigen`),
+  KEY `COPISTESPOSSESSEURS_MOBIGEN_idx` (`id_copo`),
+  KEY `MOBIGEN_COPISTESPOSSESSEURS_idx` (`id_mobigen`),
+  KEY `IDX_D6EC0D8FFA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_D6EC0D8F324E12D1` FOREIGN KEY (`id_copo`) REFERENCES `copistes_possesseurs` (`id`),
+  CONSTRAINT `FK_D6EC0D8FAF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_D6EC0D8FFA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_cotes`
+--
+
+DROP TABLE IF EXISTS `mobigen_cotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_cotes` (
+  `id_cote` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_cote`,`id_mobigen`),
+  KEY `FK_COTES_MOBIGEN_idx` (`id_cote`),
+  KEY `IDMOBIGEN` (`id_mobigen`),
+  KEY `IDX_80D65590FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_80D65590AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_80D65590B6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`),
+  CONSTRAINT `FK_80D65590FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_depots`
+--
+
+DROP TABLE IF EXISTS `mobigen_depots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_depots` (
+  `id_depot` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_depot`,`id_mobigen`),
+  KEY `DEPOTS_MOBIGEN` (`id_depot`),
+  KEY `MOBIGEN_DEPOTS_idx` (`id_mobigen`),
+  KEY `IDX_71802645FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_71802645A911CA8C` FOREIGN KEY (`id_depot`) REFERENCES `depots` (`id`),
+  CONSTRAINT `FK_71802645AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_71802645FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_fonds`
+--
+
+DROP TABLE IF EXISTS `mobigen_fonds`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_fonds` (
+  `id_fond` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_fond`,`id_mobigen`),
+  KEY `FK_MOBIGEN_FONDS_idx` (`id_mobigen`),
+  KEY `IDX_409CCD07FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_409CCD07460304B4` FOREIGN KEY (`id_fond`) REFERENCES `fonds` (`id`),
+  CONSTRAINT `FK_409CCD07AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_409CCD07FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_identifiants_types`
+--
+
+DROP TABLE IF EXISTS `mobigen_identifiants_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_identifiants_types` (
+  `id_identype` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_identype`,`id_mobigen`),
+  KEY `FK_MOBIGEN_IDENTIFIANTSTYPE_idx` (`id_mobigen`),
+  KEY `FK_IDENTIFIANTSTYPE_MOBIGEN_idx` (`id_identype`),
+  KEY `IDX_B213A446FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_B213A44656053F6A` FOREIGN KEY (`id_identype`) REFERENCES `identifiants_types` (`id`),
+  CONSTRAINT `FK_B213A446AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_B213A446FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_oeuvres`
+--
+
+DROP TABLE IF EXISTS `mobigen_oeuvres`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_oeuvres` (
+  `id_oeuvre` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_oeuvre`,`id_mobigen`),
+  KEY `OEUVRES_MOBIGEN_idx` (`id_oeuvre`),
+  KEY `MOBIGEN_OEUVRES_idx` (`id_mobigen`),
+  KEY `IDX_E22AF0C8FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_E22AF0C813C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_E22AF0C8AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_E22AF0C8FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_pays`
+--
+
+DROP TABLE IF EXISTS `mobigen_pays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_pays` (
+  `id_pays` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_pays`,`id_mobigen`),
+  KEY `PAYS_MOBIGEN_idx` (`id_pays`),
+  KEY `MOBIGEN_PAYS_idx` (`id_mobigen`),
+  KEY `IDX_B51035A7FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_B51035A7AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_B51035A7BFBF20AC` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`),
+  CONSTRAINT `FK_B51035A7FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_recensions`
+--
+
+DROP TABLE IF EXISTS `mobigen_recensions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_recensions` (
+  `id_recension` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_recension`,`id_mobigen`),
+  KEY `RECENSIONS_MOBIGEN_idx` (`id_recension`),
+  KEY `MOBIGEN_RECENSIONS_idx` (`id_mobigen`),
+  KEY `IDX_44A17F4FFA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_44A17F4F92E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`),
+  CONSTRAINT `FK_44A17F4FAF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_44A17F4FFA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_saints`
+--
+
+DROP TABLE IF EXISTS `mobigen_saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_saints` (
+  `id_saint` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_saint`,`id_mobigen`),
+  KEY `SAINTS_MOBIGEN_idx` (`id_saint`),
+  KEY `MOBIGEN_SAINTS_idx` (`id_mobigen`),
+  KEY `IDX_B600C084FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_B600C084AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_B600C084FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`),
+  CONSTRAINT `FK_B600C084FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `mobigen_search`
+--
+
+DROP TABLE IF EXISTS `mobigen_search`;
+/*!50001 DROP VIEW IF EXISTS `mobigen_search`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `mobigen_search` AS SELECT 
+ 1 AS `id`,
+ 1 AS `titre`,
+ 1 AS `num_repertoire`,
+ 1 AS `cle_zotero`,
+ 1 AS `cle_americaine`,
+ 1 AS `commentaire`,
+ 1 AS `entite`,
+ 1 AS `id_entite`,
+ 1 AS `remarque_entite`,
+ 1 AS `commentaire_relation`,
+ 1 AS `pages`,
+ 1 AS `tome`,
+ 1 AS `type_id`,
+ 1 AS `type_name`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `mobigen_temoins`
+--
+
+DROP TABLE IF EXISTS `mobigen_temoins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_temoins` (
+  `id_temoin` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_temoin`,`id_mobigen`),
+  KEY `MOBIGEN_TEMOINS_idx` (`id_mobigen`),
+  KEY `IDX_9F569F0FA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_9F569F0AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_9F569F0C2669CD6` FOREIGN KEY (`id_temoin`) REFERENCES `temoins` (`id`),
+  CONSTRAINT `FK_9F569F0FA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_types_bibliography`
+--
+
+DROP TABLE IF EXISTS `mobigen_types_bibliography`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_types_bibliography` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ordo` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CC973267727ACA70` (`parent_id`),
+  CONSTRAINT `FK_CC973267727ACA70` FOREIGN KEY (`parent_id`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mobigen_villes`
+--
+
+DROP TABLE IF EXISTS `mobigen_villes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mobigen_villes` (
+  `id_ville` int NOT NULL,
+  `id_mobigen` int NOT NULL,
+  `commentaire` text,
+  `pages` text,
+  `id_type_bibliography` int DEFAULT NULL,
+  `tome` tinytext,
+  PRIMARY KEY (`id_ville`,`id_mobigen`),
+  KEY `IDVILLE` (`id_ville`),
+  KEY `MOBIGEN_VILLES_idx` (`id_mobigen`),
+  KEY `IDX_B13E1DBAFA3B337A` (`id_type_bibliography`),
+  CONSTRAINT `FK_B13E1DBAAD4698F3` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`),
+  CONSTRAINT `FK_B13E1DBAAF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`),
+  CONSTRAINT `FK_B13E1DBAFA3B337A` FOREIGN KEY (`id_type_bibliography`) REFERENCES `mobigen_types_bibliography` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `occurrence`
+--
+
+DROP TABLE IF EXISTS `occurrence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `occurrence` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tokenId` int NOT NULL,
+  `field` char(5) NOT NULL,
+  `targetId` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `occurrence_FK` (`tokenId`),
+  KEY `occurrence_field_IDX` (`field`) USING BTREE,
+  KEY `occ_targetId_IDX` (`targetId`) USING BTREE,
+  CONSTRAINT `occurrence_FK` FOREIGN KEY (`tokenId`) REFERENCES `token` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=306829 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oeuvres`
+--
+
+DROP TABLE IF EXISTS `oeuvres`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oeuvres` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titre` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ordo` varchar(10) DEFAULT NULL,
+  `titulus` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `incipit` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `desinit` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `siecle` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `date_remarque` varchar(255) DEFAULT NULL,
+  `lieu` varchar(100) DEFAULT NULL,
+  `lieu_remarque` varchar(255) DEFAULT NULL,
+  `date_liturgique` varchar(150) DEFAULT NULL,
+  `responsable` text,
+  `equipe_referente` varchar(10) DEFAULT NULL,
+  `remarque` text,
+  `id_texte_noyau` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `titre` (`titre`),
+  KEY `id_texte_noyau` (`id_texte_noyau`),
+  CONSTRAINT `FK_413EEE3EF79176A` FOREIGN KEY (`id_texte_noyau`) REFERENCES `ptb_texte_noyau` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19996 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oeuvres_alias`
+--
+
+DROP TABLE IF EXISTS `oeuvres_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oeuvres_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_oeuvre` int NOT NULL,
+  `titre` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_OEUVRES_ALIAS_idx` (`id_oeuvre`),
+  KEY `titre` (`titre`),
+  CONSTRAINT `FK_A36CF00E13C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=429 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oeuvres_attributs`
+--
+
+DROP TABLE IF EXISTS `oeuvres_attributs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oeuvres_attributs` (
+  `id_oeuvre` int NOT NULL,
+  `id_oeuvre_relation` int NOT NULL,
+  `commentaire` text,
+  PRIMARY KEY (`id_oeuvre`,`id_oeuvre_relation`),
+  KEY `FK_OEUVRESATTRIBUTS_COTEPARENTS_idx` (`id_oeuvre_relation`),
+  KEY `FK_OEUVRESATTRIBUTS_IDCOTE_idx` (`id_oeuvre`),
+  CONSTRAINT `FK_B5C72CC713C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_B5C72CC777297E57` FOREIGN KEY (`id_oeuvre_relation`) REFERENCES `oeuvres` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oeuvres_auteurs`
+--
+
+DROP TABLE IF EXISTS `oeuvres_auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oeuvres_auteurs` (
+  `id_oeuvre` int NOT NULL,
+  `id_auteur` int NOT NULL,
+  `principal` tinyint(1) NOT NULL DEFAULT '0',
+  `id_role` int DEFAULT NULL,
+  PRIMARY KEY (`id_oeuvre`,`id_auteur`),
+  KEY `FK_OEUVRES_AUTEURS_idx` (`id_oeuvre`),
+  KEY `FK_AUTEURS_OEUVRES_idx` (`id_auteur`),
+  KEY `principal` (`principal`),
+  KEY `IDX_81A4BE76DC499668` (`id_role`),
+  CONSTRAINT `FK_81A4BE7613C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_81A4BE76236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`),
+  CONSTRAINT `FK_81A4BE76DC499668` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oeuvres_saints`
+--
+
+DROP TABLE IF EXISTS `oeuvres_saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `oeuvres_saints` (
+  `id_oeuvre` int NOT NULL,
+  `id_saint` int NOT NULL,
+  PRIMARY KEY (`id_oeuvre`,`id_saint`),
+  KEY `FK_OEUVRES_SAINTS_idx` (`id_oeuvre`),
+  KEY `FK_SAINTS_OEUVRES_idx` (`id_saint`),
+  CONSTRAINT `FK_E86382713C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`),
+  CONSTRAINT `FK_E863827FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pays`
+--
+
+DROP TABLE IF EXISTS `pays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pays` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `remarque` text,
+  PRIMARY KEY (`id`),
+  KEY `nom` (`nom`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pays_alias`
+--
+
+DROP TABLE IF EXISTS `pays_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pays_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_pays` int NOT NULL,
+  `nom` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDPAYS` (`id_pays`),
+  KEY `nom` (`nom`),
+  CONSTRAINT `FK_EAD21EAFBFBF20AC` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `pays_ville_depot_fonds_cote`
+--
+
+DROP TABLE IF EXISTS `pays_ville_depot_fonds_cote`;
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pays_ville_depot_fonds_cote` AS SELECT 
+ 1 AS `pays`,
+ 1 AS `remarque_pays`,
+ 1 AS `ville`,
+ 1 AS `remarque_ville`,
+ 1 AS `depot`,
+ 1 AS `remarque_depot`,
+ 1 AS `fond`,
+ 1 AS `remarque_fonds`,
+ 1 AS `cote`,
+ 1 AS `remarque_cote`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `pays_ville_depot_fonds_cote_id`
+--
+
+DROP TABLE IF EXISTS `pays_ville_depot_fonds_cote_id`;
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote_id`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pays_ville_depot_fonds_cote_id` AS SELECT 
+ 1 AS `pays`,
+ 1 AS `ville`,
+ 1 AS `depot`,
+ 1 AS `fonds`,
+ 1 AS `cote`,
+ 1 AS `remarque`,
+ 1 AS `id`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `pays_ville_depot_fonds_cote_identifiant`
+--
+
+DROP TABLE IF EXISTS `pays_ville_depot_fonds_cote_identifiant`;
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote_identifiant`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pays_ville_depot_fonds_cote_identifiant` AS SELECT 
+ 1 AS `pays`,
+ 1 AS `ville`,
+ 1 AS `depot`,
+ 1 AS `fonds`,
+ 1 AS `cote`,
+ 1 AS `identifiant`,
+ 1 AS `type`,
+ 1 AS `remarque`,
+ 1 AS `url`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `pays_ville_depot_fonds_non_vide_cote`
+--
+
+DROP TABLE IF EXISTS `pays_ville_depot_fonds_non_vide_cote`;
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_non_vide_cote`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pays_ville_depot_fonds_non_vide_cote` AS SELECT 
+ 1 AS `pays`,
+ 1 AS `ville`,
+ 1 AS `depot`,
+ 1 AS `remarque_depot`,
+ 1 AS `fond`,
+ 1 AS `remarque_fonds`,
+ 1 AS `cote`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `ptb_apivmr_import`
+--
+
+DROP TABLE IF EXISTS `ptb_apivmr_import`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_apivmr_import` (
+  `vmr_number` varchar(15) NOT NULL,
+  `cote` int NOT NULL,
+  `state` varchar(30) NOT NULL,
+  `folios_irht` varchar(250) DEFAULT NULL,
+  `folios_ptb` varchar(250) DEFAULT NULL,
+  `vmr_folios` text,
+  `vmr_lien_close` varchar(250) DEFAULT NULL,
+  `vmr_horodateur` varchar(250) DEFAULT NULL,
+  `auteur_id` int DEFAULT NULL,
+  `auteur_nom` varchar(250) DEFAULT NULL,
+  `oeuvre_id` int DEFAULT NULL,
+  `oeuvre_titre` varchar(250) DEFAULT NULL,
+  `infosup` text,
+  `commentaire` text,
+  `username` varchar(255) NOT NULL,
+  PRIMARY KEY (`vmr_number`,`cote`,`state`),
+  KEY `vmr_number` (`vmr_number`),
+  KEY `cote` (`cote`),
+  KEY `state` (`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ptb_folios`
+--
+
+DROP TABLE IF EXISTS `ptb_folios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_folios` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `entity` varchar(250) NOT NULL,
+  `id_entity` int unsigned NOT NULL,
+  `type` varchar(2) DEFAULT NULL,
+  `fromto` varchar(4) NOT NULL,
+  `number` varchar(10) DEFAULT NULL,
+  `side` varchar(2) DEFAULT NULL,
+  `zone` varchar(20) DEFAULT NULL,
+  `position` varchar(20) DEFAULT NULL,
+  `freefield` varchar(50) DEFAULT NULL,
+  `extrafield` varchar(10) DEFAULT NULL COMMENT 'for IRHT, to store the * car. but can be used for other context',
+  `str_function` varchar(5) DEFAULT NULL,
+  `str_complete` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `entity` (`entity`,`id_entity`),
+  KEY `str_complete` (`str_complete`)
+) ENGINE=MyISAM AUTO_INCREMENT=178030 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ptb_infosup`
+--
+
+DROP TABLE IF EXISTS `ptb_infosup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_infosup` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `entite` varchar(250) NOT NULL,
+  `id_entite` int unsigned NOT NULL,
+  `ref_champ` varchar(250) DEFAULT NULL,
+  `infosup` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `entite` (`entite`,`id_entite`),
+  FULLTEXT KEY `infosup` (`infosup`)
+) ENGINE=MyISAM AUTO_INCREMENT=14926 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `ptb_infosup_search`
+--
+
+DROP TABLE IF EXISTS `ptb_infosup_search`;
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `ptb_infosup_search` AS SELECT 
+ 1 AS `id_entite`,
+ 1 AS `entite`,
+ 1 AS `equipe_referente`,
+ 1 AS `colonne`,
+ 1 AS `contenu`,
+ 1 AS `titre`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `ptb_infosup_search_all`
+--
+
+DROP TABLE IF EXISTS `ptb_infosup_search_all`;
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search_all`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `ptb_infosup_search_all` AS SELECT 
+ 1 AS `id_entite`,
+ 1 AS `entite`,
+ 1 AS `equipe_referente`,
+ 1 AS `colonne`,
+ 1 AS `contenu`,
+ 1 AS `titre`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `ptb_infosup_search_empty`
+--
+
+DROP TABLE IF EXISTS `ptb_infosup_search_empty`;
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search_empty`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `ptb_infosup_search_empty` AS SELECT 
+ 1 AS `id_entite`,
+ 1 AS `entite`,
+ 1 AS `equipe_referente`,
+ 1 AS `colonne`,
+ 1 AS `contenu`,
+ 1 AS `titre`,
+ 1 AS `fullPath`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `ptb_materialite_uc`
+--
+
+DROP TABLE IF EXISTS `ptb_materialite_uc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_materialite_uc` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `column_std` varchar(100) DEFAULT NULL,
+  `column_max` varchar(100) DEFAULT NULL,
+  `lines_std` varchar(100) DEFAULT NULL,
+  `lines_max` varchar(100) DEFAULT NULL,
+  `lines_description` varchar(250) DEFAULT NULL,
+  `height_std` varchar(100) DEFAULT NULL,
+  `height_max` varchar(100) DEFAULT NULL,
+  `width_std` varchar(100) DEFAULT NULL,
+  `width_max` varchar(100) DEFAULT NULL,
+  `support_principal` varchar(60) DEFAULT NULL COMMENT 'support materiel principal',
+  `support_secondaire` varchar(60) DEFAULT NULL COMMENT 'support materiel secondaire',
+  `ecriture_principale` varchar(60) DEFAULT NULL COMMENT 'principale ecriture du texte',
+  `forme_originale` varchar(60) DEFAULT NULL,
+  `remarque` text,
+  `source` varchar(250) DEFAULT NULL,
+  `support_main_vmr` varchar(60) DEFAULT NULL,
+  `support_others_vmr` varchar(60) DEFAULT NULL,
+  `columns_std_vmr` varchar(12) DEFAULT NULL,
+  `columns_max_vmr` varchar(50) DEFAULT NULL,
+  `lines_std_vmr` varchar(12) DEFAULT NULL,
+  `lines_max_vmr` varchar(50) DEFAULT NULL,
+  `height_std_ptb` varchar(12) DEFAULT NULL,
+  `height_others_ptb` varchar(50) DEFAULT NULL,
+  `width_std_ptb` varchar(12) DEFAULT NULL,
+  `width_others_ptb` varchar(50) DEFAULT NULL,
+  `vmr_number` int DEFAULT NULL,
+  `vmr_horodateur` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5566 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ptb_statut_entite`
+--
+
+DROP TABLE IF EXISTS `ptb_statut_entite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_statut_entite` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user` varchar(50) DEFAULT NULL,
+  `user_infos` varchar(150) DEFAULT NULL,
+  `statut` varchar(50) NOT NULL,
+  `entite` varchar(250) NOT NULL,
+  `id_entite` int unsigned NOT NULL,
+  `from_user` varchar(50) DEFAULT NULL,
+  `from_user_infos` varchar(150) DEFAULT NULL,
+  `created_at` date NOT NULL,
+  `actif` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user` (`user`,`statut`),
+  KEY `statut` (`statut`),
+  KEY `id_entite` (`id_entite`),
+  KEY `actif` (`actif`),
+  KEY `entite` (`entite`)
+) ENGINE=InnoDB AUTO_INCREMENT=16833 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ptb_texte_noyau`
+--
+
+DROP TABLE IF EXISTS `ptb_texte_noyau`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ptb_texte_noyau` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `noyau` varchar(150) NOT NULL,
+  `rang` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `noyau` (`noyau`),
+  KEY `rang` (`rang`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `recensions`
+--
+
+DROP TABLE IF EXISTS `recensions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recensions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `numero` varchar(10) NOT NULL,
+  `recension` varchar(250) NOT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `date_remarque` varchar(255) DEFAULT NULL,
+  `lieu` varchar(100) DEFAULT NULL,
+  `lieu_remarque` varchar(255) DEFAULT NULL,
+  `remarque` text,
+  `titulus` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `incipit` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `desinit` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `responsable` text,
+  `equipe_referente` varchar(10) DEFAULT NULL,
+  `id_oeuvre` int DEFAULT NULL,
+  `id_texte_noyau` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_OEUVRES_RECENSIONS_idx` (`id_oeuvre`),
+  KEY `id_texte_noyau` (`id_texte_noyau`),
+  CONSTRAINT `FK_3B739B2C13C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `FK_3B739B2CF79176A` FOREIGN KEY (`id_texte_noyau`) REFERENCES `ptb_texte_noyau` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=913 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `recensions_auteurs`
+--
+
+DROP TABLE IF EXISTS `recensions_auteurs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recensions_auteurs` (
+  `id_auteur` int NOT NULL,
+  `id_recension` int NOT NULL,
+  `id_role` int NOT NULL,
+  PRIMARY KEY (`id_auteur`,`id_recension`),
+  KEY `IDX_1CE9670236D04AD` (`id_auteur`),
+  KEY `IDX_1CE967092E42852` (`id_recension`),
+  KEY `IDX_1CE9670DC499668` (`id_role`),
+  CONSTRAINT `FK_1CE9670236D04AD` FOREIGN KEY (`id_auteur`) REFERENCES `auteurs` (`id`),
+  CONSTRAINT `FK_1CE967092E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`),
+  CONSTRAINT `FK_1CE9670DC499668` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `recensions_saints`
+--
+
+DROP TABLE IF EXISTS `recensions_saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recensions_saints` (
+  `id_saint` int NOT NULL,
+  `id_recension` int NOT NULL,
+  PRIMARY KEY (`id_saint`,`id_recension`),
+  KEY `IDX_1C9F5B2FE5FBFF7` (`id_saint`),
+  KEY `IDX_1C9F5B292E42852` (`id_recension`),
+  CONSTRAINT `FK_1C9F5B292E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`),
+  CONSTRAINT `FK_1C9F5B2FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `relations`
+--
+
+DROP TABLE IF EXISTS `relations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `relations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_type` int NOT NULL,
+  `comment` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `category` int NOT NULL,
+  `id_parent` int NOT NULL,
+  `id_child` int NOT NULL,
+  `cote_biblio` tinyint(1) DEFAULT NULL COMMENT 'Cotes uniquement',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `relation` (`id_parent`,`id_child`,`category`),
+  KEY `IDX_146CBF787FE4B2B` (`id_type`),
+  KEY `IDX_146CBF781BB9D5A2` (`id_parent`),
+  KEY `IDX_146CBF78CC361519` (`id_child`),
+  KEY `IDX_146CBF7864C19C1` (`category`),
+  CONSTRAINT `FK_146CBF787FE4B2B` FOREIGN KEY (`id_type`) REFERENCES `relations_types` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=355 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `relations_types`
+--
+
+DROP TABLE IF EXISTS `relations_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `relations_types` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_role` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `child_role` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `revisions`
+--
+
+DROP TABLE IF EXISTS `revisions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `revisions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `code_revision` varchar(20) NOT NULL,
+  `libelle` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_revision` (`code_revision`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `revisions_temoins`
+--
+
+DROP TABLE IF EXISTS `revisions_temoins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `revisions_temoins` (
+  `id_revision` int NOT NULL,
+  `id_temoin` int NOT NULL,
+  PRIMARY KEY (`id_revision`,`id_temoin`),
+  KEY `FK_REVISIONS_TEMOINS_idx` (`id_revision`),
+  KEY `FK_TEMOINS_REVISIONS_idx` (`id_temoin`),
+  CONSTRAINT `FK_F03027433DB8F959` FOREIGN KEY (`id_revision`) REFERENCES `revisions` (`id`),
+  CONSTRAINT `FK_F0302743C2669CD6` FOREIGN KEY (`id_temoin`) REFERENCES `temoins` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `revisions_uc`
+--
+
+DROP TABLE IF EXISTS `revisions_uc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `revisions_uc` (
+  `id_revision` int NOT NULL,
+  `id_uc` int NOT NULL,
+  PRIMARY KEY (`id_revision`,`id_uc`),
+  KEY `FK_REVISIONS_UC_idx` (`id_revision`),
+  KEY `FK_UC_REVISIONS_idx` (`id_uc`),
+  CONSTRAINT `FK_E27811163DB8F959` FOREIGN KEY (`id_revision`) REFERENCES `revisions` (`id`),
+  CONSTRAINT `FK_E278111675756A9` FOREIGN KEY (`id_uc`) REFERENCES `unites_codicologiques` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `saints`
+--
+
+DROP TABLE IF EXISTS `saints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `saints` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `saint` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `sigle_saint` varchar(50) DEFAULT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `dates` varchar(20) DEFAULT NULL,
+  `date_liturgique` varchar(150) DEFAULT NULL,
+  `fonction_saint` varchar(150) DEFAULT NULL,
+  `lieu_saint` varchar(150) DEFAULT NULL,
+  `remarque` text,
+  PRIMARY KEY (`id`),
+  KEY `SAINT` (`saint`),
+  KEY `date_liturgique` (`date_liturgique`)
+) ENGINE=InnoDB AUTO_INCREMENT=987 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `saints_alias`
+--
+
+DROP TABLE IF EXISTS `saints_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `saints_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `saint` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `sigle_saint` varchar(50) DEFAULT NULL,
+  `id_saint` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_SAINT_idx` (`id_saint`),
+  KEY `SAINT` (`saint`),
+  KEY `saint_2` (`saint`),
+  CONSTRAINT `FK_2F04DA68FE5FBFF7` FOREIGN KEY (`id_saint`) REFERENCES `saints` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_audit`
+--
+
+DROP TABLE IF EXISTS `sf_audit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_audit` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `remote_ip_address` varchar(255) DEFAULT NULL,
+  `object` varchar(255) DEFAULT NULL,
+  `object_key` varchar(255) DEFAULT NULL,
+  `object_changes` text,
+  `query` text,
+  `user` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=383614 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_group`
+--
+
+DROP TABLE IF EXISTS `sf_guard_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sf_guard_group_name_unique` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_group_permission`
+--
+
+DROP TABLE IF EXISTS `sf_guard_group_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_group_permission` (
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`group_id`,`permission_id`),
+  KEY `sf_guard_group_permission_FI_2` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_permission`
+--
+
+DROP TABLE IF EXISTS `sf_guard_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `description` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sf_guard_permission_name_unique` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_remember_key`
+--
+
+DROP TABLE IF EXISTS `sf_guard_remember_key`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_remember_key` (
+  `user_id` int NOT NULL,
+  `remember_key` varchar(32) DEFAULT NULL,
+  `ip_address` varchar(15) NOT NULL DEFAULT '',
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`ip_address`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_user`
+--
+
+DROP TABLE IF EXISTS `sf_guard_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) NOT NULL DEFAULT '',
+  `algorithm` varchar(128) NOT NULL DEFAULT 'sha1',
+  `salt` varchar(128) NOT NULL DEFAULT '',
+  `password` varchar(128) NOT NULL DEFAULT '',
+  `created_at` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `is_active` int NOT NULL DEFAULT '1',
+  `is_super_admin` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sf_guard_user_username_unique` (`username`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_user_group`
+--
+
+DROP TABLE IF EXISTS `sf_guard_user_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_user_group` (
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`user_id`,`group_id`),
+  KEY `sf_guard_user_group_FI_2` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_user_memo`
+--
+
+DROP TABLE IF EXISTS `sf_guard_user_memo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_user_memo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `memo` text,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `FI_guard_user_has_sf_guard_user_memo` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_user_permission`
+--
+
+DROP TABLE IF EXISTS `sf_guard_user_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_user_permission` (
+  `user_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`user_id`,`permission_id`),
+  KEY `sf_guard_user_permission_FI_2` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_guard_user_profile`
+--
+
+DROP TABLE IF EXISTS `sf_guard_user_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_guard_user_profile` (
+  `id` int NOT NULL,
+  `first_name` varchar(500) DEFAULT NULL,
+  `last_name` varchar(500) DEFAULT NULL,
+  `institution` varchar(500) DEFAULT NULL,
+  `address` text,
+  `email` varchar(500) DEFAULT NULL,
+  `phone` varchar(32) DEFAULT NULL,
+  `photo` varchar(500) DEFAULT NULL,
+  `summary` text,
+  `contributeuractif` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_ksn_news_category`
+--
+
+DROP TABLE IF EXISTS `sf_ksn_news_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_ksn_news_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pid` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sf_ksn_news_category_pid_index` (`pid`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_ksn_news_category_i18n`
+--
+
+DROP TABLE IF EXISTS `sf_ksn_news_category_i18n`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_ksn_news_category_i18n` (
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `id` int NOT NULL,
+  `culture` varchar(7) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`,`culture`),
+  KEY `sf_ksn_news_category_i18n_name_index` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_ksn_news_item`
+--
+
+DROP TABLE IF EXISTS `sf_ksn_news_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_ksn_news_item` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL DEFAULT '1',
+  `user_id` int DEFAULT NULL,
+  `published_at` datetime DEFAULT NULL,
+  `is_published` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `sf_ksn_news_item_category_id_index` (`category_id`),
+  KEY `sf_ksn_news_item_published_at_index` (`published_at`),
+  KEY `sf_ksn_news_item_is_published_index` (`is_published`)
+) ENGINE=MyISAM AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_ksn_news_item_i18n`
+--
+
+DROP TABLE IF EXISTS `sf_ksn_news_item_i18n`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_ksn_news_item_i18n` (
+  `topic` varchar(255) NOT NULL DEFAULT '',
+  `annotation` varchar(255) DEFAULT NULL,
+  `body` text,
+  `id` int NOT NULL,
+  `culture` varchar(7) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `sf_ksn_news_item_i18n_topic_index` (`topic`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sf_ksn_news_item_to_file`
+--
+
+DROP TABLE IF EXISTS `sf_ksn_news_item_to_file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sf_ksn_news_item_to_file` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sf_ksn_news_item_id` int DEFAULT NULL,
+  `file_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sf_ksn_news_item_to_file_FI_1` (`sf_ksn_news_item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sources`
+--
+
+DROP TABLE IF EXISTS `sources`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sources` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `numero_repertoire` varchar(250) NOT NULL,
+  `remarque_repertoire` text,
+  `id_mobigen` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `MOBIGEN_SOURCES_idx` (`id_mobigen`),
+  KEY `numero_repertoire` (`numero_repertoire`),
+  CONSTRAINT `FK_D25D65F2AF67418` FOREIGN KEY (`id_mobigen`) REFERENCES `mobigen` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1377 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sources_temoins`
+--
+
+DROP TABLE IF EXISTS `sources_temoins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sources_temoins` (
+  `id_temoin` int NOT NULL,
+  `id_source` int NOT NULL,
+  PRIMARY KEY (`id_temoin`,`id_source`),
+  KEY `FK_TEMOINS_SOURCES_idx` (`id_temoin`),
+  KEY `FK_SOURCES_TEMOINS_idx` (`id_source`),
+  CONSTRAINT `FK_F94CD11E79BDCA9E` FOREIGN KEY (`id_source`) REFERENCES `sources` (`id`),
+  CONSTRAINT `FK_F94CD11EC2669CD6` FOREIGN KEY (`id_temoin`) REFERENCES `temoins` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `temoins`
+--
+
+DROP TABLE IF EXISTS `temoins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `temoins` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `folios` varchar(50) DEFAULT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `date_min` int DEFAULT NULL,
+  `date_max` int DEFAULT NULL,
+  `commentaire` text,
+  `BHG` varchar(250) DEFAULT NULL,
+  `titulus` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incipit` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desinit` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_liturgique` varchar(150) DEFAULT NULL,
+  `type_contenu` varchar(50) DEFAULT NULL,
+  `source_contenu` tinytext,
+  `equipe_referente` varchar(10) DEFAULT NULL,
+  `responsable` text,
+  `vmr_number` varchar(15) DEFAULT NULL,
+  `vmr_lien` varchar(250) DEFAULT NULL,
+  `vmr_lien_close` varchar(250) DEFAULT NULL,
+  `vmr_horodateur` varchar(250) DEFAULT NULL,
+  `id_oeuvre` int DEFAULT NULL,
+  `id_uc` int DEFAULT NULL,
+  `id_recension` int DEFAULT NULL,
+  `id_texte_noyau` int DEFAULT NULL,
+  `nuance_texte_noyau` varchar(20) DEFAULT NULL,
+  `ordo` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_uc` (`id_uc`),
+  KEY `id_oeu` (`id_oeuvre`),
+  KEY `FK_RECENSIONS_TEMOINS_idx` (`id_recension`),
+  KEY `siecle` (`siecle`),
+  KEY `date` (`date`),
+  KEY `date_liturgique` (`date_liturgique`),
+  KEY `id_texte_noyau` (`id_texte_noyau`),
+  CONSTRAINT `FK_AAE1770613C99B13` FOREIGN KEY (`id_oeuvre`) REFERENCES `oeuvres` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `FK_AAE1770675756A9` FOREIGN KEY (`id_uc`) REFERENCES `unites_codicologiques` (`id`),
+  CONSTRAINT `FK_AAE1770692E42852` FOREIGN KEY (`id_recension`) REFERENCES `recensions` (`id`),
+  CONSTRAINT `FK_AAE17706F79176A` FOREIGN KEY (`id_texte_noyau`) REFERENCES `ptb_texte_noyau` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=298110 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `token`
+--
+
+DROP TABLE IF EXISTS `token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `token` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `value` varchar(100) NOT NULL,
+  `language` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `token_value_IDX` (`value`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=19277 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `unites_codicologiques`
+--
+
+DROP TABLE IF EXISTS `unites_codicologiques`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `unites_codicologiques` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `numero` varchar(10) NOT NULL DEFAULT '0',
+  `genre` varchar(50) DEFAULT NULL,
+  `genre_num` varchar(50) DEFAULT NULL,
+  `titre` varchar(150) DEFAULT NULL,
+  `diff_prec_uc` varchar(50) DEFAULT NULL COMMENT 'pour savoir si l''Uniprod se distingue bien de l''Uniprod précédente',
+  `diff_suiv_uc` varchar(50) DEFAULT NULL COMMENT 'pour savoir si l''Uniprod se distingue bien de l''Uniprod suivante',
+  `folios` varchar(50) DEFAULT NULL,
+  `siecle` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `date_min` int DEFAULT NULL,
+  `date_max` int DEFAULT NULL,
+  `date_remarque` varchar(255) DEFAULT NULL,
+  `lieu` varchar(100) DEFAULT NULL,
+  `lieu_remarque` varchar(255) DEFAULT NULL,
+  `source_codex` varchar(50) DEFAULT NULL,
+  `remarque` text,
+  `ordo` int DEFAULT NULL,
+  `id_cote` int NOT NULL,
+  `id_materialite_uc` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4543862D9E399707` (`id_materialite_uc`),
+  KEY `FK_UC_COTES_idx` (`id_cote`),
+  CONSTRAINT `FK_4543862D9E399707` FOREIGN KEY (`id_materialite_uc`) REFERENCES `ptb_materialite_uc` (`id`),
+  CONSTRAINT `FK_4543862DB6F73ECB` FOREIGN KEY (`id_cote`) REFERENCES `cotes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=75721 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `villes`
+--
+
+DROP TABLE IF EXISTS `villes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `villes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ville` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id_pays` int DEFAULT NULL,
+  `remarque` text,
+  PRIMARY KEY (`id`),
+  KEY `FK_PAYS_idx` (`id_pays`),
+  KEY `ville` (`ville`),
+  CONSTRAINT `FK_19209FD8BFBF20AC` FOREIGN KEY (`id_pays`) REFERENCES `pays` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `villes_alias`
+--
+
+DROP TABLE IF EXISTS `villes_alias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `villes_alias` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ville` int NOT NULL,
+  `ville` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_VILLE_idx` (`id_ville`),
+  KEY `ville` (`ville`),
+  CONSTRAINT `FK_75AA9E4AAD4698F3` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=296 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Final view structure for view `auteurs_oeuvres`
+--
+
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `auteurs_oeuvres` AS select `a`.`nom` AS `auteur_nom`,`a`.`id` AS `auteur_id`,`a`.`siecle` AS `auteur_siecle`,`a`.`dates` AS `auteur_dates`,`a`.`remarque` AS `auteur_remarque`,`o`.`titre` AS `oeuvre_titre`,`o`.`id` AS `oeuvre_id`,`o`.`ordo` AS `oeuvre_ordo`,`o`.`remarque` AS `oeuvre_remarque`,`o`.`titulus` AS `oeuvre_titulus`,`o`.`incipit` AS `oeuvre_incipit`,`o`.`desinit` AS `oeuvre_desinit`,`o`.`siecle` AS `oeuvre_siecle`,`o`.`date` AS `oeuvre_date` from ((`auteurs` `a` left join `oeuvres_auteurs` `oa` on((`oa`.`id_auteur` = `a`.`id`))) left join `oeuvres` `o` on((`oa`.`id_oeuvre` = `o`.`id`))) where (0 <> 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `auteurs_oeuvres_recensions`
+--
+
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres_recensions`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `auteurs_oeuvres_recensions` AS select `a`.`id` AS `auteur_id`,`a`.`dates` AS `auteur_dates`,`a`.`is_categorie` AS `auteur_is_categorie`,`a`.`nom` AS `auteur_nom`,`a`.`remarque` AS `auteur_remarque`,`a`.`remarque_repertoire` AS `auteur_remarque_repertoire`,`a`.`siecle` AS `auteur_siecle`,`o`.`date` AS `oeuvre_date`,`o`.`date_liturgique` AS `oeuvre_date_liturgique`,`o`.`date_remarque` AS `oeuvre_date_remarque`,`o`.`desinit` AS `oeuvre_desinit`,`o`.`equipe_referente` AS `oeuvre_equipe_referente`,`o`.`id` AS `oeuvre_id`,`o`.`id_texte_noyau` AS `oeuvre_id_texte_noyau`,`o`.`incipit` AS `oeuvre_incipit`,`o`.`lieu` AS `oeuvre_lieu`,`o`.`lieu_remarque` AS `oeuvre_lieu_remarque`,`o`.`ordo` AS `oeuvre_ordo`,`o`.`remarque` AS `oeuvre_remarque`,`o`.`responsable` AS `oeuvre_responsable`,`o`.`siecle` AS `oeuvre_siecle`,`o`.`titre` AS `oeuvre_titre`,`o`.`titulus` AS `oeuvre_titulus`,`r`.`date` AS `recension_date`,`r`.`date_remarque` AS `recension_date_remarque`,`r`.`desinit` AS `recension_desinit`,`r`.`equipe_referente` AS `recension_equipe_referente`,`r`.`id` AS `recension_id`,`r`.`id_texte_noyau` AS `recension_id_texte_noyau`,`r`.`incipit` AS `recension_incipit`,`r`.`lieu` AS `recension_lieu`,`r`.`lieu_remarque` AS `recension_lieu_remarque`,`r`.`numero` AS `recension_numero`,`r`.`recension` AS `recension_recension`,`r`.`remarque` AS `recension_remarque`,`r`.`responsable` AS `recension_responsable`,`r`.`siecle` AS `recension_siecle`,`r`.`titulus` AS `recension_titulus` from (((`auteurs` `a` left join `oeuvres_auteurs` `oa` on((`oa`.`id_auteur` = `a`.`id`))) left join `oeuvres` `o` on((`oa`.`id_oeuvre` = `o`.`id`))) join `recensions` `r` on((`r`.`id_oeuvre` = `o`.`id`))) where (0 <> 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `auteurs_oeuvres_recensions_identifiants`
+--
+
+/*!50001 DROP VIEW IF EXISTS `auteurs_oeuvres_recensions_identifiants`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `auteurs_oeuvres_recensions_identifiants` AS select `a`.`nom` AS `auteur`,`i1`.`identifiant` AS `identifiant_auteur`,`it1`.`type` AS `type_identfiiant_auteur`,`i1`.`remarque` AS `remarque_identifiant_auteur`,`i1`.`url` AS `url_identifiant_auteur`,`o`.`titre` AS `oeuvre`,`i2`.`identifiant` AS `identifiant_oeuvre`,`it2`.`type` AS `type_identfiiant_oeuvre`,`i2`.`remarque` AS `remarque_identifiant_oeuvre`,`i2`.`url` AS `url_identifiant_oeuvre`,`r`.`recension` AS `recension`,`i3`.`identifiant` AS `identifiant_recension`,`it3`.`type` AS `type_identfiiant_recension`,`i3`.`remarque` AS `remarque_identifiant_recension`,`i3`.`url` AS `url_identifiant_recension` from ((((((((((((`auteurs` `a` left join `oeuvres_auteurs` `oa` on((`oa`.`id_auteur` = `a`.`id`))) left join `oeuvres` `o` on((`oa`.`id_oeuvre` = `o`.`id`))) left join `recensions` `r` on((`r`.`id_oeuvre` = `o`.`id`))) join `identifiants_auteurs` `ia` on((`a`.`id` = `ia`.`id_auteur`))) join `identifiants` `i1` on((`i1`.`id` = `ia`.`id_identifiant`))) join `identifiants_types` `it1` on((`it1`.`id` = `i1`.`id_type`))) left join `identifiants_oeuvres` `io` on((`o`.`id` = `io`.`id_oeuvre`))) left join `identifiants` `i2` on((`i2`.`id` = `io`.`id_identifiant`))) left join `identifiants_types` `it2` on((`it2`.`id` = `i2`.`id_type`))) left join `identifiants_recensions` `ir` on((`r`.`id` = `ir`.`id_recension`))) left join `identifiants` `i3` on((`i3`.`id` = `ir`.`id_identifiant`))) left join `identifiants_types` `it3` on((`it3`.`id` = `i3`.`id_type`))) union select `a`.`nom` AS `auteur`,`i1`.`identifiant` AS `identifiant_auteur`,`it1`.`type` AS `type_identfiiant_auteur`,`i1`.`remarque` AS `remarque_identifiant_auteur`,`i1`.`url` AS `url_identifiant_auteur`,`o`.`titre` AS `oeuvre`,`i2`.`identifiant` AS `identifiant_oeuvre`,`it2`.`type` AS `type_identfiiant_oeuvre`,`i2`.`remarque` AS `remarque_identifiant_oeuvre`,`i2`.`url` AS `url_identifiant_oeuvre`,`r`.`recension` AS `recension`,`i3`.`identifiant` AS `identifiant_recension`,`it3`.`type` AS `type_identfiiant_recension`,`i3`.`remarque` AS `remarque_identifiant_recension`,`i3`.`url` AS `url_identifiant_recension` from ((((((((((((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on((`oa`.`id_oeuvre` = `o`.`id`))) left join `auteurs` `a` on((`oa`.`id_auteur` = `a`.`id`))) left join `recensions` `r` on((`r`.`id_oeuvre` = `o`.`id`))) left join `identifiants_auteurs` `ia` on((`a`.`id` = `ia`.`id_auteur`))) left join `identifiants` `i1` on((`i1`.`id` = `ia`.`id_identifiant`))) left join `identifiants_types` `it1` on((`it1`.`id` = `i1`.`id_type`))) join `identifiants_oeuvres` `io` on((`o`.`id` = `io`.`id_oeuvre`))) join `identifiants` `i2` on((`i2`.`id` = `io`.`id_identifiant`))) join `identifiants_types` `it2` on((`it2`.`id` = `i2`.`id_type`))) left join `identifiants_recensions` `ir` on((`r`.`id` = `ir`.`id_recension`))) left join `identifiants` `i3` on((`i3`.`id` = `ir`.`id_identifiant`))) left join `identifiants_types` `it3` on((`it3`.`id` = `i3`.`id_type`))) union select `a`.`nom` AS `auteur`,`i1`.`identifiant` AS `identifiant_auteur`,`it1`.`type` AS `type_identfiiant_auteur`,`i1`.`remarque` AS `remarque_identifiant_auteur`,`i1`.`url` AS `url_identifiant_auteur`,`o`.`titre` AS `oeuvre`,`i2`.`identifiant` AS `identifiant_oeuvre`,`it2`.`type` AS `type_identfiiant_oeuvre`,`i2`.`remarque` AS `remarque_identifiant_oeuvre`,`i2`.`url` AS `url_identifiant_oeuvre`,`r`.`recension` AS `recension`,`i3`.`identifiant` AS `identifiant_recension`,`it3`.`type` AS `type_identfiiant_recension`,`i3`.`remarque` AS `remarque_identifiant_recension`,`i3`.`url` AS `url_identifiant_recension` from ((((((((((((`recensions` `r` join `oeuvres` `o` on((`r`.`id_oeuvre` = `o`.`id`))) left join `oeuvres_auteurs` `oa` on((`oa`.`id_oeuvre` = `o`.`id`))) left join `auteurs` `a` on((`oa`.`id_auteur` = `a`.`id`))) left join `identifiants_auteurs` `ia` on((`a`.`id` = `ia`.`id_auteur`))) left join `identifiants` `i1` on((`i1`.`id` = `ia`.`id_identifiant`))) left join `identifiants_types` `it1` on((`it1`.`id` = `i1`.`id_type`))) left join `identifiants_oeuvres` `io` on((`o`.`id` = `io`.`id_oeuvre`))) left join `identifiants` `i2` on((`i2`.`id` = `io`.`id_identifiant`))) left join `identifiants_types` `it2` on((`it2`.`id` = `i2`.`id_type`))) join `identifiants_recensions` `ir` on((`r`.`id` = `ir`.`id_recension`))) join `identifiants` `i3` on((`i3`.`id` = `ir`.`id_identifiant`))) join `identifiants_types` `it3` on((`it3`.`id` = `i3`.`id_type`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `copistes_possesseurs_identifiants`
+--
+
+/*!50001 DROP VIEW IF EXISTS `copistes_possesseurs_identifiants`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `copistes_possesseurs_identifiants` AS select `cp`.`nom` AS `nom`,`i`.`identifiant` AS `identifiant`,`it`.`type` AS `type`,`i`.`remarque` AS `remarque`,`i`.`url` AS `url` from (((`copistes_possesseurs` `cp` join `identifiants_copistes_possesseurs` `icp` on((`cp`.`id` = `icp`.`id_copo`))) join `identifiants` `i` on((`i`.`id` = `icp`.`id_identifiant`))) join `identifiants_types` `it` on((`it`.`id` = `i`.`id_type`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `cotes_avec_identifiants_s_ils_existent`
+--
+
+/*!50001 DROP VIEW IF EXISTS `cotes_avec_identifiants_s_ils_existent`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `cotes_avec_identifiants_s_ils_existent` AS select `p`.`nom` AS `pays`,`v`.`ville` AS `ville`,`d`.`depot` AS `depot`,`f`.`fond` AS `fonds`,`c`.`cote` AS `cote`,`c`.`type` AS `type_cote`,`c`.`id` AS `id_cote_pinakes`,`c`.`cote_catalogue` AS `cote_catalogue`,`c`.`remarque` AS `remarque_cote`,`i`.`identifiant` AS `identifiant`,`it`.`type` AS `type_identifiant`,`i`.`remarque` AS `remarque_identifiant`,`i`.`url` AS `url_identifiant` from (((((((`cotes` `c` join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) left join `identifiants_cotes` `ic` on((`c`.`id` = `ic`.`id_cote`))) left join `identifiants` `i` on((`i`.`id` = `ic`.`id_identifiant`))) left join `identifiants_types` `it` on((`it`.`id` = `i`.`id_type`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `detail_contenus_search`
+--
+
+/*!50001 DROP VIEW IF EXISTS `detail_contenus_search`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `detail_contenus_search` AS select `dc`.`id` AS `id`,`dc`.`entite` AS `entite`,`dc`.`id_entite` AS `id_entite`,`dc`.`contenu` AS `contenu`,`dc`.`complement` AS `complement`,`dc`.`creation` AS `creation`,`dc`.`remarque` AS `remarque`,`dc`.`rang` AS `rang`,`dcc`.`categorie` AS `categorie`,`dcc`.`aut_complement` AS `aut_complement`,`dcc`.`aut_contenu` AS `aut_contenu`,`dcc`.`id` AS `id_categorie`,if((`dc`.`entite` = 'Temoins'),(select `t`.`equipe_referente` from `temoins` `t` where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select `o`.`equipe_referente` from `oeuvres` `o` where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select `r`.`equipe_referente` from `recensions` `r` where (`r`.`id` = `dc`.`id_entite`)),NULL))) AS `equipeReferente`,if((`dc`.`entite` = 'Temoins'),(select `a`.`id` from (((`temoins` `t` left join `oeuvres` `o` on((`o`.`id` = `t`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select `a`.`id` from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select `a`.`id` from (((`recensions` `r` left join `oeuvres` `o` on((`o`.`id` = `r`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`r`.`id` = `dc`.`id_entite`)),NULL))) AS `auteur_id`,if((`dc`.`entite` = 'Temoins'),(select `a`.`nom` from (((`temoins` `t` left join `oeuvres` `o` on((`o`.`id` = `t`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select `a`.`nom` from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select `a`.`nom` from (((`recensions` `r` left join `oeuvres` `o` on((`o`.`id` = `r`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`r`.`id` = `dc`.`id_entite`)),NULL))) AS `auteur`,if((`dc`.`entite` = 'Temoins'),(select `o`.`id` from (`temoins` `t` left join `oeuvres` `o` on((`o`.`id` = `t`.`id_oeuvre`))) where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select `o`.`id` from `oeuvres` `o` where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select `o`.`id` from (`recensions` `r` left join `oeuvres` `o` on((`o`.`id` = `r`.`id_oeuvre`))) where (`r`.`id` = `dc`.`id_entite`)),NULL))) AS `oeuvre_id`,if((`dc`.`entite` = 'Temoins'),(select `o`.`titre` from (`temoins` `t` left join `oeuvres` `o` on((`o`.`id` = `t`.`id_oeuvre`))) where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select `o`.`titre` from `oeuvres` `o` where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select `o`.`titre` from (`recensions` `r` left join `oeuvres` `o` on((`o`.`id` = `r`.`id_oeuvre`))) where (`r`.`id` = `dc`.`id_entite`)),NULL))) AS `oeuvre`,if((`dc`.`entite` = 'Temoins'),(select concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`t`.`folios`) from ((((((`temoins` `t` left join `unites_codicologiques` `uc` on((`t`.`id_uc` = `uc`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`t`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Oeuvres'),(select concat_ws(', ',`a`.`nom`,`o`.`titre`) from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'Recensions'),(select concat_ws(', ',`a`.`nom`,`o`.`titre`,`r`.`recension`) from (((`recensions` `r` left join `oeuvres` `o` on((`o`.`id` = `r`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`r`.`id` = `dc`.`id_entite`)),if((`dc`.`entite` = 'UnitesCodicologiques'),(select concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`) from (((((`unites_codicologiques` `uc` left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`uc`.`id` = `dc`.`id_entite`)),'NC')))) AS `fullPath` from (((((`detail_contenus` `dc` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `dc`.`categorie`))) left join `unites_codicologiques` `ucjoin` on(((`dc`.`entite` = 'UnitesCodicologiques') and (`dc`.`id_entite` = `ucjoin`.`id`)))) left join `temoins` `tjoin` on(((`dc`.`entite` = 'Temoins') and (`dc`.`id_entite` = `tjoin`.`id`)))) left join `oeuvres` `ojoin` on(((`dc`.`entite` = 'Oeuvres') and (`dc`.`id_entite` = `ojoin`.`id`)))) left join `recensions` `rjoin` on(((`dc`.`entite` = 'Recensions') and (`dc`.`id_entite` = `rjoin`.`id`)))) where (0 <> 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `identifiants_search`
+--
+
+/*!50001 DROP VIEW IF EXISTS `identifiants_search`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`rpinakes`@`163.9.32.46` SQL SECURITY DEFINER */
+/*!50001 VIEW `identifiants_search` AS select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Auteurs' AS `entite`,`a`.`id` AS `id_entite`,(`a`.`nom` collate utf8_general_ci) AS `fullPath` from ((`identifiants_auteurs` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `auteurs` `a` on((`a`.`id` = `il`.`id_auteur`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'CataloguesSpecialises' AS `entite`,`cs`.`id` AS `id_entite`,(`cs`.`rubrique` collate utf8_general_ci) AS `fullPath` from ((`identifiants_catalogues_specialises` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `catalogues_specialises` `cs` on((`cs`.`id` = `il`.`id_catspe`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'CopistesPossesseurs' AS `entite`,`cp`.`id` AS `id_entite`,(`cp`.`nom` collate utf8_general_ci) AS `fullPath` from ((`identifiants_copistes_possesseurs` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `copistes_possesseurs` `cp` on((`cp`.`id` = `il`.`id_copo`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Cotes' AS `entite`,`c`.`id` AS `id_entite`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`) collate utf8_general_ci) AS `fullPath` from ((((((`identifiants_cotes` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `cotes` `c` on((`c`.`id` = `il`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Depots' AS `entite`,`d`.`id` AS `id_entite`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`) collate utf8_general_ci) AS `fullPath` from ((((`identifiants_depots` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `depots` `d` on((`d`.`id` = `il`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Fonds' AS `entite`,`f`.`id` AS `id_entite`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal')) collate utf8_general_ci) AS `fullPath` from (((((`identifiants_fonds` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `fonds` `f` on((`f`.`id` = `il`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Oeuvres' AS `entite`,`o`.`id` AS `id_entite`,(concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_general_ci) AS `fullPath` from ((((`identifiants_oeuvres` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `oeuvres` `o` on((`o`.`id` = `il`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`oa`.`id_oeuvre` = `o`.`id`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Pays' AS `entite`,`p`.`id` AS `id_entite`,(`p`.`nom` collate utf8_general_ci) AS `fullPath` from ((`identifiants_pays` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `pays` `p` on((`p`.`id` = `il`.`id_pays`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Recensions' AS `entite`,`r`.`id` AS `id_entite`,(concat_ws(', ',`r`.`numero`,`r`.`recension`) collate utf8_general_ci) AS `fullPath` from ((`identifiants_recensions` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `recensions` `r` on((`r`.`id` = `il`.`id_recension`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Saints' AS `entite`,`s`.`id` AS `id_entite`,(`s`.`saint` collate utf8_general_ci) AS `fullPath` from ((`identifiants_saints` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `saints` `s` on((`s`.`id` = `il`.`id_saint`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'UnitesCodicologiques' AS `entite`,`uc`.`id` AS `id_entite`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`) collate utf8_general_ci) AS `fullPath` from (((((((`identifiants_unites_codicologiques` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `unites_codicologiques` `uc` on((`uc`.`id` = `il`.`id_uc`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `i`.`id` AS `id`,`i`.`identifiant` AS `identifiant`,`i`.`id_type` AS `id_type`,'Villes' AS `entite`,`v`.`id` AS `id_entite`,(`v`.`ville` collate utf8_general_ci) AS `fullPath` from ((`identifiants_villes` `il` left join `identifiants` `i` on((`i`.`id` = `il`.`id_identifiant`))) left join `villes` `v` on((`v`.`id` = `il`.`id_ville`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `keywords_search`
+--
+
+/*!50001 DROP VIEW IF EXISTS `keywords_search`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`rpinakes`@`163.9.32.46` SQL SECURITY DEFINER */
+/*!50001 VIEW `keywords_search` AS select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'Auteurs' AS `entite`,`a`.`id` AS `id_entite`,(`a`.`nom` collate utf8_general_ci) AS `fullPath` from ((`keywords_auteurs` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `auteurs` `a` on((`a`.`id` = `link`.`id_auteur`))) union select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'CopistesPossesseurs' AS `entite`,`cp`.`id` AS `id_entite`,(`cp`.`nom` collate utf8_general_ci) AS `fullPath` from ((`keywords_copistes_possesseurs` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `copistes_possesseurs` `cp` on((`cp`.`id` = `link`.`id_copo`))) union select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'Cotes' AS `entite`,`c`.`id` AS `id_entite`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`) collate utf8_general_ci) AS `fullPath` from ((((((`keywords_cotes` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `cotes` `c` on((`c`.`id` = `link`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'Oeuvres' AS `entite`,`o`.`id` AS `id_entite`,(concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_general_ci) AS `fullPath` from ((((`keywords_oeuvres` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `oeuvres` `o` on((`o`.`id` = `link`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`oa`.`id_oeuvre` = `o`.`id`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) union select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'Recensions' AS `entite`,`r`.`id` AS `id_entite`,(concat_ws(', ',`r`.`numero`,`r`.`recension`) collate utf8_general_ci) AS `fullPath` from ((`keywords_recensions` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `recensions` `r` on((`r`.`id` = `link`.`id_recension`))) union select `mc`.`id` AS `id`,`mc`.`keyword` AS `keyword`,`mc`.`id_type` AS `id_type`,'Saints' AS `entite`,`s`.`id` AS `id_entite`,(`s`.`saint` collate utf8_general_ci) AS `fullPath` from ((`keywords_saints` `link` left join `keywords` `mc` on((`mc`.`id` = `link`.`id_keyword`))) left join `saints` `s` on((`s`.`id` = `link`.`id_saint`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `mobigen_search`
+--
+
+/*!50001 DROP VIEW IF EXISTS `mobigen_search`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`rpinakes`@`163.9.32.46` SQL SECURITY DEFINER */
+/*!50001 VIEW `mobigen_search` AS select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Auteurs' AS `entite`,`a`.`id` AS `id_entite`,`a`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`a`.`nom` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_auteurs` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `auteurs` `a` on((`a`.`id` = `el`.`id_auteur`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'CataloguesSpecialises' AS `entite`,`cs`.`id` AS `id_entite`,`cs`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`cs`.`rubrique` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_catalogues` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `catalogues_specialises` `cs` on((`cs`.`id` = `el`.`id_catalogue`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'CopistesPossesseurs' AS `entite`,`cp`.`id` AS `id_entite`,`cp`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`cp`.`nom` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_copistespossesseurs` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `copistes_possesseurs` `cp` on((`cp`.`id` = `el`.`id_copo`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Cotes' AS `entite`,`c`.`id` AS `id_entite`,`c`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`) collate utf8_general_ci) AS `fullPath` from ((((((((`mobigen_cotes` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `cotes` `c` on((`c`.`id` = `el`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Depots' AS `entite`,`d`.`id` AS `id_entite`,`d`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`) collate utf8_general_ci) AS `fullPath` from ((((((`mobigen_depots` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `depots` `d` on((`d`.`id` = `el`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Fonds' AS `entite`,`f`.`id` AS `id_entite`,`f`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal')) collate utf8_general_ci) AS `fullPath` from (((((((`mobigen_fonds` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `fonds` `f` on((`f`.`id` = `el`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'IdentifiantsTypes' AS `entite`,`it`.`id` AS `id_entite`,`it`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`it`.`type`,`it`.`nom`) collate utf8_general_ci) AS `fullPath` from ((((`mobigen_identifiants_types` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `identifiants_types` `it` on((`it`.`id` = `el`.`id_identype`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Oeuvres' AS `entite`,`o`.`id` AS `id_entite`,`o`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_general_ci) AS `fullPath` from ((((((`mobigen_oeuvres` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `oeuvres` `o` on((`o`.`id` = `el`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`oa`.`id_oeuvre` = `o`.`id`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Pays' AS `entite`,`p`.`id` AS `id_entite`,`p`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`p`.`nom` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_pays` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `pays` `p` on((`p`.`id` = `el`.`id_pays`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Recensions' AS `entite`,`r`.`id` AS `id_entite`,`r`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`r`.`numero`,`r`.`recension`) collate utf8_general_ci) AS `fullPath` from ((((`mobigen_recensions` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `recensions` `r` on((`r`.`id` = `el`.`id_recension`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Saints' AS `entite`,`saints`.`id` AS `id_entite`,`saints`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`saints`.`saint` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_saints` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `saints` on((`saints`.`id` = `el`.`id_saint`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Temoins' AS `entite`,`t`.`id` AS `id_entite`,`t`.`commentaire` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`t`.`folios`) collate utf8_general_ci) AS `fullPath` from ((((((((((`mobigen_temoins` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `temoins` `t` on((`t`.`id` = `el`.`id_temoin`))) left join `unites_codicologiques` `uc` on((`uc`.`id` = `t`.`id_uc`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) union select `m`.`id` AS `id`,`m`.`titre` AS `titre`,`s`.`numero_repertoire` AS `num_repertoire`,`m`.`cle_zotero` AS `cle_zotero`,`m`.`cle_americaine` AS `cle_americaine`,`m`.`commentaire` AS `commentaire`,'Villes' AS `entite`,`v`.`id` AS `id_entite`,`v`.`remarque` AS `remarque_entite`,`el`.`commentaire` AS `commentaire_relation`,`el`.`pages` AS `pages`,`el`.`tome` AS `tome`,`el`.`id_type_bibliography` AS `type_id`,`mtb`.`name` AS `type_name`,(`v`.`ville` collate utf8_general_ci) AS `fullPath` from ((((`mobigen_villes` `el` left join `mobigen` `m` on((`m`.`id` = `el`.`id_mobigen`))) left join `sources` `s` on((`m`.`id` = `s`.`id_mobigen`))) left join `villes` `v` on((`v`.`id` = `el`.`id_ville`))) left join `mobigen_types_bibliography` `mtb` on((`mtb`.`id` = `el`.`id_type_bibliography`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pays_ville_depot_fonds_cote`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pays_ville_depot_fonds_cote` AS select `p`.`nom` AS `pays`,`p`.`remarque` AS `remarque_pays`,`v`.`ville` AS `ville`,`v`.`remarque` AS `remarque_ville`,`d`.`depot` AS `depot`,`d`.`remarque` AS `remarque_depot`,`f`.`fond` AS `fond`,`f`.`remarque` AS `remarque_fonds`,`c`.`cote` AS `cote`,`c`.`remarque` AS `remarque_cote` from ((((`cotes` `c` join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pays_ville_depot_fonds_cote_id`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote_id`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pays_ville_depot_fonds_cote_id` AS select `p`.`nom` AS `pays`,`v`.`ville` AS `ville`,`d`.`depot` AS `depot`,`f`.`fond` AS `fonds`,`c`.`cote` AS `cote`,`c`.`remarque` AS `remarque`,`c`.`id` AS `id` from ((((`cotes` `c` join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pays_ville_depot_fonds_cote_identifiant`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_cote_identifiant`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pays_ville_depot_fonds_cote_identifiant` AS select `p`.`nom` AS `pays`,`v`.`ville` AS `ville`,`d`.`depot` AS `depot`,`f`.`fond` AS `fonds`,`c`.`cote` AS `cote`,`i`.`identifiant` AS `identifiant`,`it`.`type` AS `type`,`i`.`remarque` AS `remarque`,`i`.`url` AS `url` from (((((((`cotes` `c` join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) join `identifiants_cotes` `ic` on((`c`.`id` = `ic`.`id_cote`))) join `identifiants` `i` on((`i`.`id` = `ic`.`id_identifiant`))) join `identifiants_types` `it` on((`it`.`id` = `i`.`id_type`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `pays_ville_depot_fonds_non_vide_cote`
+--
+
+/*!50001 DROP VIEW IF EXISTS `pays_ville_depot_fonds_non_vide_cote`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pays_ville_depot_fonds_non_vide_cote` AS select `p`.`nom` AS `pays`,`v`.`ville` AS `ville`,`d`.`depot` AS `depot`,`d`.`remarque` AS `remarque_depot`,`f`.`fond` AS `fond`,`f`.`remarque` AS `remarque_fonds`,`c`.`cote` AS `cote` from ((((`cotes` `c` join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) group by `f`.`fond` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `ptb_infosup_search`
+--
+
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ptb_infosup_search` AS select `auteurs`.`id` AS `id_entite`,'Auteurs' AS `entite`,NULL AS `equipe_referente`,'remarque' AS `colonne`,(`auteurs`.`remarque` collate utf8_unicode_ci) AS `contenu`,NULL AS `titre`,`auteurs`.`nom` AS `fullPath` from `auteurs` where (char_length(`auteurs`.`remarque`) > 0) union select `catalogues_specialises`.`id` AS `id`,'CataloguesSpecialises' AS `CataloguesSpecialises`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`catalogues_specialises`.`remarque` collate utf8_unicode_ci) AS `catalogues_specialises.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`catalogues_specialises`.`rubrique` AS `fullpath` from `catalogues_specialises` where (char_length(`catalogues_specialises`.`remarque`) > 0) union select `copistes_possesseurs`.`id` AS `id`,'CopistesPossesseurs' AS `CopistesPossesseurs`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`copistes_possesseurs`.`remarque` collate utf8_unicode_ci) AS `copistes_possesseurs.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`copistes_possesseurs`.`nom` AS `fullpath` from `copistes_possesseurs` where (char_length(`copistes_possesseurs`.`remarque`) > 0) union select `cotes`.`id` AS `id`,'Cotes' AS `Cotes`,`cotes`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`cotes`.`remarque` collate utf8_unicode_ci) AS `cotes.remarque COLLATE utf8_unicode_ci`,`cotes`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`cotes`.`cote`) AS `fullpath` from ((((`cotes` left join `fonds` `f` on((`f`.`id` = `cotes`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where (char_length(`cotes`.`remarque`) > 0) union select `depots`.`id` AS `id`,'Depots' AS `Depots`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`depots`.`remarque` collate utf8_unicode_ci) AS `depots.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`depots`.`depot`) AS `fullpath` from ((`depots` left join `villes` `v` on((`v`.`id` = `depots`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where (char_length(`depots`.`remarque`) > 0) union select `detail_contenus`.`id` AS `id`,'DetailContenus' AS `DetailContenus`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus`.`remarque` collate utf8_unicode_ci) AS `detail_contenus.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) AS `fullpath` from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) where (char_length(`detail_contenus`.`remarque`) > 0) union select `detail_contenus_categories`.`id` AS `id`,'DetailContenusCategories' AS `DetailContenusCategories`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus_categories`.`remarque` collate utf8_unicode_ci) AS `detail_contenus_categories.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`detail_contenus_categories`.`categorie` AS `fullpath` from `detail_contenus_categories` where (char_length(`detail_contenus_categories`.`remarque`) > 0) union select `fonds`.`id` AS `id`,'Fonds' AS `Fonds`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`fonds`.`remarque` collate utf8_unicode_ci) AS `fonds.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`fonds`.`fond`) > 0),`fonds`.`fond`,'fonds principal')) AS `fullpath` from (((`fonds` left join `depots` `d` on((`d`.`id` = `fonds`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where (char_length(`fonds`.`remarque`) > 0) union select `identifiants`.`id` AS `id`,'Identifiants' AS `Identifiants`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants`.`remarque` collate utf8_unicode_ci) AS `identifiants.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`idt`.`type`,`identifiants`.`identifiant`) AS `fullpath` from (`identifiants` left join `identifiants_types` `idt` on((`idt`.`id` = `identifiants`.`id_type`))) where (char_length(`identifiants`.`remarque`) > 0) union select `identifiants_types`.`id` AS `id`,'IdentifiantsTypes' AS `IdentifiantsTypes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants_types`.`remarque` collate utf8_unicode_ci) AS `identifiants_types.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`identifiants_types`.`type` AS `fullpath` from `identifiants_types` where (char_length(`identifiants_types`.`remarque`) > 0) union select `oeuvres`.`id` AS `id`,'Oeuvres' AS `Oeuvres`,`oeuvres`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`oeuvres`.`remarque` collate utf8_unicode_ci) AS `oeuvres.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`oeuvres`.`titre`) AS `fullpath` from ((`oeuvres` left join `oeuvres_auteurs` `oa` on(((`oeuvres`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (char_length(`oeuvres`.`remarque`) > 0) union select `pays`.`id` AS `id`,'Pays' AS `Pays`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`pays`.`remarque` collate utf8_unicode_ci) AS `pays.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`pays`.`nom` AS `fullpath` from `pays` where (char_length(`pays`.`remarque`) > 0) union select `ptb_materialite_uc`.`id` AS `id`,'PtbMaterialiteUc' AS `PtbMaterialiteUc`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`ptb_materialite_uc`.`remarque` collate utf8_unicode_ci) AS `ptb_materialite_uc.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`ptb_materialite_uc`.`support_principal`) AS `fullpath` from (((((`ptb_materialite_uc` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `ptb_materialite_uc`.`id`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) where (char_length(`ptb_materialite_uc`.`remarque`) > 0) union select `recensions`.`id` AS `id`,'Recensions' AS `Recensions`,`recensions`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`recensions`.`remarque` collate utf8_unicode_ci) AS `recensions.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`o`.`titre`,`recensions`.`recension`) AS `fullpath` from (((`recensions` left join `oeuvres` `o` on((`o`.`id` = `recensions`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (char_length(`recensions`.`remarque`) > 0) union select `saints`.`id` AS `id`,'Saints' AS `Saints`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`saints`.`remarque` collate utf8_unicode_ci) AS `saints.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`saints`.`saint` AS `fullpath` from `saints` where (char_length(`saints`.`remarque`) > 0) union select `temoins`.`id` AS `id`,'Temoins' AS `Temoins`,`temoins`.`equipe_referente` AS `equipe_referente`,'commentaire' AS `commentaire`,(`temoins`.`commentaire` collate utf8_unicode_ci) AS `temoins.commentaire COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`temoins`.`folios`) AS `fullpath` from ((((((`temoins` left join `unites_codicologiques` `uc` on((`uc`.`id` = `temoins`.`id_uc`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where (char_length(`temoins`.`commentaire`) > 0) union select `unites_codicologiques`.`id` AS `id`,'UnitesCodicologiques' AS `UnitesCodicologiques`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`unites_codicologiques`.`remarque` collate utf8_unicode_ci) AS `unites_codicologiques.remarque COLLATE utf8_unicode_ci`,`unites_codicologiques`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`unites_codicologiques`.`numero`) AS `fullpath` from (((((`unites_codicologiques` left join `cotes` `c` on((`c`.`id` = `unites_codicologiques`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where (char_length(`unites_codicologiques`.`remarque`) > 0) union select `villes`.`id` AS `id`,'Villes' AS `Villes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`villes`.`remarque` collate utf8_unicode_ci) AS `villes.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`villes`.`ville`) AS `fullpath` from (`villes` left join `pays` `p` on((`p`.`id` = `villes`.`id_pays`))) where (char_length(`villes`.`remarque`) > 0) union select `ptb`.`id_entite` AS `id_entite`,`ptb`.`entite` AS `entite`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`equipe_referente` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select `o`.`equipe_referente` from `oeuvres` `o` where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Recensions'),(select `r`.`equipe_referente` from `recensions` `r` where (`r`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select `t`.`equipe_referente` from `temoins` `t` where (`t`.`id` = `ptb`.`id_entite`)),NULL)))) AS `equipe_referente`,'infosup' AS `infosup`,(`ptb`.`infosup` collate utf8_unicode_ci) AS `infosup COLLATE utf8_unicode_ci`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`titre` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select `uc`.`titre` from `unites_codicologiques` `uc` where (`uc`.`id` = `ptb`.`id_entite`)),NULL)) AS `titre`,if((`ptb`.`entite` = 'Cotes'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`c`.`cote`) collate utf8_unicode_ci) from ((((`cotes` `c` left join `fonds` on((`fonds`.`id` = `c`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`) collate utf8_unicode_ci) from (((((`unites_codicologiques` `uc` left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`uc`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`t`.`folios`) collate utf8_unicode_ci) from ((((((`temoins` `t` left join `unites_codicologiques` `uc` on((`t`.`id_uc` = `uc`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`t`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select (concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_unicode_ci) from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'PtbMaterialiteUc'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`mat`.`support_principal`) collate utf8_unicode_ci) from ((((((`ptb_materialite_uc` `mat` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `mat`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`mat`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Auteurs'),(select (`auteurs`.`nom` collate utf8_unicode_ci) from `auteurs` where (`auteurs`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenus'),(select (concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) collate utf8_unicode_ci) from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) where (`detail_contenus`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenusCategories'),(select (`detail_contenus_categories`.`categorie` collate utf8_unicode_ci) from `detail_contenus_categories` where (`detail_contenus_categories`.`id` = `ptb`.`id_entite`)),'NC')))))))) AS `fullPath` from `ptb_infosup` `ptb` where (char_length(`ptb`.`infosup`) > 0) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `ptb_infosup_search_all`
+--
+
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search_all`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ptb_infosup_search_all` AS select `auteurs`.`id` AS `id_entite`,'Auteurs' AS `entite`,NULL AS `equipe_referente`,'remarque' AS `colonne`,(`auteurs`.`remarque` collate utf8_unicode_ci) AS `contenu`,NULL AS `titre`,`auteurs`.`nom` AS `fullPath` from `auteurs` union select `catalogues_specialises`.`id` AS `id`,'CataloguesSpecialises' AS `CataloguesSpecialises`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`catalogues_specialises`.`remarque` collate utf8_unicode_ci) AS `catalogues_specialises.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`catalogues_specialises`.`rubrique` AS `fullpath` from `catalogues_specialises` union select `copistes_possesseurs`.`id` AS `id`,'CopistesPossesseurs' AS `CopistesPossesseurs`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`copistes_possesseurs`.`remarque` collate utf8_unicode_ci) AS `copistes_possesseurs.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`copistes_possesseurs`.`nom` AS `fullpath` from `copistes_possesseurs` union select `cotes`.`id` AS `id`,'Cotes' AS `Cotes`,`cotes`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`cotes`.`remarque` collate utf8_unicode_ci) AS `cotes.remarque COLLATE utf8_unicode_ci`,`cotes`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`cotes`.`cote`) AS `fullpath` from ((((`cotes` left join `fonds` `f` on((`f`.`id` = `cotes`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `depots`.`id` AS `id`,'Depots' AS `Depots`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`depots`.`remarque` collate utf8_unicode_ci) AS `depots.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`depots`.`depot`) AS `fullpath` from ((`depots` left join `villes` `v` on((`v`.`id` = `depots`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `detail_contenus`.`id` AS `id`,'DetailContenus' AS `DetailContenus`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus`.`remarque` collate utf8_unicode_ci) AS `detail_contenus.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) AS `fullpath` from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) union select `detail_contenus_categories`.`id` AS `id`,'DetailContenusCategories' AS `DetailContenusCategories`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus_categories`.`remarque` collate utf8_unicode_ci) AS `detail_contenus_categories.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`detail_contenus_categories`.`categorie` AS `fullpath` from `detail_contenus_categories` union select `fonds`.`id` AS `id`,'Fonds' AS `Fonds`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`fonds`.`remarque` collate utf8_unicode_ci) AS `fonds.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`fonds`.`fond`) > 0),`fonds`.`fond`,'fonds principal')) AS `fullpath` from (((`fonds` left join `depots` `d` on((`d`.`id` = `fonds`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `identifiants`.`id` AS `id`,'Identifiants' AS `Identifiants`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants`.`remarque` collate utf8_unicode_ci) AS `identifiants.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`idt`.`type`,`identifiants`.`identifiant`) AS `fullpath` from (`identifiants` left join `identifiants_types` `idt` on((`idt`.`id` = `identifiants`.`id_type`))) union select `identifiants_types`.`id` AS `id`,'IdentifiantsTypes' AS `IdentifiantsTypes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants_types`.`remarque` collate utf8_unicode_ci) AS `identifiants_types.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`identifiants_types`.`type` AS `fullpath` from `identifiants_types` union select `oeuvres`.`id` AS `id`,'Oeuvres' AS `Oeuvres`,`oeuvres`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`oeuvres`.`remarque` collate utf8_unicode_ci) AS `oeuvres.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`oeuvres`.`titre`) AS `fullpath` from ((`oeuvres` left join `oeuvres_auteurs` `oa` on(((`oeuvres`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) union select `pays`.`id` AS `id`,'Pays' AS `Pays`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`pays`.`remarque` collate utf8_unicode_ci) AS `pays.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`pays`.`nom` AS `fullpath` from `pays` union select `ptb_materialite_uc`.`id` AS `id`,'PtbMaterialiteUc' AS `PtbMaterialiteUc`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`ptb_materialite_uc`.`remarque` collate utf8_unicode_ci) AS `ptb_materialite_uc.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`ptb_materialite_uc`.`support_principal`) AS `fullpath` from (((((`ptb_materialite_uc` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `ptb_materialite_uc`.`id`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) union select `recensions`.`id` AS `id`,'Recensions' AS `Recensions`,`recensions`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`recensions`.`remarque` collate utf8_unicode_ci) AS `recensions.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`o`.`titre`,`recensions`.`recension`) AS `fullpath` from (((`recensions` left join `oeuvres` `o` on((`o`.`id` = `recensions`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) union select `saints`.`id` AS `id`,'Saints' AS `Saints`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`saints`.`remarque` collate utf8_unicode_ci) AS `saints.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`saints`.`saint` AS `fullpath` from `saints` union select `temoins`.`id` AS `id`,'Temoins' AS `Temoins`,`temoins`.`equipe_referente` AS `equipe_referente`,'commentaire' AS `commentaire`,(`temoins`.`commentaire` collate utf8_unicode_ci) AS `temoins.commentaire COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`temoins`.`folios`) AS `fullpath` from ((((((`temoins` left join `unites_codicologiques` `uc` on((`uc`.`id` = `temoins`.`id_uc`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `unites_codicologiques`.`id` AS `id`,'UnitesCodicologiques' AS `UnitesCodicologiques`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`unites_codicologiques`.`remarque` collate utf8_unicode_ci) AS `unites_codicologiques.remarque COLLATE utf8_unicode_ci`,`unites_codicologiques`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`unites_codicologiques`.`numero`) AS `fullpath` from (((((`unites_codicologiques` left join `cotes` `c` on((`c`.`id` = `unites_codicologiques`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) union select `villes`.`id` AS `id`,'Villes' AS `Villes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`villes`.`remarque` collate utf8_unicode_ci) AS `villes.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`villes`.`ville`) AS `fullpath` from (`villes` left join `pays` `p` on((`p`.`id` = `villes`.`id_pays`))) union select `ptb`.`id_entite` AS `id_entite`,`ptb`.`entite` AS `entite`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`equipe_referente` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select `o`.`equipe_referente` from `oeuvres` `o` where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Recensions'),(select `r`.`equipe_referente` from `recensions` `r` where (`r`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select `t`.`equipe_referente` from `temoins` `t` where (`t`.`id` = `ptb`.`id_entite`)),NULL)))) AS `equipe_referente`,'infosup' AS `infosup`,(`ptb`.`infosup` collate utf8_unicode_ci) AS `infosup COLLATE utf8_unicode_ci`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`titre` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select `uc`.`titre` from `unites_codicologiques` `uc` where (`uc`.`id` = `ptb`.`id_entite`)),NULL)) AS `titre`,if((`ptb`.`entite` = 'Cotes'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`c`.`cote`) collate utf8_unicode_ci) from ((((`cotes` `c` left join `fonds` on((`fonds`.`id` = `c`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`) collate utf8_unicode_ci) from (((((`unites_codicologiques` `uc` left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`uc`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`t`.`folios`) collate utf8_unicode_ci) from ((((((`temoins` `t` left join `unites_codicologiques` `uc` on((`t`.`id_uc` = `uc`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`t`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select (concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_unicode_ci) from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'PtbMaterialiteUc'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`mat`.`support_principal`) collate utf8_unicode_ci) from ((((((`ptb_materialite_uc` `mat` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `mat`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`mat`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Auteurs'),(select (`auteurs`.`nom` collate utf8_unicode_ci) from `auteurs` where (`auteurs`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenus'),(select (concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) collate utf8_unicode_ci) from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) where (`detail_contenus`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenusCategories'),(select (`detail_contenus_categories`.`categorie` collate utf8_unicode_ci) from `detail_contenus_categories` where (`detail_contenus_categories`.`id` = `ptb`.`id_entite`)),'NC')))))))) AS `fullPath` from `ptb_infosup` `ptb` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `ptb_infosup_search_empty`
+--
+
+/*!50001 DROP VIEW IF EXISTS `ptb_infosup_search_empty`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ptb_infosup_search_empty` AS select `auteurs`.`id` AS `id_entite`,'Auteurs' AS `entite`,NULL AS `equipe_referente`,'remarque' AS `colonne`,(`auteurs`.`remarque` collate utf8_unicode_ci) AS `contenu`,NULL AS `titre`,`auteurs`.`nom` AS `fullPath` from `auteurs` where ((char_length(`auteurs`.`remarque`) = 0) or (`auteurs`.`remarque` is null)) union select `catalogues_specialises`.`id` AS `id`,'CataloguesSpecialises' AS `CataloguesSpecialises`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`catalogues_specialises`.`remarque` collate utf8_unicode_ci) AS `catalogues_specialises.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`catalogues_specialises`.`rubrique` AS `fullpath` from `catalogues_specialises` where ((char_length(`catalogues_specialises`.`remarque`) = 0) or (`catalogues_specialises`.`remarque` is null)) union select `copistes_possesseurs`.`id` AS `id`,'CopistesPossesseurs' AS `CopistesPossesseurs`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`copistes_possesseurs`.`remarque` collate utf8_unicode_ci) AS `copistes_possesseurs.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`copistes_possesseurs`.`nom` AS `fullpath` from `copistes_possesseurs` where ((char_length(`copistes_possesseurs`.`remarque`) = 0) or (`copistes_possesseurs`.`remarque` is null)) union select `cotes`.`id` AS `id`,'Cotes' AS `Cotes`,`cotes`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`cotes`.`remarque` collate utf8_unicode_ci) AS `cotes.remarque COLLATE utf8_unicode_ci`,`cotes`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`cotes`.`cote`) AS `fullpath` from ((((`cotes` left join `fonds` `f` on((`f`.`id` = `cotes`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where ((char_length(`cotes`.`remarque`) = 0) or (`cotes`.`remarque` is null)) union select `depots`.`id` AS `id`,'Depots' AS `Depots`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`depots`.`remarque` collate utf8_unicode_ci) AS `depots.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`depots`.`depot`) AS `fullpath` from ((`depots` left join `villes` `v` on((`v`.`id` = `depots`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where ((char_length(`depots`.`remarque`) = 0) or (`depots`.`remarque` is null)) union select `detail_contenus`.`id` AS `id`,'DetailContenus' AS `DetailContenus`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus`.`remarque` collate utf8_unicode_ci) AS `detail_contenus.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) AS `fullpath` from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) where ((char_length(`detail_contenus`.`remarque`) = 0) or (`detail_contenus`.`remarque` is null)) union select `detail_contenus_categories`.`id` AS `id`,'DetailContenusCategories' AS `DetailContenusCategories`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`detail_contenus_categories`.`remarque` collate utf8_unicode_ci) AS `detail_contenus_categories.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`detail_contenus_categories`.`categorie` AS `fullpath` from `detail_contenus_categories` where ((char_length(`detail_contenus_categories`.`remarque`) = 0) or (`detail_contenus_categories`.`remarque` is null)) union select `fonds`.`id` AS `id`,'Fonds' AS `Fonds`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`fonds`.`remarque` collate utf8_unicode_ci) AS `fonds.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`fonds`.`fond`) > 0),`fonds`.`fond`,'fonds principal')) AS `fullpath` from (((`fonds` left join `depots` `d` on((`d`.`id` = `fonds`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where ((char_length(`fonds`.`remarque`) = 0) or (`fonds`.`remarque` is null)) union select `identifiants`.`id` AS `id`,'Identifiants' AS `Identifiants`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants`.`remarque` collate utf8_unicode_ci) AS `identifiants.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`idt`.`type`,`identifiants`.`identifiant`) AS `fullpath` from (`identifiants` left join `identifiants_types` `idt` on((`idt`.`id` = `identifiants`.`id_type`))) where ((char_length(`identifiants`.`remarque`) = 0) or (`identifiants`.`remarque` is null)) union select `identifiants_types`.`id` AS `id`,'IdentifiantsTypes' AS `IdentifiantsTypes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`identifiants_types`.`remarque` collate utf8_unicode_ci) AS `identifiants_types.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`identifiants_types`.`type` AS `fullpath` from `identifiants_types` where ((char_length(`identifiants_types`.`remarque`) = 0) or (`identifiants_types`.`remarque` is null)) union select `oeuvres`.`id` AS `id`,'Oeuvres' AS `Oeuvres`,`oeuvres`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`oeuvres`.`remarque` collate utf8_unicode_ci) AS `oeuvres.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`oeuvres`.`titre`) AS `fullpath` from ((`oeuvres` left join `oeuvres_auteurs` `oa` on(((`oeuvres`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where ((char_length(`oeuvres`.`remarque`) = 0) or (`oeuvres`.`remarque` is null)) union select `pays`.`id` AS `id`,'Pays' AS `Pays`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`pays`.`remarque` collate utf8_unicode_ci) AS `pays.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`pays`.`nom` AS `fullpath` from `pays` where ((char_length(`pays`.`remarque`) = 0) or (`pays`.`remarque` <> 0)) union select `ptb_materialite_uc`.`id` AS `id`,'PtbMaterialiteUc' AS `PtbMaterialiteUc`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`ptb_materialite_uc`.`remarque` collate utf8_unicode_ci) AS `ptb_materialite_uc.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`ptb_materialite_uc`.`support_principal`) AS `fullpath` from (((((`ptb_materialite_uc` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `ptb_materialite_uc`.`id`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) where ((char_length(`ptb_materialite_uc`.`remarque`) = 0) or (`ptb_materialite_uc`.`remarque` is null)) union select `recensions`.`id` AS `id`,'Recensions' AS `Recensions`,`recensions`.`equipe_referente` AS `equipe_referente`,'remarque' AS `remarque`,(`recensions`.`remarque` collate utf8_unicode_ci) AS `recensions.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`a`.`nom`,`o`.`titre`,`recensions`.`recension`) AS `fullpath` from (((`recensions` left join `oeuvres` `o` on((`o`.`id` = `recensions`.`id_oeuvre`))) left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where ((char_length(`recensions`.`remarque`) = 0) or (`recensions`.`remarque` is null)) union select `saints`.`id` AS `id`,'Saints' AS `Saints`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`saints`.`remarque` collate utf8_unicode_ci) AS `saints.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,`saints`.`saint` AS `fullpath` from `saints` where ((char_length(`saints`.`remarque`) = 0) or (`saints`.`remarque` is null)) union select `temoins`.`id` AS `id`,'Temoins' AS `Temoins`,`temoins`.`equipe_referente` AS `equipe_referente`,'commentaire' AS `commentaire`,(`temoins`.`commentaire` collate utf8_unicode_ci) AS `temoins.commentaire COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`uc`.`numero`,`temoins`.`folios`) AS `fullpath` from ((((((`temoins` left join `unites_codicologiques` `uc` on((`uc`.`id` = `temoins`.`id_uc`))) left join `cotes` `c` on((`c`.`id` = `uc`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where ((char_length(`temoins`.`commentaire`) = 0) or (`temoins`.`commentaire` is null)) union select `unites_codicologiques`.`id` AS `id`,'UnitesCodicologiques' AS `UnitesCodicologiques`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`unites_codicologiques`.`remarque` collate utf8_unicode_ci) AS `unites_codicologiques.remarque COLLATE utf8_unicode_ci`,`unites_codicologiques`.`titre` AS `titre`,concat_ws(', ',`p`.`nom`,`v`.`ville`,`d`.`depot`,if((char_length(`f`.`fond`) > 0),`f`.`fond`,'fonds principal'),`c`.`cote`,`unites_codicologiques`.`numero`) AS `fullpath` from (((((`unites_codicologiques` left join `cotes` `c` on((`c`.`id` = `unites_codicologiques`.`id_cote`))) left join `fonds` `f` on((`f`.`id` = `c`.`id_fond`))) left join `depots` `d` on((`d`.`id` = `f`.`id_depot`))) left join `villes` `v` on((`v`.`id` = `d`.`id_ville`))) left join `pays` `p` on((`p`.`id` = `v`.`id_pays`))) where ((char_length(`unites_codicologiques`.`remarque`) = 0) or (`unites_codicologiques`.`remarque` is null)) union select `villes`.`id` AS `id`,'Villes' AS `Villes`,NULL AS `equipe_referente`,'remarque' AS `remarque`,(`villes`.`remarque` collate utf8_unicode_ci) AS `villes.remarque COLLATE utf8_unicode_ci`,NULL AS `titre`,concat_ws(', ',`p`.`nom`,`villes`.`ville`) AS `fullpath` from (`villes` left join `pays` `p` on((`p`.`id` = `villes`.`id_pays`))) where ((char_length(`villes`.`remarque`) = 0) or (`villes`.`remarque` is null)) union select `ptb`.`id_entite` AS `id_entite`,`ptb`.`entite` AS `entite`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`equipe_referente` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select `o`.`equipe_referente` from `oeuvres` `o` where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Recensions'),(select `r`.`equipe_referente` from `recensions` `r` where (`r`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select `t`.`equipe_referente` from `temoins` `t` where (`t`.`id` = `ptb`.`id_entite`)),NULL)))) AS `equipe_referente`,'infosup' AS `infosup`,(`ptb`.`infosup` collate utf8_unicode_ci) AS `infosup COLLATE utf8_unicode_ci`,if((`ptb`.`entite` = 'Cotes'),(select `c`.`titre` from `cotes` `c` where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select `uc`.`titre` from `unites_codicologiques` `uc` where (`uc`.`id` = `ptb`.`id_entite`)),NULL)) AS `titre`,if((`ptb`.`entite` = 'Cotes'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`c`.`cote`) collate utf8_unicode_ci) from ((((`cotes` `c` left join `fonds` on((`fonds`.`id` = `c`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`c`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'UnitesCodicologiques'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`) collate utf8_unicode_ci) from (((((`unites_codicologiques` `uc` left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`uc`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Temoins'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`t`.`folios`) collate utf8_unicode_ci) from ((((((`temoins` `t` left join `unites_codicologiques` `uc` on((`t`.`id_uc` = `uc`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`t`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Oeuvres'),(select (concat_ws(', ',`a`.`nom`,`o`.`titre`) collate utf8_unicode_ci) from ((`oeuvres` `o` left join `oeuvres_auteurs` `oa` on(((`o`.`id` = `oa`.`id_oeuvre`) and (`oa`.`principal` = 1)))) left join `auteurs` `a` on((`a`.`id` = `oa`.`id_auteur`))) where (`o`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'PtbMaterialiteUc'),(select (concat_ws(', ',`pays`.`nom`,`villes`.`ville`,`depots`.`depot`,if((char_length(`fonds`.`fond`) <= 0),'fonds principal',`fonds`.`fond`),`cotes`.`cote`,`uc`.`numero`,`mat`.`support_principal`) collate utf8_unicode_ci) from ((((((`ptb_materialite_uc` `mat` left join `unites_codicologiques` `uc` on((`uc`.`id_materialite_uc` = `mat`.`id`))) left join `cotes` on((`cotes`.`id` = `uc`.`id_cote`))) left join `fonds` on((`fonds`.`id` = `cotes`.`id_fond`))) left join `depots` on((`depots`.`id` = `fonds`.`id_depot`))) left join `villes` on((`villes`.`id` = `depots`.`id_ville`))) left join `pays` on((`pays`.`id` = `villes`.`id_pays`))) where (`mat`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'Auteurs'),(select (`auteurs`.`nom` collate utf8_unicode_ci) from `auteurs` where (`auteurs`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenus'),(select (concat_ws(', ',concat('[',`dcc`.`categorie`,']'),`detail_contenus`.`contenu`) collate utf8_unicode_ci) from (`detail_contenus` left join `detail_contenus_categories` `dcc` on((`dcc`.`id` = `detail_contenus`.`categorie`))) where (`detail_contenus`.`id` = `ptb`.`id_entite`)),if((`ptb`.`entite` = 'DetailContenusCategories'),(select (`detail_contenus_categories`.`categorie` collate utf8_unicode_ci) from `detail_contenus_categories` where (`detail_contenus_categories`.`id` = `ptb`.`id_entite`)),'NC')))))))) AS `fullPath` from `ptb_infosup` `ptb` where ((char_length(`ptb`.`infosup`) = 0) or (`ptb`.`infosup` is null)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-06-30 14:02:45

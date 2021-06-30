@@ -30,12 +30,15 @@ namespace Pinakes.Search
             Query subQuery = QueryFactory.Query(request
                 ? "keywords_auteurs AS kl"
                 : "keywords_oeuvres AS kl")
-            .Where("kl.id", "k.id");
+            .WhereRaw("kl.id_keyword = k.id");
 
-            return QueryFactory.Query("keywords AS k")
-                .Select("id", "keyword")
+            Query query = QueryFactory.Query("keywords AS k")
+                .Select("id", "keyword AS value")
                 .WhereExists(subQuery)
                 .OrderBy("keyword");
+
+            string s = QueryFactory.Compiler.Compile(query).Sql;
+            return query;
         }
     }
 }

@@ -35,4 +35,4 @@ $tf*/
 packages/
 !Lib/**/*.dll
 *.scgdat
-pleiades-api-log*.txt
+*-log*.txt
