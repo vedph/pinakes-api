@@ -14,6 +14,10 @@ namespace PinakesApi.Controllers
             _searcher = searcher;
         }
 
+        /// <summary>
+        /// Gets all the keywords related to authors.
+        /// </summary>
+        /// <returns>List of keywords</returns>
         [HttpGet("api/keywords/authors")]
         [ProducesResponseType(200)]
         public ActionResult<IList<KeywordResult>> GetAuthorKeywords()
@@ -21,6 +25,10 @@ namespace PinakesApi.Controllers
             return Ok(_searcher.GetKeywords(true));
         }
 
+        /// <summary>
+        /// Gets the all the keywords related to works.
+        /// </summary>
+        /// <returns>List of keywords</returns>
         [HttpGet("api/keywords/works")]
         [ProducesResponseType(200)]
         public ActionResult<IList<KeywordResult>> GetWorkKeywords()
