@@ -78,6 +78,7 @@ namespace Pinakes.Index
 
         private void WriteDates(IList<Tuple<int, string>> sources,
             IDbCommand command,
+            string field,
             CancellationToken cancel,
             IProgress<int> progress = null)
         {
@@ -87,7 +88,7 @@ namespace Pinakes.Index
                 HistoricalDate date = _adapter.GetDate(s.Item2);
                 if (date == null) continue;
 
-                ((DbParameter)command.Parameters["@field"]).Value = "aut";
+                ((DbParameter)command.Parameters["@field"]).Value = field;
                 ((DbParameter)command.Parameters["@targetid"]).Value = s.Item1;
                 ((DbParameter)command.Parameters["@datetxt"]).Value = date.ToString();
                 ((DbParameter)command.Parameters["@dateval"]).Value = date.GetSortValue();
@@ -119,10 +120,10 @@ namespace Pinakes.Index
                 AddParameter(p, cmd, p == "@dateval" ? DbType.Double : DbType.String);
 
             var sources = CollectSources(connection, "auteurs");
-            WriteDates(sources, cmd, cancel, progress);
+            WriteDates(sources, cmd, "aut", cancel, progress);
 
             sources = CollectSources(connection, "oeuvres");
-            WriteDates(sources, cmd, cancel, progress);
+            WriteDates(sources, cmd, "wrk", cancel, progress);
         }
     }
 }

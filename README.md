@@ -93,6 +93,17 @@ Date metadata (for centuries) need to be preprocessed for indexing: in `auteurs.
 - `15 (2/2) - 16 (1/4)`
 - `1657-1719` by error; this is not considered, as it should be sporadic.
 
+These dates are parsed and inserted into a `date` table which gets filled with the original date expression (`source`), its normalized text value and the corresponding approximate numeric value, and the ID of the source author or work having that date (`field` is used to specify a code representing the source table: `aut` or `wrk`). For instance:
+
+```txt
+field targetid datetxt       dateval source
+wrk   86       XV AD         1450    15
+wrk   89       XIV AD        1350    14
+wrk   355      XI -- XII AD  1100    11-12
+wrk   358      c. 1125 AD    1125    12 (1/2)
+...
+```
+
 ### Subset
 
 This is not exposed in a UI, but is a general filter always applied to get only the RAP data subset.
