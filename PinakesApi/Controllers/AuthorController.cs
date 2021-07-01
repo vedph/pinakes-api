@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pinakes.Search;
+using PinakesApi.Models;
 using System.Collections.Generic;
 
 namespace PinakesApi.Controllers

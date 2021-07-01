@@ -31,10 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pinakes.Search\Pinakes.Search.csproj" />
   </ItemGroup>
 

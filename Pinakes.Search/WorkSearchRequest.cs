@@ -53,7 +53,7 @@ namespace Pinakes.Search
         /// </summary>
         public WorkSearchRequest()
         {
-            TextScope = "wkttl,wkals";
+            TextScope = "wkttl,wattl";
         }
     }
 }

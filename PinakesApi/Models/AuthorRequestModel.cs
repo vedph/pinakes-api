@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PinakesApi.Controllers
+namespace PinakesApi.Models
 {
     /// <summary>
     /// The model for an author search request.
