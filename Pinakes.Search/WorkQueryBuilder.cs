@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Pinakes.Search
 {
+    /// <summary>
+    /// Work search query builder.
+    /// </summary>
+    /// <seealso cref="PinakesPagedQueryBuilder&lt;WorkSearchRequest&gt;" />
     public sealed class WorkQueryBuilder : PinakesPagedQueryBuilder<WorkSearchRequest>
     {
         /// <summary>
@@ -18,7 +22,7 @@ namespace Pinakes.Search
         /// class.
         /// </summary>
         /// <param name="connString">The connection string.</param>
-        private WorkQueryBuilder(string connString) : base(connString)
+        public WorkQueryBuilder(string connString) : base(connString)
         {
         }
 
@@ -30,7 +34,7 @@ namespace Pinakes.Search
         protected override IList<string> GetFields(WorkSearchRequest request)
         {
             if (string.IsNullOrEmpty(request.TextScope))
-                return new[] { "wkttl", "wkals" };
+                return new[] { "wkttl", "wattl" };
 
             return request.TextScope.Split(',',
                 StringSplitOptions.RemoveEmptyEntries);

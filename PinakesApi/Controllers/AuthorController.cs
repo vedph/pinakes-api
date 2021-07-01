@@ -24,7 +24,7 @@ namespace PinakesApi.Controllers
         }
 
         /// <summary>
-        /// Gets all the keywords related to authors.
+        /// Gets the specified page of authors.
         /// </summary>
         /// <returns>List of authors</returns>
         [HttpPost("api/authors")]
