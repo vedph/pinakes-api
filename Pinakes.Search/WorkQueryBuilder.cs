@@ -79,12 +79,11 @@ namespace Pinakes.Search
 
             if (request.RelationIds?.Count > 0)
             {
-                // TODO
+                query.Join("relations AS r", "t.id", "id_parent")
+                    .WhereIn("r.id_type", request.RelationIds);
 
                 if (request.RelationTargetId > 0)
-                {
-                    // TODO
-                }
+                    query.Where("r.id_child", request.RelationTargetId);
             }
 
             return query;
