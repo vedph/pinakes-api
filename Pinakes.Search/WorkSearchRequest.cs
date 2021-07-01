@@ -10,6 +10,11 @@ namespace Pinakes.Search
     public class WorkSearchRequest : TextBasedRequest
     {
         /// <summary>
+        /// Gets or sets the author identifier.
+        /// </summary>
+        public int AuthorId { get; set; }
+
+        /// <summary>
         /// Gets or sets the dictyon identifier. This is equal to the manuscript
         /// ID in the Pinakes DB; 0=do not filter by dictyon ID.
         /// </summary>

@@ -39,6 +39,11 @@ namespace PinakesApi.Models
         public string TextScope { get; set; }
 
         /// <summary>
+        /// The author identifier; 0=do not filter by author ID.
+        /// </summary>
+        public int AuthorId { get; set; }
+
+        /// <summary>
         /// The dictyon identifier. This is equal to the manuscript
         /// ID in the Pinakes DB; 0=do not filter by dictyon ID.
         /// </summary>

@@ -89,7 +89,16 @@ namespace Pinakes.Search
         /// </summary>
         /// <param name="idQuery">The identifiers query.</param>
         /// <returns>The query.</returns>
-        protected abstract Query GetCountQuery(Query idQuery);
+        protected Query GetCountQuery(Query idQuery)
+        {
+            Query query = QueryFactory.Query().From(idQuery)
+                .AsCount(new[] { "q.id" });
+#if DEBUG
+            Debug.WriteLine("---COUNT:\n" +
+                QueryFactory.Compiler.Compile(query).ToString());
+#endif
+            return query;
+        }
 
         /// <summary>
         /// Gets the data query connected to the specified IDs query.

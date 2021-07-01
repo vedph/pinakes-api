@@ -11,7 +11,8 @@ namespace Pinakes.Search
     /// Authors search MySql query builder.
     /// </summary>
     /// <seealso cref="MySqlPagedQueryBuilder&lt;AuthorSearchRequest&gt;" />
-    public sealed class AuthorQueryBuilder : PinakesPagedQueryBuilder<AuthorSearchRequest>
+    public sealed class AuthorQueryBuilder :
+        PinakesPagedQueryBuilder<AuthorSearchRequest>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorQueryBuilder"/>
@@ -53,30 +54,10 @@ namespace Pinakes.Search
 
             if (request.KeywordIds?.Count > 0)
             {
-                // where exists (select id_keyword from keywords_auteurs
-                //   where ak.id_auteur=auteurs.id AND ak.id_keyword IN...)
-                query.WhereExists(QueryFactory.Query("keywords_auteurs AS ak")
-                    .Select("id_keyword")
-                    .Where("ak.id_auteur", "t.id")
-                    .WhereIn("ak.id_keyword", request.KeywordIds));
+                query.Join("keywords_auteurs AS ka", "t.id", "ka.id_auteur")
+                    .WhereIn("ka.id_keyword", request.KeywordIds);
             }
 
-            return query;
-        }
-
-        /// <summary>
-        /// Gets the count query connected to the specified IDs query.
-        /// </summary>
-        /// <param name="idQuery">The identifiers query.</param>
-        /// <returns>The query.</returns>
-        protected override Query GetCountQuery(Query idQuery)
-        {
-            Query query = QueryFactory.Query().From(idQuery)
-                .AsCount(new[] { "q.id" });
-#if DEBUG
-            Debug.WriteLine("---COUNT:\n" + 
-                QueryFactory.Compiler.Compile(query).ToString());
-#endif
             return query;
         }
 

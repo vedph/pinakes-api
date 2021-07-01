@@ -3,13 +3,8 @@
     /// <summary>
     /// A generic text-based lookup request.
     /// </summary>
-    public class LookupRequest
+    public class LookupRequest : TextBasedRequest
     {
-        /// <summary>
-        /// Gets or sets the text to be matched.
-        /// </summary>
-        public string Text { get; set; }
-
         /// <summary>
         /// Gets or sets the max count of matching results to be returned.
         /// </summary>

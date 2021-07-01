@@ -10,13 +10,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9DC31AD-CC7A-41F3-8E4E-3FC6CB9E50D5}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		schema.png = schema.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pinix", "pinix\pinix.csproj", "{EF7D754B-E8CB-49FD-864C-2D362E4928F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinakes.Search", "Pinakes.Search\Pinakes.Search.csproj", "{5B2952BF-2FE6-481E-AFE5-18E4B542E0D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinakesApi", "PinakesApi\PinakesApi.csproj", "{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PinakesApi", "PinakesApi\PinakesApi.csproj", "{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
