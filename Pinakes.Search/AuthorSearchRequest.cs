@@ -7,34 +7,8 @@ namespace Pinakes.Search
     /// Author search request.
     /// </summary>
     /// <seealso cref="PagingOptions" />
-    public sealed class AuthorSearchRequest : PagingOptions
+    public sealed class AuthorSearchRequest : TextBasedRequest
     {
-        /// <summary>
-        /// Gets or sets the text. This can include 1 or more tokens, separated
-        /// by spaces. Each token is preceded by an optional operator; when no
-        /// operator is specified, <c>*=</c> (contains) is assumed.
-        /// </summary>
-        public string Text { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to match if at least any
-        /// of the tokens in <see cref="Text"/> matches (i.e. tokens in OR
-        /// relation). The default is to match all the tokens (AND), i.e.
-        /// this property is false.
-        /// </summary>
-        public bool IsMatchAnyEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include author aliases
-        /// in the search.
-        /// </summary>
-        public bool IncludeAlias { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include author notes.
-        /// </summary>
-        public bool IncludeNotes { get; set; }
-
         /// <summary>
         /// Gets or sets the category flag to be matched for the author.
         /// </summary>

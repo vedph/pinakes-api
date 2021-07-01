@@ -7,7 +7,7 @@ namespace PinakesApi.Controllers
     /// <summary>
     /// Authors search.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="ControllerBase" />
     [ApiController]
     public class AuthorController : ControllerBase
     {
@@ -25,10 +25,10 @@ namespace PinakesApi.Controllers
         /// <summary>
         /// Gets all the keywords related to authors.
         /// </summary>
-        /// <returns>List of keywords</returns>
+        /// <returns>List of authors</returns>
         [HttpPost("api/authors")]
         [ProducesResponseType(200)]
-        public ActionResult<IList<KeywordResult>> GetAuthors(
+        public ActionResult<IList<AuthorResult>> GetAuthors(
             [FromBody] AuthorRequestModel model)
         {
             return Ok(_searcher.GetAuthors(model.ToRequest()));

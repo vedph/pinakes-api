@@ -31,23 +31,21 @@ namespace PinakesApi.Controllers
         public string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets the text search scope, represented by a comma delimited
+        /// list of field codes from <c>aunam</c>=author name, <c>aanam</c>=alias,
+        /// <c>aunot</c>=note.
+        /// </summary>
+        [MaxLength(100)]
+        [RegularExpression("^(?:(?:aunam|aanam|aunot),?)*$")]
+        public string TextScope { get; set; }
+
+        /// <summary>
         /// A value indicating whether to match if at least any
         /// of the tokens in <see cref="Text"/> matches (i.e. tokens in OR
         /// relation). The default is to match all the tokens (AND), i.e.
         /// this property is false.
         /// </summary>
         public bool IsMatchAnyEnabled { get; set; }
-
-        /// <summary>
-        /// A value indicating whether to include author aliases
-        /// in the search.
-        /// </summary>
-        public bool IncludeAlias { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to include author notes.
-        /// </summary>
-        public bool IncludeNotes { get; set; }
 
         /// <summary>
         /// The category flag to be matched for the author.
@@ -81,9 +79,8 @@ namespace PinakesApi.Controllers
                 PageNumber = PageNumber,
                 PageSize = PageSize,
                 Text = Text,
+                TextScope = TextScope,
                 IsMatchAnyEnabled = IsMatchAnyEnabled,
-                IncludeAlias = IncludeAlias,
-                IncludeNotes = IncludeNotes,
                 IsCategory = IsCategory,
                 CenturyMin = CenturyMin,
                 CenturyMax = CenturyMax
