@@ -1,6 +1,7 @@
 ﻿using SqlKata;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Pinakes.Search
 {
@@ -92,7 +93,37 @@ namespace Pinakes.Search
         protected override Query GetDataQuery(WorkSearchRequest request,
             Query idQuery)
         {
-            throw new NotImplementedException();
+            // note that here we need to join works with other tables,
+            // so that among the results a work might include more than 1 row.
+            // It is up to the consumer consolidating them. This is more
+            // performant than making a roundtrip to the server for each resulting
+            // work, and these joins are performed only on the results page.
+
+            Query query = QueryFactory.Query()
+                .From(idQuery)
+                .Join("oeuvres", "oeuvres.id", "q.id")
+                .Join("oeuvres_auteurs AS wa", "oeuvres.id", "wa.id_oeuvre")
+                .Join("auteurs AS a", "wa.id_auteur", "a.id")
+                .Join("roles AS r", "wa.id_role", "r.id")
+                .Select("oeuvres.id",
+                    "oeuvres.titre AS title",
+                    "oeuvres.titulus",
+                    "oeuvres.siecle AS century",
+                    "oeuvres.dates",
+                    "oeuvres.lieu AS place",
+                    "oeuvres.remarque AS note",
+                    "a.nom AS authorName",
+                    "wa.id_role AS authorRoleId",
+                    "r.nom AS authorRoleName")
+                .OrderBy("a.nom", "oeuvres.titre", "oeuvres.id")
+                .Offset(request.GetSkipCount())
+                .Limit(request.PageSize);
+
+#if DEBUG
+            Debug.WriteLine("---DATA:\n" +
+                QueryFactory.Compiler.Compile(query).ToString());
+#endif
+            return query;
         }
     }
 }

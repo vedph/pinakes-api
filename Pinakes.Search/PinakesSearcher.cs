@@ -75,5 +75,10 @@ namespace Pinakes.Search
                 total,
                 authors);
         }
+
+        public DataPage<WorkResult> GetWorks(WorkSearchRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
