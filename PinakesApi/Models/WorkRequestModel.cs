@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pinakes.Search;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,6 +29,14 @@ namespace PinakesApi.Models
         /// </summary>
         [MaxLength(200)]
         public string Text { get; set; }
+
+        /// <summary>
+        /// A value indicating whether to match if at least any
+        /// of the tokens in <see cref="Text"/> matches (i.e. tokens in OR
+        /// relation). The default is to match all the tokens (AND), i.e.
+        /// this property is false.
+        /// </summary>
+        public bool IsMatchAnyEnabled { get; set; }
 
         /// <summary>
         /// The text search scope, represented by a comma delimited
@@ -84,6 +93,29 @@ namespace PinakesApi.Models
         public WorkRequestModel()
         {
             TextScope = "wkttl,wattl";
+        }
+
+        /// <summary>
+        /// Converts this model to the corresponding search request.
+        /// </summary>
+        /// <returns>Request</returns>
+        public WorkSearchRequest ToRequest()
+        {
+            return new WorkSearchRequest
+            {
+                PageNumber = PageNumber,
+                PageSize = PageSize,
+                Text = Text,
+                TextScope = TextScope,
+                IsMatchAnyEnabled = IsMatchAnyEnabled,
+                AuthorId = AuthorId,
+                DictyonId = DictyonId,
+                CenturyMin = CenturyMin,
+                CenturyMax = CenturyMax,
+                KeywordIds = KeywordIds,
+                RelationIds = RelationIds,
+                RelationTargetId = RelationTargetId
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Fusi.Tools.Data;
+using Microsoft.AspNetCore.Mvc;
 using Pinakes.Search;
 using PinakesApi.Models;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace PinakesApi.Controllers
         /// <returns>List of authors</returns>
         [HttpPost("api/authors")]
         [ProducesResponseType(200)]
-        public ActionResult<IList<AuthorResult>> GetAuthors(
+        public ActionResult<DataPage<AuthorResult>> GetAuthors(
             [FromBody] AuthorRequestModel model)
         {
             return Ok(_searcher.GetAuthors(model.ToRequest()));

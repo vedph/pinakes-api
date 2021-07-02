@@ -105,6 +105,43 @@ namespace Pinakes.Search
             };
         }
 
+        private static void AddAuthorToWork(dynamic d, WorkResult work)
+        {
+            // nope if no author
+            if (d.authorId == null || d.authorId == 0) return;
+
+            if (work.Authors == null)
+                work.Authors = new List<WorkResultAuthor>();
+
+            if (work.Authors.All(a => a.Id != d.authorId))
+            {
+                work.Authors.Add(new WorkResultAuthor
+                {
+                    Id = d.id,
+                    Name = d.authorName,
+                    RoleId = d.roleId,
+                    Role = d.roleName
+                });
+            }
+        }
+
+        private static void AddKeywordToWork(dynamic d, WorkResult work)
+        {
+            if (d.keywordId == null || d.keywordId == 0) return;
+
+            if (work.Keywords == null)
+                work.Keywords = new List<LookupResult<int>>();
+
+            if (work.Keywords.All(k => k.Id != d.keywordId))
+            {
+                work.Keywords.Add(new LookupResult<int>
+                {
+                    Id = d.keywordId,
+                    Value = d.keywordValue
+                });
+            }
+        }
+
         /// <summary>
         /// Gets the works.
         /// </summary>
@@ -132,24 +169,20 @@ namespace Pinakes.Search
             }
 
             List<WorkResult> works = new List<WorkResult>();
-            WorkResult current = null;
+            WorkResult work = null;
 
             foreach (dynamic d in t.Item1.Get())
             {
-                if (current == null || current.Id != d.id)
+                if (work == null || work.Id != d.id)
                 {
                     // add pending work
-                    if (current != null)
-                    {
-                        // TODO
-                    }
-                    current = GetWork(d);
+                    if (work != null) works.Add(work);
+                    work = GetWork(d);
                 }
+                AddAuthorToWork(d, work);
+                AddKeywordToWork(d, work);
             }
-            if (current != null)
-            {
-                // TODO
-            }
+            if (work != null) works.Add(work);
 
             return new DataPage<WorkResult>(request.PageNumber,
                 request.PageSize, total, works);
