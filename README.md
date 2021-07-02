@@ -301,7 +301,7 @@ Here I list a set of sample services provided by a UI consuming this API.
 - page size
 - text
 - match any / match all in text
-- text scope (1 or more from `aunam`=author name, `aanam`=alias, `aunot`=note)
+- text scope (1 or more from `aunam`=author name, `aanam`=alias, `aunot`=note; plus, from Zotero: `zattl`, `zaaut`, `zaabs`)
 - is category
 - min century
 - max century
@@ -315,7 +315,7 @@ Here I list a set of sample services provided by a UI consuming this API.
 - page size
 - text
 - match any / match all in text
-- text scope (1 or more from `wkttl`=work title, `wattl`=title alias, `wkinc`=incipit, `wkdes`=desinit, `wkplc`=place, `wknot`=note)
+- text scope (1 or more from `wkttl`=work title, `wattl`=title alias, `wkinc`=incipit, `wkdes`=desinit, `wkplc`=place, `wknot`=note; plus, from Zotero: `zwttl`, `zwaut`, `zwabs`)
 - author ID (from a list)
 - dictyon ID
 - min century
@@ -332,3 +332,5 @@ Here I list a set of sample services provided by a UI consuming this API.
 7. lookup authors (`api/authors`): to lookup authors (get a list of matches while typing some letters) just use the authors search endpoint with page number=1, page size=the limit of matches to get, and text=the text typed.
 
 8. lookup works (`api/works`): to lookup works (get a list of matches while typing some letters) just use the works search endpoint with page number=1, page size=the limit of matches to get, and text=the text typed.
+
+9. lookup relations (`api/relations`): to get the list of relations from the point of view of its parent edge we just select `parent_role` from `relations_types`.

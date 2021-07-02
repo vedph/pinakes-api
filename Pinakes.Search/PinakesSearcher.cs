@@ -14,6 +14,7 @@ namespace Pinakes.Search
     {
         private readonly string _connString;
         private KeywordQueryBuilder _keywordQueryBuilder;
+        private RelationQueryBuilder _relationQueryBuilder;
         private AuthorQueryBuilder _authorQueryBuilder;
 
         /// <summary>
@@ -33,13 +34,29 @@ namespace Pinakes.Search
         /// <param name="authors">if set to <c>true</c>, get the authors keywords;
         /// else get the works keywords.</param>
         /// <returns>List of keywords</returns>
-        public IList<KeywordResult> GetKeywords(bool authors)
+        public IList<LookupResult<int>> GetKeywords(bool authors)
         {
             if (_keywordQueryBuilder == null)
                 _keywordQueryBuilder = new KeywordQueryBuilder(_connString);
 
             Query query = _keywordQueryBuilder.Build(authors);
-            return query.Get<KeywordResult>().ToList();
+            return query.Get<LookupResult<int>>().ToList();
+        }
+
+        /// <summary>
+        /// Gets the list of relations.
+        /// </summary>
+        /// <param name="child">if set to <c>true</c> get the list on the child
+        /// edge of the relations; otherwise, get the list on the parent's edge.
+        /// </param>
+        /// <returns>List of relations</returns>
+        public IList<LookupResult<int>> GetRelations(bool child)
+        {
+            if (_relationQueryBuilder == null)
+                _relationQueryBuilder = new RelationQueryBuilder(_connString);
+
+            Query query = _relationQueryBuilder.Build(child);
+            return query.Get<LookupResult<int>>().ToList();
         }
 
         /// <summary>

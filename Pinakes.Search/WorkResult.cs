@@ -50,7 +50,7 @@ namespace Pinakes.Search
         /// <summary>
         /// Gets or sets the keywords.
         /// </summary>
-        public List<KeywordResult> Keywords { get; set; }
+        public List<LookupResult<int>> Keywords { get; set; }
 
         /// <summary>
         /// Converts to string.

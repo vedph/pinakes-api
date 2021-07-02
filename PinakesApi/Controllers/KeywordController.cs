@@ -29,7 +29,7 @@ namespace PinakesApi.Controllers
         /// <returns>List of keywords</returns>
         [HttpGet("api/keywords/authors")]
         [ProducesResponseType(200)]
-        public ActionResult<IList<KeywordResult>> GetAuthorKeywords()
+        public ActionResult<IList<LookupResult<int>>> GetAuthorKeywords()
         {
             return Ok(_searcher.GetKeywords(true));
         }
@@ -40,7 +40,7 @@ namespace PinakesApi.Controllers
         /// <returns>List of keywords</returns>
         [HttpGet("api/keywords/works")]
         [ProducesResponseType(200)]
-        public ActionResult<IList<KeywordResult>> GetWorkKeywords()
+        public ActionResult<IList<LookupResult<int>>> GetWorkKeywords()
         {
             return Ok(_searcher.GetKeywords(false));
         }

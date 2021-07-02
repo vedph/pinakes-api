@@ -1,17 +1,18 @@
 ﻿namespace Pinakes.Search
 {
     /// <summary>
-    /// A keywords lookup result.
+    /// A generic lookup result, with an ID and a string value representing it.
     /// </summary>
-    public class KeywordResult
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    public class LookupResult<TKey>
     {
         /// <summary>
-        /// Gets or sets the kwyword identifier.
+        /// Gets or sets the identifier.
         /// </summary>
-        public int Id { get; set; }
+        public TKey Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the keyword value.
+        /// Gets or sets the value.
         /// </summary>
         public string Value { get; set; }
 

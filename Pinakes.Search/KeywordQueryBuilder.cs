@@ -37,7 +37,6 @@ namespace Pinakes.Search
                 .WhereExists(subQuery)
                 .OrderBy("keyword");
 
-            string s = QueryFactory.Compiler.Compile(query).Sql;
             return query;
         }
     }
