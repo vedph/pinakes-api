@@ -48,6 +48,11 @@ namespace Pinakes.Search
         public string Note { get; set; }
 
         /// <summary>
+        /// Gets or sets the keywords.
+        /// </summary>
+        public List<KeywordResult> Keywords { get; set; }
+
+        /// <summary>
         /// Converts to string.
         /// </summary>
         /// <returns>

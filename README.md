@@ -207,20 +207,17 @@ limit 10
 
 ### Bibliography
 
-As for bibliography, first we should define what, if anything, should be included in the search.
-If we are going to search inside bibliography, and combine this search with data from the DB, we will probably have better get the required bibliographic data from Zotero and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
-
-So here we should first decide how to use bibliography: if we just have to display it, we can query Zotero. If instead some of its data must become an active part of the search, we must get the subset of data we need, via Zotero API. For instance, the items found at <https://www.zotero.org/groups/44775/manuscripts_on_microfilm_project/library> can be easily retrieved via API calls.
-
 Collection: `irht_grec`.
 
-Zotero fields:
+As for bibliography, we include in the search only a subset of Zotero's data for each item, i.e. probably these fields:
 
 - title
 - author
 - abstract
 
-an item id is just the library ID + the item ID, e.g. <https://www.zotero.org/groups/669969/irht_grec/items/548S2DQW/library>
+This implies that the indexer must get the required bibliographic data from Zotero, and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
+
+A sample Zotero URI has a group ID and a collection ID, e.g. <https://www.zotero.org/groups/44775/manuscripts_on_microfilm_project/library>. The ID of a Zotero item is just the library ID + the item ID, e.g. `669969-548S2DQW` <https://www.zotero.org/groups/669969/irht_grec/items/548S2DQW/library>.
 
 ### Embix Profile
 
@@ -293,3 +290,45 @@ These are the Pinakes conventions:
 - `μπ` = `mp`
 - `ου` = `ou`
 - esprit rude = `h`
+
+## Consuming API
+
+Here I list a set of sample services provided by a UI consuming this API.
+
+1. list authors (`/api/authors`): get a paged list of authors, variously filtered. Filters include zero or more keywords, picked from a list. Filters:
+
+- page number
+- page size
+- text
+- match any / match all in text
+- text scope (1 or more from `aunam`=author name, `aanam`=alias, `aunot`=note)
+- is category
+- min century
+- max century
+- keyword ID(s) (from a list)
+
+2. show details for a specific author (`/api/authors/ID`): data about the author and his works and bibliography. Bibliography comes from Zotero API.
+
+3. list works (`/api/works`): get a paged list of works, variously filtered. Filters include zero or 1 author, picked from a list; and zero or more keywords, picked from a list. Filters:
+
+- page number
+- page size
+- text
+- match any / match all in text
+- text scope (1 or more from `wkttl`=work title, `wattl`=title alias, `wkinc`=incipit, `wkdes`=desinit, `wkplc`=place, `wknot`=note)
+- author ID (from a list)
+- dictyon ID
+- min century
+- max century
+- keyword ID(s) (from a list)
+- relation ID(s) (from a list)
+
+4. show details for a specific work (`/api/works/ID`): data about the work and its bibliography. Bibliography comes from Zotero API.
+
+5. get the full list of authors keywords (`/api/keywords/authors`). This is useful to provide a keywords list in author's filters.
+
+6. get the full list of works keywords (`/api/keywords/works`). This is useful to provide a keywords list in work's filters.
+
+7. lookup authors (`api/authors`): to lookup authors (get a list of matches while typing some letters) just use the authors search endpoint with page number=1, page size=the limit of matches to get, and text=the text typed.
+
+8. lookup works (`api/works`): to lookup works (get a list of matches while typing some letters) just use the works search endpoint with page number=1, page size=the limit of matches to get, and text=the text typed.

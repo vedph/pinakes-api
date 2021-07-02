@@ -89,6 +89,12 @@ namespace Pinakes.Search
             return query;
         }
 
+        /// <summary>
+        /// Gets the data query connected to the specified IDs query.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="idQuery">The identifiers query.</param>
+        /// <returns>The query.</returns>
         protected override Query GetDataQuery(WorkSearchRequest request,
             Query idQuery)
         {
@@ -101,9 +107,13 @@ namespace Pinakes.Search
             Query query = QueryFactory.Query()
                 .From(idQuery)
                 .Join("oeuvres", "oeuvres.id", "q.id")
-                .Join("oeuvres_auteurs AS wa", "oeuvres.id", "wa.id_oeuvre")
-                .Join("auteurs AS a", "wa.id_auteur", "a.id")
-                .Join("roles AS r", "wa.id_role", "r.id")
+                // authors
+                .LeftJoin("oeuvres_auteurs AS wa", "oeuvres.id", "wa.id_oeuvre")
+                .LeftJoin("auteurs AS a", "wa.id_auteur", "a.id")
+                .LeftJoin("roles AS r", "wa.id_role", "r.id")
+                // keywords
+                .LeftJoin("keywords_oeuvres AS wk", "q.id", "wk.id_oeuvre")
+                .LeftJoin("keywords AS k", "wk.id_keyword", "k.id")
                 .Select("oeuvres.id",
                     "oeuvres.titre AS title",
                     "oeuvres.titulus",
@@ -111,9 +121,15 @@ namespace Pinakes.Search
                     "oeuvres.dates",
                     "oeuvres.lieu AS place",
                     "oeuvres.remarque AS note",
+                    // optional author(s)
+                    "a.id AS authorId",
                     "a.nom AS authorName",
                     "wa.id_role AS authorRoleId",
-                    "r.nom AS authorRoleName")
+                    "r.nom AS authorRoleName",
+                    // optional keyword(s)
+                    "k.id AS keywordId",
+                    "k.keyword AS keywordValue"
+                    )
                 .OrderBy("a.nom", "oeuvres.titre", "oeuvres.id")
                 .Offset(request.GetSkipCount())
                 .Limit(request.PageSize);

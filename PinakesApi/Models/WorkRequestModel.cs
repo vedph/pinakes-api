@@ -31,8 +31,9 @@ namespace PinakesApi.Models
 
         /// <summary>
         /// The text search scope, represented by a comma delimited
-        /// list of field codes from <c>aunam</c>=author name, <c>aanam</c>=alias,
-        /// <c>aunot</c>=note.
+        /// list of field codes from <c>wkttl</c>=work title, <c>wattl</c>=title
+        /// alias, <c>wkinc</c>=incipit, <c>wkdes</c>=desinit, <c>wkplc</c>=place,
+        /// <c>wknot</c>=note.
         /// </summary>
         [MaxLength(100)]
         [RegularExpression("^(?:(?:wkttl|wattl|wktit|wkinc|wkdes|wkplc|wknot),?)*$")]
