@@ -128,8 +128,7 @@ namespace Pinakes.Search
                     "r.nom AS authorRoleName",
                     // optional keyword(s)
                     "k.id AS keywordId",
-                    "k.keyword AS keywordValue"
-                    )
+                    "k.keyword AS keywordValue")
                 .OrderBy("a.nom", "oeuvres.titre", "oeuvres.id")
                 .Offset(request.GetSkipCount())
                 .Limit(request.PageSize);

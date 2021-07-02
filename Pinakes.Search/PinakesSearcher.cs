@@ -16,6 +16,7 @@ namespace Pinakes.Search
         private KeywordQueryBuilder _keywordQueryBuilder;
         private RelationQueryBuilder _relationQueryBuilder;
         private AuthorQueryBuilder _authorQueryBuilder;
+        private WorkQueryBuilder _workQueryBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PinakesSearcher"/> class.
@@ -86,16 +87,72 @@ namespace Pinakes.Search
             }
 
             List<AuthorResult> authors = t.Item1.Get<AuthorResult>().ToList();
-            return new DataPage<AuthorResult>(
-                request.PageNumber,
-                request.PageSize,
-                total,
-                authors);
+            return new DataPage<AuthorResult>(request.PageNumber,
+                request.PageSize, total, authors);
         }
 
+        private static WorkResult GetWork(dynamic d)
+        {
+            return new WorkResult
+            {
+                Id = d.id,
+                Title = d.title,
+                Titulus = d.titulus,
+                Century = d.century,
+                Dates = d.dates,
+                Place = d.place,
+                Note = d.note
+            };
+        }
+
+        /// <summary>
+        /// Gets the works.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>The works page.</returns>
         public DataPage<WorkResult> GetWorks(WorkSearchRequest request)
         {
-            throw new NotImplementedException();
+            if (_workQueryBuilder == null)
+                _workQueryBuilder = new WorkQueryBuilder(_connString);
+
+            var t = _workQueryBuilder.Build(request);
+
+            // count
+            dynamic row = t.Item2.AsCount().First();
+            int total = (int)row.count;
+
+            // data
+            if (total == 0)
+            {
+                return new DataPage<WorkResult>(
+                    request.PageNumber,
+                    request.PageSize,
+                    0,
+                    Array.Empty<WorkResult>());
+            }
+
+            List<WorkResult> works = new List<WorkResult>();
+            WorkResult current = null;
+
+            foreach (dynamic d in t.Item1.Get())
+            {
+                if (current == null || current.Id != d.id)
+                {
+                    // add pending work
+                    if (current != null)
+                    {
+                        // TODO
+                    }
+                    current = GetWork(d);
+                }
+            }
+            if (current != null)
+            {
+                // TODO
+            }
+
+            return new DataPage<WorkResult>(request.PageNumber,
+                request.PageSize, total, works);
         }
     }
 }
