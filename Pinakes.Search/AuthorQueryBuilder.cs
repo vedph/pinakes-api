@@ -36,26 +36,30 @@ namespace Pinakes.Search
 
             if (request.IsCategory.HasValue)
             {
-                query.Where("auteurs.is_categorie",
+                query.Where("t.is_categorie",
                     request.IsCategory.Value ? 1 : 0);
             }
 
             if (request.CenturyMin != 0)
             {
+                query.Join("date", "date.targetid", "t.id");
                 query.Where("date.field", "aut");
                 query.Where("date.dateval", ">=", request.CenturyMin);
             }
 
             if (request.CenturyMax != 0)
             {
+                if (request.CenturyMin == 0)
+                    query.Join("date", "date.targetid", "t.id");
                 query.Where("date.field", "aut");
                 query.Where("date.dateval", "<=", request.CenturyMax);
             }
 
             if (request.KeywordIds?.Count > 0)
             {
-                query.Join("keywords_auteurs AS ka", "t.id", "ka.id_auteur")
-                    .WhereIn("ka.id_keyword", request.KeywordIds);
+                query.Join("keywords_auteurs", "t.id", 
+                    "keywords_auteurs.id_auteur")
+                    .WhereIn("keywords_auteurs.id_keyword", request.KeywordIds);
             }
 
             return query;

@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinakes.Search", "Pinakes.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PinakesApi", "PinakesApi\PinakesApi.csproj", "{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinakes.Search.Test", "Pinakes.Search.Test\Pinakes.Search.Test.csproj", "{0B29942B-9439-43CB-9747-54D4BF1BAA81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55CB1D45-07BF-4F4F-AD28-970DA9CEE7B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B29942B-9439-43CB-9747-54D4BF1BAA81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B29942B-9439-43CB-9747-54D4BF1BAA81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B29942B-9439-43CB-9747-54D4BF1BAA81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B29942B-9439-43CB-9747-54D4BF1BAA81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
