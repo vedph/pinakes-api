@@ -83,7 +83,8 @@ namespace PinakesApi.Models
                 IsMatchAnyEnabled = IsMatchAnyEnabled,
                 IsCategory = IsCategory,
                 CenturyMin = CenturyMin,
-                CenturyMax = CenturyMax
+                CenturyMax = CenturyMax,
+                KeywordIds = KeywordIds
             };
         }
     }
