@@ -119,7 +119,7 @@ namespace Pinakes.Search
                 {
                     Id = d.id,
                     Name = d.authorName,
-                    RoleId = d.roleId,
+                    RoleId = d.roleId ?? 0,
                     Role = d.roleName
                 });
             }

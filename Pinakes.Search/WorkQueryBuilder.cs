@@ -118,7 +118,7 @@ namespace Pinakes.Search
                     "oeuvres.titre AS title",
                     "oeuvres.titulus",
                     "oeuvres.siecle AS century",
-                    "oeuvres.dates",
+                    "oeuvres.date AS dates",
                     "oeuvres.lieu AS place",
                     "oeuvres.remarque AS note",
                     // optional author(s)
