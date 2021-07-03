@@ -48,15 +48,16 @@ namespace Pinakes.Search
 
             if (request.AuthorId > 0)
             {
-                query.Join("oeuvres_auteurs wa", "t.id", "wa.id_oeuvre")
-                    .Where("wa.id_auteur", request.AuthorId);
+                query.Join("oeuvres_auteurs", "t.id", "oeuvres_auteurs.id_oeuvre")
+                    .Where("oeuvres_auteurs.id_auteur", request.AuthorId);
             }
 
             if (request.DictyonId > 0)
             {
-                query.Join("temoins AS tm", "t.id", "temoins.id_oeuvre")
-                    .Join("unites_codicologiques AS uc", "tm.id_uc", "uc.id")
-                    .Where("uc.id_cote", request.DictyonId);
+                query.Join("temoins", "t.id", "temoins.id_oeuvre")
+                    .Join("unites_codicologiques", "temoins.id_uc",
+                        "unites_codicologiques.id")
+                    .Where("unites_codicologiques.id_cote", request.DictyonId);
             }
 
             if (request.CenturyMin != 0)
@@ -73,17 +74,17 @@ namespace Pinakes.Search
 
             if (request.KeywordIds?.Count > 0)
             {
-                query.Join("keywords_oeuvres AS kw", "t.id", "kw.id_oeuvre")
-                    .WhereIn("kw.id_keyword", request.KeywordIds);
+                query.Join("keywords_oeuvres", "t.id", "keywords_oeuvres.id_oeuvre")
+                    .WhereIn("keywords_oeuvres.id_keyword", request.KeywordIds);
             }
 
             if (request.RelationIds?.Count > 0)
             {
-                query.Join("relations AS r", "t.id", "id_parent")
-                    .WhereIn("r.id_type", request.RelationIds);
+                query.Join("relations", "t.id", "relations.id_parent")
+                    .WhereIn("relations.id_type", request.RelationIds);
 
                 if (request.RelationTargetId > 0)
-                    query.Where("r.id_child", request.RelationTargetId);
+                    query.Where("relations.id_child", request.RelationTargetId);
             }
 
             return query;
@@ -108,12 +109,12 @@ namespace Pinakes.Search
                 .From(idQuery)
                 .Join("oeuvres", "oeuvres.id", "q.id")
                 // authors
-                .LeftJoin("oeuvres_auteurs AS wa", "oeuvres.id", "wa.id_oeuvre")
-                .LeftJoin("auteurs AS a", "wa.id_auteur", "a.id")
-                .LeftJoin("roles AS r", "wa.id_role", "r.id")
+                .LeftJoin("oeuvres_auteurs", "oeuvres.id", "oeuvres_auteurs.id_oeuvre")
+                .LeftJoin("auteurs", "oeuvres_auteurs.id_auteur", "auteurs.id")
+                .LeftJoin("roles", "oeuvres_auteurs.id_role", "roles.id")
                 // keywords
-                .LeftJoin("keywords_oeuvres AS wk", "q.id", "wk.id_oeuvre")
-                .LeftJoin("keywords AS k", "wk.id_keyword", "k.id")
+                .LeftJoin("keywords_oeuvres", "q.id", "keywords_oeuvres.id_oeuvre")
+                .LeftJoin("keywords", "keywords_oeuvres.id_keyword", "keywords.id")
                 .Select("oeuvres.id",
                     "oeuvres.titre AS title",
                     "oeuvres.titulus",
@@ -122,14 +123,14 @@ namespace Pinakes.Search
                     "oeuvres.lieu AS place",
                     "oeuvres.remarque AS note",
                     // optional author(s)
-                    "a.id AS authorId",
-                    "a.nom AS authorName",
-                    "wa.id_role AS authorRoleId",
-                    "r.nom AS authorRoleName",
+                    "auteurs.id AS authorId",
+                    "auteurs.nom AS authorName",
+                    "oeuvres_auteurs.id_role AS authorRoleId",
+                    "roles.nom AS authorRoleName",
                     // optional keyword(s)
-                    "k.id AS keywordId",
-                    "k.keyword AS keywordValue")
-                .OrderBy("a.nom", "oeuvres.titre", "oeuvres.id")
+                    "keywords.id AS keywordId",
+                    "keywords.keyword AS keywordValue")
+                .OrderBy("auteurs.nom", "oeuvres.titre", "oeuvres.id")
                 .Offset(request.GetSkipCount())
                 .Limit(request.PageSize);
 
