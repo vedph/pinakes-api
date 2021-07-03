@@ -73,12 +73,14 @@ namespace Pinakes.Search
             Query query = QueryFactory.Query()
                 .From(idQuery)
                 .Join("auteurs", "auteurs.id", "q.id")
+                .LeftJoin("auteurs_alias", "q.id", "auteurs_alias.id_auteur")
                 .Select("auteurs.id",
                     "auteurs.nom AS name",
+                    "auteurs_alias.nom AS alias",
                     "auteurs.siecle AS century",
                     "auteurs.dates",
                     "auteurs.remarque AS note",
-                    "auteurs.is_categorie AS iscategory")
+                    "auteurs.is_categorie AS isCategory")
                 .OrderBy("auteurs.nom", "auteurs.id")
                 .Offset(request.GetSkipCount())
                 .Limit(request.PageSize);

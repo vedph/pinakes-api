@@ -1,4 +1,6 @@
-﻿namespace Pinakes.Search
+﻿using System.Collections.Generic;
+
+namespace Pinakes.Search
 {
     /// <summary>
     /// The author as resulting from a search.
@@ -14,6 +16,11 @@
         /// Gets or sets the name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the aliases.
+        /// </summary>
+        public List<string> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the century.

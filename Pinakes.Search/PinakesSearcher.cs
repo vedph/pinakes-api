@@ -60,6 +60,31 @@ namespace Pinakes.Search
             return query.Get<LookupResult<int>>().ToList();
         }
 
+        private static AuthorResult GetAuthor(dynamic d)
+        {
+            return new AuthorResult
+            {
+                Id = d.id,
+                Name = d.name,
+                Century = d.century ?? "",
+                Dates = d.dates,
+                Note = d.note,
+                IsCategory = d.isCategory != null && d.isCategory
+            };
+        }
+
+        private static void AddAliasToAuthor(dynamic d, AuthorResult author)
+        {
+            // nope if no alias
+            if (d.alias == null) return;
+
+            if (author.Aliases == null)
+                author.Aliases = new List<string>();
+
+            if (author.Aliases.All(a => a != d.alias))
+                author.Aliases.Add(d.alias);
+        }
+
         /// <summary>
         /// Gets the authors.
         /// </summary>
@@ -86,7 +111,21 @@ namespace Pinakes.Search
                     Array.Empty<AuthorResult>());
             }
 
-            List<AuthorResult> authors = t.Item1.Get<AuthorResult>().ToList();
+            List<AuthorResult> authors = new List<AuthorResult>();
+            AuthorResult author = null;
+
+            foreach (dynamic d in t.Item1.Get())
+            {
+                if (author == null || author.Id != d.id)
+                {
+                    // add pending author
+                    if (author != null) authors.Add(author);
+                    author = GetAuthor(d);
+                }
+                AddAliasToAuthor(d, author);
+            }
+            if (author != null) authors.Add(author);
+
             return new DataPage<AuthorResult>(request.PageNumber,
                 request.PageSize, total, authors);
         }
