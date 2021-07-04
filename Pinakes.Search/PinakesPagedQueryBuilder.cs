@@ -2,6 +2,7 @@
 using Embix.Search;
 using Embix.Search.MySql;
 using SqlKata;
+using SqlKata.Compilers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -158,7 +159,16 @@ namespace Pinakes.Search
                 for (int i = 1; i < queries.Count; i++)
                 {
                     if (request.IsMatchAnyEnabled) idQuery.Union(queries[i]);
-                    else idQuery.Intersect(queries[i]);
+                    else
+                    {
+                        // MySql does not support intersect
+                        if (QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
+                        {
+                            // idQuery.Join(queries[i], );
+                            // TODO
+                        }
+                        else idQuery.Intersect(queries[i]);
+                    }
                 }
             }
 
