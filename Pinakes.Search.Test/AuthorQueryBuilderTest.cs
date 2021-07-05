@@ -30,9 +30,9 @@ namespace Pinakes.Search.Test
                 "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM " +
-                "`auteurs` AS `t` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM " +
+                "`auteurs` AS `t1` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `occurrence`.`field` IN ('aunam', 'aanam') AND " +
                 "LOWER(`token`.`value`) like '%he%') AS `q` " +
@@ -60,9 +60,9 @@ namespace Pinakes.Search.Test
                 "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM " +
-                "`auteurs` AS `t` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM " +
+                "`auteurs` AS `t1` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `occurrence`.`field` IN ('aunam', 'aanam') AND " +
                 "LOWER(`token`.`value`) like '%he%') AS `q` " +
@@ -102,9 +102,9 @@ namespace Pinakes.Search.Test
                 "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM " +
-                "`auteurs` AS `t` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM " +
+                "`auteurs` AS `t1` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `occurrence`.`field` IN ('aunam', 'aanam', 'aunot') AND " +
                 "LOWER(`token`.`value`) like '%he%') AS `q` " +
@@ -134,10 +134,10 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM `auteurs` AS `t` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `t`.`is_categorie` = 1 " +
+                "WHERE `t1`.`is_categorie` = 1 " +
                 "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
@@ -167,9 +167,9 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`siecle` AS `century`, `auteurs`.`dates`, " +
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM `auteurs` AS `t` " +
-                "INNER JOIN `date` ON `date`.`targetid` = `t`.`id` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
+                "INNER JOIN `date` ON `date`.`targetid` = `t1`.`id` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `date`.`field` = 'aut' AND `date`.`dateval` >= 15 " +
                 "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
@@ -200,9 +200,9 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`siecle` AS `century`, `auteurs`.`dates`, " +
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM `auteurs` AS `t` " +
-                "INNER JOIN `date` ON `date`.`targetid` = `t`.`id` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
+                "INNER JOIN `date` ON `date`.`targetid` = `t1`.`id` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `date`.`field` = 'aut' AND `date`.`dateval` <= 15 " +
                 "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
@@ -232,10 +232,10 @@ namespace Pinakes.Search.Test
                 "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
-                "FROM (SELECT DISTINCT `t`.`id` FROM `auteurs` AS `t` " +
+                "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
                 "INNER JOIN `keywords_auteurs` ON " +
-                "`t`.`id` = `keywords_auteurs`.`id_auteur`" +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t`.`id` " +
+                "`t1`.`id` = `keywords_auteurs`.`id_auteur` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
                 "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
                 "WHERE `keywords_auteurs`.`id_keyword` IN (68) " +
                 "AND `occurrence`.`field` IN ('aunam', 'aanam') " +

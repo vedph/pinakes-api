@@ -40,21 +40,25 @@ namespace Pinakes.Search
         /// based on text search.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="nr">The ordinal number of the query to build.
+        /// This is used to alias the query like t1, t2, etc.</param>
         /// <returns>The query.</returns>
-        protected override Query GetNonTextQuery(WorkSearchRequest request)
+        protected override Query GetNonTextQuery(WorkSearchRequest request,
+            int nr)
         {
-            Query query = QueryFactory.Query("oeuvres AS t")
-                .Select("t.id").Distinct();
+            string tn = "t" + nr;
+            Query query = QueryFactory.Query("oeuvres AS " + tn)
+                .Select($"{tn}.id").Distinct();
 
             if (request.AuthorId > 0)
             {
-                query.Join("oeuvres_auteurs", "t.id", "oeuvres_auteurs.id_oeuvre")
+                query.Join("oeuvres_auteurs", $"{tn}.id", "oeuvres_auteurs.id_oeuvre")
                     .Where("oeuvres_auteurs.id_auteur", request.AuthorId);
             }
 
             if (request.DictyonId > 0)
             {
-                query.Join("temoins", "t.id", "temoins.id_oeuvre")
+                query.Join("temoins", $"{tn}.id", "temoins.id_oeuvre")
                     .Join("unites_codicologiques", "temoins.id_uc",
                         "unites_codicologiques.id")
                     .Where("unites_codicologiques.id_cote", request.DictyonId);
@@ -74,13 +78,13 @@ namespace Pinakes.Search
 
             if (request.KeywordIds?.Count > 0)
             {
-                query.Join("keywords_oeuvres", "t.id", "keywords_oeuvres.id_oeuvre")
+                query.Join("keywords_oeuvres", $"{tn}.id", "keywords_oeuvres.id_oeuvre")
                     .WhereIn("keywords_oeuvres.id_keyword", request.KeywordIds);
             }
 
             if (request.RelationIds?.Count > 0)
             {
-                query.Join("relations", "t.id", "relations.id_parent")
+                query.Join("relations", $"{tn}.id", "relations.id_parent")
                     .WhereIn("relations.id_type", request.RelationIds);
 
                 if (request.RelationTargetId > 0)

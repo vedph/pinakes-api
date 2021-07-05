@@ -28,21 +28,25 @@ namespace Pinakes.Search
         /// based on text search.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="nr">The ordinal number of the query to build.
+        /// This is used to alias the query like t1, t2, etc.</param>
         /// <returns>The query.</returns>
-        protected override Query GetNonTextQuery(AuthorSearchRequest request)
+        protected override Query GetNonTextQuery(AuthorSearchRequest request,
+            int nr)
         {
-            Query query = QueryFactory.Query("auteurs AS t")
-                .Select("t.id").Distinct();
+            string tn = "t" + nr;
+            Query query = QueryFactory.Query("auteurs AS " + tn)
+                .Select($"{tn}.id").Distinct();
 
             if (request.IsCategory.HasValue)
             {
-                query.Where("t.is_categorie",
+                query.Where($"{tn}.is_categorie",
                     request.IsCategory.Value ? 1 : 0);
             }
 
             if (request.CenturyMin != 0)
             {
-                query.Join("date", "date.targetid", "t.id");
+                query.Join("date", "date.targetid", $"{tn}.id");
                 query.Where("date.field", "aut");
                 query.Where("date.dateval", ">=", request.CenturyMin);
             }
@@ -50,14 +54,14 @@ namespace Pinakes.Search
             if (request.CenturyMax != 0)
             {
                 if (request.CenturyMin == 0)
-                    query.Join("date", "date.targetid", "t.id");
+                    query.Join("date", "date.targetid", $"{tn}.id");
                 query.Where("date.field", "aut");
                 query.Where("date.dateval", "<=", request.CenturyMax);
             }
 
             if (request.KeywordIds?.Count > 0)
             {
-                query.Join("keywords_auteurs", "t.id", 
+                query.Join("keywords_auteurs", $"{tn}.id",
                     "keywords_auteurs.id_auteur")
                     .WhereIn("keywords_auteurs.id_keyword", request.KeywordIds);
             }
@@ -90,7 +94,7 @@ namespace Pinakes.Search
                 .Limit(request.PageSize);
 
 #if DEBUG
-            Debug.WriteLine("---DATA:\n" + 
+            Debug.WriteLine("---DATA:\n" +
                 QueryFactory.Compiler.Compile(query).ToString());
 #endif
             return query;

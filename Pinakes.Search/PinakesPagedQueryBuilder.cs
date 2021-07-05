@@ -75,8 +75,10 @@ namespace Pinakes.Search
         /// based on text search.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="nr">The ordinal number of the query to build.
+        /// This is used to alias the query like t1, t2, etc.</param>
         /// <returns>The query.</returns>
-        protected abstract Query GetNonTextQuery(TRequest request);
+        protected abstract Query GetNonTextQuery(TRequest request, int nr);
 
         /// <summary>
         /// Gets the Embix fields to search in from the specified request.
@@ -130,10 +132,11 @@ namespace Pinakes.Search
             if (!string.IsNullOrEmpty(request.Text))
             {
                 // text
+                int n = 0;
                 foreach (string token in request.Text.Split())
                 {
-                    Query tokenQuery = GetNonTextQuery(request);
-                    tokenQuery.Join("occurrence", "occurrence.targetid", "t.id");
+                    Query tokenQuery = GetNonTextQuery(request, ++n);
+                    tokenQuery.Join("occurrence", "occurrence.targetid", $"t{n}.id");
                     tokenQuery.Join("token", "occurrence.tokenid", "token.id");
 
                     IList<string> fields = GetFields(request);
@@ -149,26 +152,27 @@ namespace Pinakes.Search
             else
             {
                 // non-text
-                queries.Add(GetNonTextQuery(request));
+                queries.Add(GetNonTextQuery(request, 1));
             }
 
-            // build a concatenated query
             Query idQuery;
-            if (QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
+            if (queries.Count > 1)
             {
-                idQuery = QueryFactory.Query("auteurs AS q").Select("q.id");
-                for (int i = 0; i < queries.Count; i++)
+                // MySql is a special case as it does not support intersect
+                if (!request.IsMatchAnyEnabled
+                    && QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
                 {
-                    string alias = $"s{i}";
-                    idQuery.With(alias, queries[i]);
-                    idQuery.Join(alias, "q.id", $"{alias}.id");
+                    idQuery = QueryFactory.Query("auteurs AS q").Select("q.id");
+                    for (int i = 0; i < queries.Count; i++)
+                    {
+                        string alias = $"s{i}";
+                        idQuery.With(alias, queries[i]);
+                        idQuery.Join(alias, "q.id", $"{alias}.id");
+                    }
                 }
-            }
-            else
-            {
-                idQuery = queries[0].As("q");
-                if (queries.Count > 1)
+                else
                 {
+                    idQuery = queries[0].As("q");
                     for (int i = 1; i < queries.Count; i++)
                     {
                         if (request.IsMatchAnyEnabled) idQuery.Union(queries[i]);
@@ -176,6 +180,7 @@ namespace Pinakes.Search
                     }
                 }
             }
+            else idQuery = queries[0].As("q");
 
 #if DEBUG
             Debug.WriteLine("---ID:\n" + QueryFactory.Compiler.Compile(idQuery).ToString());
