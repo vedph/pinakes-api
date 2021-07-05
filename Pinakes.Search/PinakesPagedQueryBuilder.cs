@@ -153,20 +153,26 @@ namespace Pinakes.Search
             }
 
             // build a concatenated query
-            Query idQuery = queries[0].As("q");
-            if (queries.Count > 1)
+            Query idQuery;
+            if (QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
             {
-                for (int i = 1; i < queries.Count; i++)
+                // give a name to each with-table
+                idQuery = QueryFactory.Query("auteurs").Select("id");
+                for (int i = 0; i < queries.Count; i++)
                 {
-                    if (request.IsMatchAnyEnabled) idQuery.Union(queries[i]);
-                    else
+                    string alias = $"s{i}";
+                    idQuery.With(alias, queries[i]);
+                    idQuery.Join(alias, "q.id", $"{alias}.id");
+                }
+            }
+            else
+            {
+                idQuery = queries[0].As("q");
+                if (queries.Count > 1)
+                {
+                    for (int i = 1; i < queries.Count; i++)
                     {
-                        // MySql does not support intersect
-                        if (QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
-                        {
-                            // idQuery.Join(queries[i], );
-                            // TODO
-                        }
+                        if (request.IsMatchAnyEnabled) idQuery.Union(queries[i]);
                         else idQuery.Intersect(queries[i]);
                     }
                 }
