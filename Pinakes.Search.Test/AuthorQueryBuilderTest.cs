@@ -1,5 +1,4 @@
 using SqlKata.Compilers;
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -85,7 +84,36 @@ namespace Pinakes.Search.Test
         [Fact]
         public void Build_TextManyTokensAny_Ok()
         {
-            throw new NotImplementedException();
+            const string sql =
+                "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
+                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
+                "`auteurs`.`is_categorie` AS `isCategory` FROM (" +
+                "SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
+                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
+                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`token`.`value`) like '%he%' " +
+                "UNION SELECT DISTINCT `t2`.`id` FROM `auteurs` AS `t2` " +
+                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t2`.`id` " +
+                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
+                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`token`.`value`) like '%an%') AS `q` " +
+                "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
+                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
+                "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
+
+            AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
+            var t = builder.Build(new AuthorSearchRequest
+            {
+                PageNumber = 1,
+                PageSize = 20,
+                Text = "*=he *=an",
+                IsMatchAnyEnabled = true
+            });
+            Assert.Equal(
+                NormalizeWs(sql),
+                NormalizeWs(_compiler.Compile(t.Item1).ToString()));
         }
 
         [Fact]
@@ -119,6 +147,7 @@ namespace Pinakes.Search.Test
                 PageNumber = 1,
                 PageSize = 20,
                 Text = "*=he *=an",
+                IsMatchAnyEnabled = false
             });
             Assert.Equal(
                 NormalizeWs(sql),
