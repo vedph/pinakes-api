@@ -156,8 +156,7 @@ namespace Pinakes.Search
             Query idQuery;
             if (QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
             {
-                // give a name to each with-table
-                idQuery = QueryFactory.Query("auteurs").Select("id");
+                idQuery = QueryFactory.Query("auteurs AS q").Select("q.id");
                 for (int i = 0; i < queries.Count; i++)
                 {
                     string alias = $"s{i}";
