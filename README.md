@@ -4,7 +4,14 @@ An API wrapping an essential search engine for the RAP subset of the Pinakes dat
 
 ## Quick Start
 
-1. have your Pinakes DB imported in MySql under a database named `pinakes`.
+1. have your Pinakes DB imported in MySql under a database named `pinakes`. Should you want to use MySql in a Docker container, do something like:
+
+```ps1
+docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=mysql -v c:/data/mysql:/var/lib/mysql -p 3306:3306 mysql --default-authentication-plugin=mysql_native_password
+```
+
+assuming that you have created a folder `c:\data\mysql`.
+
 2. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes.profile` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
 
 ```ps1
