@@ -148,9 +148,40 @@ Invalid dates are listed in the log, like this (referring to an author, Hierothe
 
 This is not exposed in a UI, but is a general filter always applied to get only the RAP data subset.
 
-RAP records are identified in table `identifiants` by `id_type`=234; the `id` supposedly being the work ID. In `remarque` you find the name of the curator (e.g. `Curator: Bucossi 2020`).
+RAP records are identified in table `identifiants` by `id_type`=234 (e.g. `SELECT * FROM pinakes.identifiants where remarque like '%bucossi%';`). In `remarque` you find the name of the curator (e.g. `Curator: Bucossi 2020`).
 
-So all the work IDs must be JOINed with `identifiants i ON i.id=work ID WHERE id_type=234`.
+So, these should be the RAP works:
+
+```sql
+SELECT w.id, w.titre, i.id_type FROM oeuvres w
+INNER JOIN identifiants_oeuvres wi ON w.id=wi.id_oeuvre
+INNER JOIN identifiants i ON wi.id_identifiant=i.id
+WHERE i.id_type=234
+ORDER BY w.titre;
+```
+
+And these might possibly be the RAP authors:
+
+```sql
+SELECT a.id, a.nom, i.id_type FROM auteurs a
+INNER JOIN identifiants_auteurs ai ON a.id=ai.id_auteur
+INNER JOIN identifiants i ON ai.id_identifiant=i.id
+WHERE i.id_type=234
+ORDER BY a.nom;
+```
+
+Yet, for authors I get no results. Perhaps this depends on the fact that authors cross the boundaries of a single project, so that maybe the author X has been entered in the context of project Y, and then has just been reused in the context of project Z. If this is true, we cannot filter authors in the same way, but we should rather rely on their works, like:
+
+```sql
+SELECT a.id, a.nom, i.id_type FROM auteurs a
+INNER JOIN oeuvres_auteurs wa ON a.id=wa.id_auteur
+INNER JOIN identifiants_oeuvres wi ON wi.id_oeuvre=wa.id_oeuvre
+INNER JOIN identifiants i ON wi.id_identifiant=i.id
+WHERE i.id_type=234
+ORDER BY a.nom;
+```
+
+This returns some results. Of course, this has the disadvantage that we would never find an author without any work, which anyway does not appear to be the case, at least for RAP.
 
 ### Search Author
 
