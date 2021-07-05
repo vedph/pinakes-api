@@ -94,13 +94,10 @@ namespace Pinakes.Search
         /// <returns>The query.</returns>
         protected Query GetCountQuery(Query idQuery)
         {
-            Query query = QueryFactory.Query().From(idQuery)
+            return QueryFactory.Query()
+                .From(idQuery)
+                .As("q")
                 .AsCount(new[] { "q.id" });
-#if DEBUG
-            Debug.WriteLine("---COUNT:\n" +
-                QueryFactory.Compiler.Compile(query).ToString());
-#endif
-            return query;
         }
 
         /// <summary>
@@ -162,12 +159,12 @@ namespace Pinakes.Search
                 if (!request.IsMatchAnyEnabled
                     && QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
                 {
-                    idQuery = QueryFactory.Query("auteurs AS q").Select("q.id");
+                    idQuery = QueryFactory.Query("auteurs AS qs").As("q").Select("qs.id");
                     for (int i = 0; i < queries.Count; i++)
                     {
                         string alias = $"s{i}";
-                        idQuery.With(alias, queries[i]);
-                        idQuery.Join(alias, "q.id", $"{alias}.id");
+                        // idQuery.With(alias, queries[i]);
+                        idQuery.Join(alias, "qs.id", $"{alias}.id");
                     }
                 }
                 else
@@ -182,13 +179,31 @@ namespace Pinakes.Search
             }
             else idQuery = queries[0].As("q");
 
-#if DEBUG
-            Debug.WriteLine("---ID:\n" + QueryFactory.Compiler.Compile(idQuery).ToString());
-#endif
-
-            return Tuple.Create(
+            var t = Tuple.Create(
                 GetDataQuery(request, idQuery),
                 GetCountQuery(idQuery));
+
+            if (queries.Count > 1
+                && !request.IsMatchAnyEnabled
+                && QueryFactory.Compiler.GetType() == typeof(MySqlCompiler))
+            {
+                for (int i = 0; i < queries.Count; i++)
+                {
+                    string alias = $"s{i}";
+                    t.Item1.With(alias, queries[i]);
+                    t.Item2.With(alias, queries[i]);
+                }
+            }
+
+#if DEBUG
+            Debug.WriteLine("---ID:\n" + QueryFactory.Compiler.Compile(idQuery).ToString());
+            Debug.WriteLine("\n---DATA:\n" +
+                QueryFactory.Compiler.Compile(t.Item1).ToString());
+            Debug.WriteLine("\n---COUNT:\n" +
+                QueryFactory.Compiler.Compile(t.Item2).ToString());
+            Debug.WriteLine("---");
+#endif
+            return t;
         }
     }
 }
