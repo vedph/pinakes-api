@@ -1,4 +1,5 @@
 ﻿using Fusi.Antiquity.Chronology;
+using Fusi.Tools;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -59,9 +60,9 @@ namespace Pinakes.Index
             IDbCommand command,
             string field,
             CancellationToken cancel,
-            IProgress<int> progress = null)
+            IProgress<ProgressReport> progress = null)
         {
-            int n = 0;
+            ProgressReport report = progress != null ? new ProgressReport() : null;
             foreach (var s in sources)
             {
                 HistoricalDate date = _adapter.GetDate(s.Item2);
@@ -80,9 +81,18 @@ namespace Pinakes.Index
                 command.ExecuteNonQuery();
 
                 if (cancel.IsCancellationRequested) break;
-                if (++n % 100 == 0) progress?.Report(n);
+                if (progress != null && ++report.Count % 10 == 0)
+                {
+                    report.Percent = report.Count * 100 / sources.Count;
+                    progress?.Report(report);
+                }
             }
-            progress?.Report(n);
+
+            if (progress != null)
+            {
+                report.Percent = 100;
+                progress?.Report(report);
+            }
         }
 
         /// <summary>
@@ -94,7 +104,7 @@ namespace Pinakes.Index
         /// <exception cref="ArgumentNullException">connection</exception>
         protected override void DoIndex(IDbConnection connection,
             CancellationToken cancel,
-            IProgress<int> progress = null)
+            IProgress<ProgressReport> progress = null)
         {
             if (connection == null) throw new ArgumentNullException(nameof(connection));
 

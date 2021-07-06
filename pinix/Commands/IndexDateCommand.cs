@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.CommandLineUtils;
+﻿using Fusi.Tools;
+using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pinakes.Index;
+using ShellProgressBar;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -56,13 +58,19 @@ namespace Pinix.Cli.Commands
                 _dbName);
 
             _logger?.LogInformation("Index date");
+            ProgressBar bar = new ProgressBar(100, null, new ProgressBarOptions
+            {
+                DisplayTimeInRealTime = true,
+                EnableTaskBarProgress = true
+            });
             PinakesDateIndexer indexer = new PinakesDateIndexer(connString)
             {
                 Logger = _logger
             };
-            indexer.Index(CancellationToken.None, new Progress<int>((count) =>
+            indexer.Index(CancellationToken.None, new Progress<ProgressReport>(
+                report =>
             {
-                Console.WriteLine(count);
+                bar.Tick(report.Percent);
             }));
 
             return Task.CompletedTask;

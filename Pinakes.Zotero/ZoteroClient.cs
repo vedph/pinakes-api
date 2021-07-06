@@ -63,11 +63,13 @@ namespace Pinakes.Zotero
         /// Gets the data fragment for the specified item.
         /// </summary>
         /// <param name="id">The item identifier.</param>
+        /// <param name="targetId">The target ID.</param>
         /// <param name="forAuthor">if set to <c>true</c>, the fragment is being
         /// retrieved for authors; else for works.</param>
         /// <returns>The fragment or null if not found.</returns>
         /// <exception cref="ArgumentNullException">id</exception>
-        public BiblioItemFragment GetItemFragment(string id, bool forAuthor)
+        public BiblioItemFragment GetItemFragment(string id, int targetId,
+            bool forAuthor)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
 
@@ -80,6 +82,7 @@ namespace Pinakes.Zotero
             {
                 Id = data.GetProperty("key").GetString(),
                 IsAuthorTarget = forAuthor,
+                TargetId = targetId,
                 Title = data.GetProperty("title").GetString(),
                 Abstract = GetOptionalString(data, "abstractNote")
             };

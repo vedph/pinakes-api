@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Fusi.Tools;
+using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -25,7 +26,7 @@ namespace Pinakes.Index
         /// Initializes a new instance of the <see cref="PinakesIndexer"/> class.
         /// </summary>
         /// <param name="connString">The connection string.</param>
-        /// <exception cref="System.ArgumentNullException">connString</exception>
+        /// <exception cref="ArgumentNullException">connString</exception>
         protected PinakesIndexer(string connString)
         {
             _connString = connString
@@ -84,7 +85,7 @@ namespace Pinakes.Index
         /// <param name="progress">The optional progress reporter.</param>
         protected abstract void DoIndex(IDbConnection connection,
             CancellationToken cancel,
-            IProgress<int> progress = null);
+            IProgress<ProgressReport> progress = null);
 
         /// <summary>
         /// Index the required resources in the Pinakes database.
@@ -92,7 +93,7 @@ namespace Pinakes.Index
         /// <param name="cancel">The cancel token.</param>
         /// <param name="progress">The optional progress reporter.</param>
         public void Index(CancellationToken cancel,
-            IProgress<int> progress = null)
+            IProgress<ProgressReport> progress = null)
         {
             using IDbConnection connection = new MySqlConnection(_connString);
             connection.Open();
