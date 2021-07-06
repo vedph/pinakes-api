@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Authors>Daniele Fusi</Authors>
+    <Company>Fusi</Company>
+    <Product>Pinakes</Product>
+    <Description>Pinakes Zotero components.</Description>
+    <Copyright>by Daniele Fusi 2021</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageTags>Pinakes</PackageTags>
+  </PropertyGroup>
+
+</Project>
