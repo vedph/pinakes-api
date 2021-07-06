@@ -245,15 +245,49 @@ limit 10
 
 ### Bibliography
 
-Collection: `irht_grec`.
+- group: `irht_grec` (ID 669969).
+- [API docs](https://www.zotero.org/support/dev/web_api/v3/basics)
 
-As for bibliography, we include in the search only a subset of Zotero's data for each item, i.e. probably these fields:
+Base URI: <https://api.zotero.org>.
 
-- title
-- author
-- abstract
+You must request a specific version of the API via HTTP header `Zotero-API-Version: 3`. Authentication is required for access to non public libraries.  End users can create API keys via their Zotero account settings. Use header `Authorization: Bearer TOKEN...`.
 
-This implies that the indexer must get the required bibliographic data from Zotero, and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
+So each request has header with:
+
+- Zotero-API-Version: 3
+- Authorization: Bearer APIKEY
+
+All what we need here is:
+
+1. getting user ID: <https://api.zotero.org/users/8216379/groups>. This is done just once.
+
+2. getting items: <https://api.zotero.org/groups/669969/items>.
+
+The items query returns an array where each object has among other properties:
+
+- `data.key` (e.g. `HUAJ26D4`)
+- `data.itemType` (e.g. `book`)
+- `data.creators`: array with objects having:
+  - `creatorType` (e.g. `author`)
+  - `firstName`
+  - `lastName`
+- `data.title`
+- `data.abstractNote`
+- `data.series`
+- `data.seriesNumber`
+- `data.edition`
+- `data.place`
+- `data.publisher`
+- `data.date` (e.g. `2011`)
+- `data.language` (e.g. `allemand`)
+- `data.ISBN`
+
+3. getting item: https://api.zotero.org/groups/669969/items/HUAJ26D4
+
+Returns a single object with the same schema of objects in the items list.
+
+
+As for bibliography, we include in the search only a subset of Zotero's data for each item. This implies that the indexer must get the required bibliographic data from Zotero, and build a local index; otherwise performance would suffer, as we would have to fire two different searches, where one of them is on external server reached via web, and combine the results. Also, the Zotero server is not designed to handle a lot of search requests, as of course its resources are limited.
 
 A sample Zotero URI has a group ID and a collection ID, e.g. <https://www.zotero.org/groups/44775/manuscripts_on_microfilm_project/library>. The ID of a Zotero item is just the library ID + the item ID, e.g. `669969-548S2DQW` <https://www.zotero.org/groups/669969/irht_grec/items/548S2DQW/library>.
 
