@@ -15,13 +15,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Date.mysql" />
     <None Remove="Assets\Profile.json" />
-    <None Remove="Assets\Schema.mysql" />
+    <None Remove="Assets\Zotero.mysql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\Profile.json" />
-    <EmbeddedResource Include="Assets\Schema.mysql" />
+    <EmbeddedResource Include="Assets\Date.mysql" />
+    <EmbeddedResource Include="Assets\Zotero.mysql" />
   </ItemGroup>
 
   <ItemGroup>

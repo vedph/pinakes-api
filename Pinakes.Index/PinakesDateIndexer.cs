@@ -1,13 +1,9 @@
 ﻿using Fusi.Antiquity.Chronology;
 using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 
 namespace Pinakes.Index
@@ -16,34 +12,24 @@ namespace Pinakes.Index
     /// Pinakes date indexer. This collects century indications from authors
     /// and works and stores them into the <c>date</c> table.
     /// </summary>
-    public sealed class PinakesDateIndexer
+    public sealed class PinakesDateIndexer : PinakesIndexer
     {
-        private readonly string _connString;
         private readonly PinakesCenturyDateAdapter _adapter;
 
-        public ILogger Logger { get; set; }
-
-        public PinakesDateIndexer(string connString)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PinakesDateIndexer"/>
+        /// class.
+        /// </summary>
+        /// <param name="connString">The connection string.</param>
+        public PinakesDateIndexer(string connString) : base(connString)
         {
-            _connString = connString
-                ?? throw new ArgumentNullException(nameof(connString));
             _adapter = new PinakesCenturyDateAdapter();
-        }
-
-        private static string LoadResourceText(string name)
-        {
-            using (StreamReader reader = new StreamReader(
-                Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                    $"Pinakes.Index.Assets.{name}"), Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
         }
 
         private static void InitTarget(IDbConnection connection)
         {
             IDbCommand cmd = connection.CreateCommand();
-            cmd.CommandText = LoadResourceText("Schema.mysql");
+            cmd.CommandText = LoadResourceText("Date.mysql");
             cmd.ExecuteNonQuery();
 
             cmd.CommandText = "TRUNCATE TABLE date;";
@@ -67,16 +53,6 @@ namespace Pinakes.Index
                 sources.Add(Tuple.Create(id, source));
             }
             return sources;
-        }
-
-        private static void AddParameter(string name, IDbCommand command,
-            DbType type)
-        {
-            var p = command.CreateParameter();
-            p.DbType = type;
-            p.ParameterName = name;
-            p.Direction = ParameterDirection.Input;
-            command.Parameters.Add(p);
         }
 
         private void WriteDates(IList<Tuple<int, string>> sources,
@@ -109,11 +85,18 @@ namespace Pinakes.Index
             progress?.Report(n);
         }
 
-        public void Index(CancellationToken cancel,
+        /// <summary>
+        /// Perform the indexing.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        /// <param name="cancel">The cancel token.</param>
+        /// <param name="progress">The optional progress reporter.</param>
+        /// <exception cref="ArgumentNullException">connection</exception>
+        protected override void DoIndex(IDbConnection connection,
+            CancellationToken cancel,
             IProgress<int> progress = null)
         {
-            using IDbConnection connection = new MySqlConnection(_connString);
-            connection.Open();
+            if (connection == null) throw new ArgumentNullException(nameof(connection));
 
             // create or truncate date
             InitTarget(connection);
