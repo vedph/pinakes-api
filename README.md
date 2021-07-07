@@ -458,3 +458,28 @@ Here I list a set of sample services provided by a UI consuming this API.
 8. lookup works (`api/works`): to lookup works (get a list of matches while typing some letters) just use the works search endpoint with page number=1, page size=the limit of matches to get, and text=the text typed.
 
 9. lookup relations (`api/relations`): to get the list of relations from the point of view of its parent edge we just select `parent_role` from `relations_types`.
+
+## Details
+
+Details for an author:
+
+```sql
+SELECT a.id,a.nom,a.siecle,a.dates,a.remarque,a.is_categorie,aa.nom,k.keyword 
+FROM auteurs a
+LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur
+LEFT JOIN keywords_auteurs ak ON a.id=ak.id_auteur 
+LEFT JOIN keywords k ON ak.id_keyword=k.id
+WHERE a.id=@id
+```
+
+Details for a work:
+
+```sql
+SELECT w.id,w.titre,w.titulus,w.incipit,w.desinit,w.siecle,w.date,
+w.date_remarque,w.lieu,w.lieu_remarque,w.responsable,w.equipe_referente,w.remarque
+FROM oeuvres w
+LEFT JOIN oeuvres_alias wa ON w.id=wa.id_oeuvre 
+LEFT JOIN keywords_oeuvres wk ON w.id=wk.id_oeuvre
+LEFT JOIN keywords k ON wk.id_keyword=k.id
+WHERE w.id=@id
+```
