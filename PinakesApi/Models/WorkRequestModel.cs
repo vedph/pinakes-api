@@ -42,10 +42,11 @@ namespace PinakesApi.Models
         /// The text search scope, represented by a comma delimited
         /// list of field codes from <c>wkttl</c>=work title, <c>wattl</c>=title
         /// alias, <c>wkinc</c>=incipit, <c>wkdes</c>=desinit, <c>wkplc</c>=place,
-        /// <c>wknot</c>=note.
+        /// <c>wknot</c>=note, <c>zwaut</c>=bibliography author, <c>zwttl</c>=
+        /// bibliography title, <c>zwabs</c>=bibliography abstract.
         /// </summary>
         [MaxLength(100)]
-        [RegularExpression("^(?:(?:wkttl|wattl|wktit|wkinc|wkdes|wkplc|wknot),?)*$")]
+        [RegularExpression("^(?:(?:wkttl|wattl|wktit|wkinc|wkdes|wkplc|wknot|zwaut|zwttl|zwabs),?)*$")]
         public string TextScope { get; set; }
 
         /// <summary>

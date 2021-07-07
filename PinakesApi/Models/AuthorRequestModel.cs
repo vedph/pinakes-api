@@ -33,10 +33,11 @@ namespace PinakesApi.Models
         /// <summary>
         /// Gets or sets the text search scope, represented by a comma delimited
         /// list of field codes from <c>aunam</c>=author name, <c>aanam</c>=alias,
-        /// <c>aunot</c>=note.
+        /// <c>aunot</c>=note, <c>zaaut</c>=bibliography author, <c>zattl</c>=
+        /// bibliography title, <c>zaabs</c>=bibliography abstract.
         /// </summary>
         [MaxLength(100)]
-        [RegularExpression("^(?:(?:aunam|aanam|aunot),?)*$")]
+        [RegularExpression("^(?:(?:aunam|aanam|aunot|zaaut|zattl|zaabs),?)*$")]
         public string TextScope { get; set; }
 
         /// <summary>

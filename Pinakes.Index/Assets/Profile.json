@@ -113,7 +113,7 @@
     {
       "Id": "zotero-work",
       "CountSql": "SELECT COUNT(w.id) FROM oeuvres w INNER JOIN zotero z ON w.id=z.targetId WHERE z.authorTarget=0;",
-      "DataSql": "SELECT w.id AS m_targetid,z.authors AS zaaut,z.title AS zattl,z.abstract AS zaabs FROM oeuvres w INNER JOIN zotero z ON w.id=z.targetId WHERE z.authorTarget=0 ORDER BY w.id LIMIT {1} OFFSET {0};",
+      "DataSql": "SELECT w.id AS m_targetid,z.authors AS zwaut,z.title AS zwttl,z.abstract AS zwabs FROM oeuvres w INNER JOIN zotero z ON w.id=z.targetId WHERE z.authorTarget=0 ORDER BY w.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },
@@ -121,9 +121,9 @@
         "*": "std"
       },
       "TokenMultipliers": {
-        "zaaut": "rom",
-        "zattl": "rom",
-        "zaabs": "rom"
+        "zwaut": "rom",
+        "zwttl": "rom",
+        "zwabs": "rom"
       }
     }
   ]
