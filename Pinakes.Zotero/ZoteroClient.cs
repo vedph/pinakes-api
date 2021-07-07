@@ -80,7 +80,7 @@ namespace Pinakes.Zotero
             JsonElement data = doc.RootElement.GetProperty("data");
             BiblioItemFragment fr = new BiblioItemFragment
             {
-                Id = data.GetProperty("key").GetString(),
+                ZoteroId = data.GetProperty("key").GetString(),
                 IsAuthorTarget = forAuthor,
                 TargetId = targetId,
                 Title = data.GetProperty("title").GetString(),

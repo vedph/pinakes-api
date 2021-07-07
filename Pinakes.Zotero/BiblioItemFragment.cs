@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets or sets the Zotero item identifier.
         /// </summary>
-        public string Id { get; set; }
+        public string ZoteroId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this fragment targets an
@@ -45,7 +45,7 @@
         /// </returns>
         public override string ToString()
         {
-            return $"[{Id}] {(IsAuthorTarget? 'A' : 'W')}#{TargetId} {Authors} - {Title}";
+            return $"[{ZoteroId}] {(IsAuthorTarget? 'A' : 'W')}#{TargetId} {Authors} - {Title}";
         }
     }
 }

@@ -99,7 +99,7 @@ namespace Pinakes.Index
                     Logger?.LogError($"Zotero item with ID {t.Item2} not found");
                     continue;
                 }
-                ((DbParameter)command.Parameters["@id"]).Value = fr.Id;
+                ((DbParameter)command.Parameters["@zoteroId"]).Value = fr.ZoteroId;
                 ((DbParameter)command.Parameters["@authorTarget"]).Value =
                     fr.IsAuthorTarget;
                 ((DbParameter)command.Parameters["@targetId"]).Value = fr.TargetId;
@@ -143,11 +143,12 @@ namespace Pinakes.Index
 
             // prepare insert command
             IDbCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO `zotero`" +
-                "(`id`, `authorTarget`, `targetId`, `authors`, `title`, `abstract`)" +
+            command.CommandText = "INSERT INTO `zotero`\n" +
+                "(`zoteroId`, `authorTarget`, `targetId`, `authors`, `title`, " +
+                "`abstract`)\n" +
                 "VALUES" +
-                "(@id, @authorTarget, @targetId, @authors, @title, @abstract;";
-            AddParameter("@id", command, DbType.String);
+                "(@zoteroId, @authorTarget, @targetId, @authors, @title, @abstract);";
+            AddParameter("@zoteroId", command, DbType.String);
             AddParameter("@authorTarget", command, DbType.Boolean);
             AddParameter("@targetId", command, DbType.Int32);
             AddParameter("@authors", command, DbType.String);

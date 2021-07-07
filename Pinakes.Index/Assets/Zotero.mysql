@@ -1,5 +1,6 @@
 ﻿CREATE TABLE IF NOT EXISTS `zotero` (
-  `id` VARCHAR(16) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `zoteroId` VARCHAR(16) NOT NULL,
   `authorTarget` BIT(1) NOT NULL,
   `targetId` INT NOT NULL,
   `authors` VARCHAR(300) NOT NULL,
