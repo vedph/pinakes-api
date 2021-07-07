@@ -17,6 +17,7 @@ namespace Pinix.Cli.Commands
         {
             // configure all the app commands here
             app.Command("index-date", c => IndexDateCommand.Configure(c, options));
+            app.Command("index-zotero", c => IndexZoteroCommand.Configure(c, options));
 
             app.OnExecute(() =>
             {
