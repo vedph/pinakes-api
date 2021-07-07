@@ -30,13 +30,21 @@ Both operations take less than 1 minute in my computer.
 
 Note that this truncates the target `zotero` table if present; else it creates it.
 
-4. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes.profile` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
+4. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes-profile.json` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
 
 ```ps1
 ./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
 ```
 
-Note that this truncates the target `token` and `occurrence` tables if present; else it creates them.
+Note that this truncates the target `token` and `occurrence` tables if present; else it creates them. Also, the profile draws data also from the `zotero` table created in the previous step.
+
+Also, currently I'm not excluding any stopword from the index. A useful query to inspect the results for the most frequent tokens is:
+
+```sql
+SELECT value,
+(SELECT COUNT(*) FROM occurrence WHERE occurrence.tokenId=token.id) AS oc FROM token
+ORDER BY oc DESC,value;
+```
 
 5. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
 
