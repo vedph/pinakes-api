@@ -93,6 +93,38 @@
         "wkplc": "rom",
         "wknot": "rom"
       }
+    },
+    {
+      "Id": "zotero-author",
+      "CountSql": "SELECT COUNT(auteurs.id) FROM auteurs INNER JOIN zotero ON auteurs.id=zotero.targetId WHERE zotero.authorTarget=1;",
+      "DataSql": "SELECT auteurs.id AS m_targetid,zotero.authors AS zaaut,zotero.title AS zattl,zotero.abstract AS zaabs FROM auteurs INNER JOIN zotero ON auteurs.id=zotero.targetId WHERE zotero.authorTarget=1 ORDER BY auteurs.id LIMIT {1} OFFSET {0};",
+      "TextFilterChains": {
+        "*": "tag-sep-wsp-std"
+      },
+      "Tokenizers": {
+        "*": "std"
+      },
+      "TokenMultipliers": {
+        "zaaut": "rom",
+        "zattl": "rom",
+        "zaabs": "rom"
+      }
+    },
+    {
+      "Id": "zotero-work",
+      "CountSql": "SELECT COUNT(oeuvres.id) FROM oeuvres INNER JOIN zotero ON oeuvres.id=zotero.targetId WHERE zotero.authorTarget=0;",
+      "DataSql": "SELECT oeuvres.id AS m_targetid,zotero.authors AS zaaut,zotero.title AS zattl,zotero.abstract AS zaabs FROM auteurs INNER JOIN zotero ON oeuvres.id=zotero.targetId WHERE zotero.authorTarget=0 ORDER BY oeuvres.id LIMIT {1} OFFSET {0};",
+      "TextFilterChains": {
+        "*": "tag-sep-wsp-std"
+      },
+      "Tokenizers": {
+        "*": "std"
+      },
+      "TokenMultipliers": {
+        "zaaut": "rom",
+        "zattl": "rom",
+        "zaabs": "rom"
+      }
     }
   ]
 }
