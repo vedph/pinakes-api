@@ -12,15 +12,7 @@ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=mysql -v c:/data/mysql:/var/li
 
 assuming that you have created a folder `c:\data\mysql`.
 
-2. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes.profile` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
-
-```ps1
-./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
-```
-
-Note that this truncates the target `token` and `occurrence` tables if present; else it creates them.
-
-3. build the dates index using the Pinakes RAP CLI (`pinix` in this solution):
+2. build the dates index using the Pinakes RAP CLI (`pinix` in this solution):
 
 ```ps1
 ./pinix index-date pinakes
@@ -30,13 +22,21 @@ Note that this truncates the target `date` table if present; else it creates it.
 
 Both operations take less than 1 minute in my computer.
 
-4. build the Zotero index using the Pinakes RAP CLI:
+3. build the Zotero index using the Pinakes RAP CLI:
 
 ```ps1
 ./pinix index-zotero pinakes
 ```
 
 Note that this truncates the target `zotero` table if present; else it creates it.
+
+4. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes.profile` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
+
+```ps1
+./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
+```
+
+Note that this truncates the target `token` and `occurrence` tables if present; else it creates them.
 
 5. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
 
