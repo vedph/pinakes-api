@@ -10,6 +10,13 @@ namespace Pinakes.Search
     public class WorkSearchRequest : TextBasedRequest
     {
         /// <summary>
+        /// Gets or sets the data set identifier. When greater than 0, this
+        /// represents the id_type from table identifiants, used as a marker
+        /// for a specific subset of Pinakes. For RAP, this ID is 234.
+        /// </summary>
+        public int SetId { get; set; }
+
+        /// <summary>
         /// Gets or sets the author identifier.
         /// </summary>
         public int AuthorId { get; set; }

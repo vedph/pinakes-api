@@ -49,6 +49,13 @@ namespace PinakesApi.Models
         public bool IsMatchAnyEnabled { get; set; }
 
         /// <summary>
+        /// The data set identifier. When greater than 0, this
+        /// represents the id_type from table identifiants, used as a marker
+        /// for a specific subset of Pinakes. For RAP, this ID is 234.
+        /// </summary>
+        public int SetId { get; set; }
+
+        /// <summary>
         /// The category flag to be matched for the author.
         /// </summary>
         public bool? IsCategory { get; set; }
@@ -82,6 +89,7 @@ namespace PinakesApi.Models
                 Text = Text,
                 TextScope = TextScope,
                 IsMatchAnyEnabled = IsMatchAnyEnabled,
+                SetId = SetId,
                 IsCategory = IsCategory,
                 CenturyMin = CenturyMin,
                 CenturyMax = CenturyMax,

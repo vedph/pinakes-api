@@ -50,6 +50,13 @@ namespace PinakesApi.Models
         public string TextScope { get; set; }
 
         /// <summary>
+        /// The data set identifier. When greater than 0, this
+        /// represents the id_type from table identifiants, used as a marker
+        /// for a specific subset of Pinakes. For RAP, this ID is 234.
+        /// </summary>
+        public int SetId { get; set; }
+
+        /// <summary>
         /// The author identifier; 0=do not filter by author ID.
         /// </summary>
         public int AuthorId { get; set; }
@@ -109,6 +116,7 @@ namespace PinakesApi.Models
                 Text = Text,
                 TextScope = TextScope,
                 IsMatchAnyEnabled = IsMatchAnyEnabled,
+                SetId = SetId,
                 AuthorId = AuthorId,
                 DictyonId = DictyonId,
                 CenturyMin = CenturyMin,

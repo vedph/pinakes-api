@@ -3,7 +3,6 @@ using SqlKata;
 using SqlKata.Execution;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Pinakes.Search
 {
@@ -37,6 +36,13 @@ namespace Pinakes.Search
             string tn = "t" + nr;
             Query query = QueryFactory.Query("auteurs AS " + tn)
                 .Select($"{tn}.id").Distinct();
+
+            if (request.SetId > 0)
+            {
+                query.Join("identifiants_auteurs AS ai", $"{tn}.id", "ai.id_auteur")
+                    .Join("identifiants AS i", "ai.id_identifiant", "i.id")
+                    .Where("i.id_type", request.SetId);
+            }
 
             if (request.IsCategory.HasValue)
             {
