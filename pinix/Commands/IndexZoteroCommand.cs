@@ -39,7 +39,7 @@ namespace Pinix.Cli.Commands
 
             command.OnExecute(() =>
             {
-                options.Command = new IndexDateCommand(
+                options.Command = new IndexZoteroCommand(
                     options,
                     dbArgument.Value);
                 return 0;
@@ -65,7 +65,8 @@ namespace Pinix.Cli.Commands
             });
             PinakesZoteroIndexer indexer = new PinakesZoteroIndexer(connString)
             {
-                Logger = _logger
+                Logger = _logger,
+                ZoteroKey = _config.GetValue<string>("ZoteroKey")
             };
             indexer.Index(CancellationToken.None, new Progress<ProgressReport>(
                 report =>

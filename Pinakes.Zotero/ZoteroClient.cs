@@ -94,9 +94,9 @@ namespace Pinakes.Zotero
             {
                 if (GetOptionalString(author, "creatorType") != "author") continue;
                 if (sb.Length > 0) sb.Append("; ");
-                sb.Append(data.GetProperty("lastName").GetString());
+                sb.Append(author.GetProperty("lastName").GetString());
                 sb.Append(", ");
-                sb.Append(data.GetProperty("firstName").GetString());
+                sb.Append(author.GetProperty("firstName").GetString());
             }
             fr.Authors = sb.ToString();
             return fr;

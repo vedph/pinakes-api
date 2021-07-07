@@ -2,7 +2,7 @@
   "profiles": {
     "pinix": {
       "commandName": "Project",
-      "commandLineArgs": "index-date pinakes"
+      "commandLineArgs": "index-zotero pinakes"
     }
   }
 }
