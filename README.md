@@ -30,7 +30,15 @@ Note that this truncates the target `date` table if present; else it creates it.
 
 Both operations take less than 1 minute in my computer.
 
-4. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
+4. build the Zotero index using the Pinakes RAP CLI:
+
+```ps1
+./pinix index-zotero pinakes
+```
+
+Note that this truncates the target `zotero` table if present; else it creates it.
+
+5. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
 
 ## Deployment
 
