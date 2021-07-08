@@ -192,6 +192,26 @@ namespace Pinakes.Search
             };
         }
 
+        private static WorkDetailResult GetWorkDetail(dynamic d)
+        {
+            return new WorkDetailResult
+            {
+                Id = d.id,
+                Title = d.title,
+                Titulus = d.titulus,
+                Century = d.century,
+                Dates = d.dates,
+                Place = d.place,
+                Note = d.note,
+                Incipit = d.incipit,
+                Desinit = d.desinit,
+                DatesNote = d.datesNote,
+                PlaceNote = d.placeNote,
+                Manager = d.manager,
+                Team = d.team
+            };
+        }
+
         private static void AddAuthorToWork(dynamic d, WorkResult work)
         {
             // nope if no author
@@ -275,9 +295,30 @@ namespace Pinakes.Search
                 request.PageSize, total, works);
         }
 
-        public WorkResult GetWorkDetail(int id)
+        public WorkDetailResult GetWorkDetail(int id)
         {
-            throw new NotImplementedException();
+            if (_workQueryBuilder == null)
+                _workQueryBuilder = new WorkQueryBuilder(_connString);
+
+            Query query = _workQueryBuilder.QueryFactory.Query("oeuvres AS w")
+                .LeftJoin("oeuvres_alias AS wa", "w.id", "wa.id_oeuvre")
+                .LeftJoin("keywords_oeuvres AS wk", "w.id", "wk.id_oeuvre")
+                .LeftJoin("keywords AS k", "wk.id_keyword", "k.id")
+                .Select("w.id", "w.titre AS title", "w.titulus", "w.incipit",
+                    "w.desinit", "w.siecle AS century", "w.date AS dates",
+                    "w.date_remarque AS datesNote", "w.lieu AS place",
+                    "w.lieu_remarque AS placeNote", "w.responsable AS manager",
+                    "w.equipe_referente AS team", "w.remarque AS note")
+                .Where("w.id", id);
+
+            WorkDetailResult work = null;
+            foreach (dynamic d in query.Get())
+            {
+                if (work == null) work = GetWorkDetail(d);
+                AddAuthorToWork(d, work);
+                AddKeywordToWork(d, work);
+            }
+            return work;
         }
     }
 }

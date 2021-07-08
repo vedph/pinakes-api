@@ -37,5 +37,19 @@ namespace PinakesApi.Controllers
         {
             return Ok(_searcher.GetWorks(model.ToRequest()));
         }
+
+        /// <summary>
+        /// Gets the details about the specified work.
+        /// </summary>
+        /// <returns>Work.</returns>
+        [HttpPost("api/works/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public ActionResult<WorkDetailResult> GetWork([FromRoute] int id)
+        {
+            WorkDetailResult work = _searcher.GetWorkDetail(id);
+            if (work == null) return NotFound();
+            return Ok(work);
+        }
     }
 }
