@@ -345,55 +345,9 @@ We need to fetch from Zotero only the data used in search, i.e.:
 
 ### Embix Profile
 
-The text-based index portion of the search engine uses [Embix](https://github.com/vedph/embix). The Embix profile for Pinakes uses a single document, as defined by this query:
+The text-based index portion of the search engine uses [Embix](https://github.com/vedph/embix). The Embix profile for Pinakes uses documents for authors, works, author bibliography and work bibliography.
 
-```sql
-SELECT
- -- work
- w.id AS m_targetid,
- w.titre AS wkttl,
- w.titulus AS wktit,
- w.incipit AS wkinc,
- w.desinit AS wkdes,
- w.lieu AS wkplc,
- w.remarque AS wkcom,
- -- work aliases
- ws.titre AS wsttl,
- -- work keywords
- k1.keyword AS wkkey,
- -- work's authors with their aliases and keywords
- a.nom AS aunam,
- aa.nom AS aanam,
- k2.keyword AS aukey
-FROM oeuvres w
-LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id
-LEFT JOIN keywords_oeuvres kw ON kw.id_oeuvre=w.id
-LEFT JOIN keywords k1 ON kw.id_keyword=k1.id
-LEFT JOIN oeuvres_auteurs wa ON wa.id_oeuvre=w.id
-LEFT JOIN auteurs a ON a.id=wa.id_auteur
-LEFT JOIN auteurs_alias aa ON aa.id_auteur=a.id
-LEFT JOIN keywords_auteurs ka ON ka.id_auteur=a.id
-LEFT JOIN keywords k2 ON ka.id_keyword=k2.id
-ORDER BY w.id
-```
-
-This is just a catch-all query which collects all the text-based sources pointing to the same work, i.e.:
-
-- work's title and its eventual aliases.
-- work's titulus, incipit, desinit, place, comment.
-- work's keywords.
-- work's authors, each with his name, eventual aliases, and keywords.
-
-There are 2 filter chains in this profile:
-
-- `wsp-std` is the chain applied to the text field as a whole, before tokenization. It normalizes whitespaces, and applies a standard filter.
-- `stp` is the chain applied after tokenization, to each token. It just includes a stopwords filter.
-- the only tokenizer used is the standard whitespace tokenizer, `std`. It has `stp` as its token filters chain.
-- some fields, which may have Greek content, add a Greek romanizer token multiplier (`rom`).
-
-### Transliteration
-
-Transliteration uses a Greek token multiplier, which provides the transliterated form of each Greek token next to it. As the transliterated form is targeted to the index process, it comes already deprived of any rumor feature, like accents or casing; this is done by just using a 7-bit ASCII encoding as the transliteration target.
+Among the components in the Embix chain, there is a Greek token multiplier, which provides the transliterated form of each Greek token next to it. As the transliterated form is targeted to the index process, it comes already deprived of any rumor feature, like accents or casing; this is done by just using a 7-bit ASCII encoding as the transliteration target.
 
 These are the Pinakes conventions:
 

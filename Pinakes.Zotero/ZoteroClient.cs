@@ -36,7 +36,7 @@ namespace Pinakes.Zotero
         /// <returns>The JSON code representing the item, or null if not found.
         /// </returns>
         /// <exception cref="ArgumentNullException">id</exception>
-        public string GetItem(string id)
+        public string GetItemJson(string id)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
 
@@ -73,7 +73,7 @@ namespace Pinakes.Zotero
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
 
-            string json = GetItem(id);
+            string json = GetItemJson(id);
             if (json == null) return null;
 
             JsonDocument doc = JsonDocument.Parse(json);
@@ -100,6 +100,35 @@ namespace Pinakes.Zotero
             }
             fr.Authors = sb.ToString();
             return fr;
+        }
+
+        public BiblioItem GetItem(string id)
+        {
+            if (id is null) throw new ArgumentNullException(nameof(id));
+
+            string json = GetItemJson(id);
+            if (json == null) return null;
+
+            JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement data = doc.RootElement.GetProperty("data");
+            BiblioItem item = new BiblioItem
+            {
+                GroupId = GroupId,
+                Key = data.GetProperty("key").GetString(),
+                Type = data.GetProperty("itemType").GetString(),
+                // TODO
+                Title = data.GetProperty("title").GetString(),
+                Abstract = GetOptionalString(data, "abstractNote")
+            };
+
+            // creators
+            foreach (JsonElement creator in data.GetProperty("creators")
+                .EnumerateArray())
+            {
+                // TODO
+            }
+
+            return item;
         }
     }
 }
