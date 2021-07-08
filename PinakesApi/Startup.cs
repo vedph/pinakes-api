@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Pinakes.Search;
+using Pinakes.Zotero;
 using Serilog;
 using Serilog.Events;
 using Serilog.Exceptions;
@@ -148,6 +149,12 @@ namespace PinakesApi
                 return new PinakesSearcher(
                     string.Format(
                         Configuration.GetConnectionString("Default"), "pinakes"));
+            });
+
+            services.AddScoped(_ =>
+            {
+                return new ZoteroClient(
+                    Configuration.GetSection("ZoteroKey").Get<string>());
             });
 
             // messaging

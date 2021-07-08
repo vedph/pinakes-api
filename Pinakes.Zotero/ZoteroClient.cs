@@ -59,6 +59,14 @@ namespace Pinakes.Zotero
         private static string GetOptionalString(JsonElement element, string name) 
             => element.TryGetProperty(name, out JsonElement e) ? e.GetString() : null;
 
+        private static short GetOptionalInt16(JsonElement element, string name)
+        {
+            if (!element.TryGetProperty(name, out JsonElement e)) return 0;
+            string value = e.GetString();
+            if (value != null && short.TryParse(value, out short n)) return n;
+            return 0;
+        }
+
         /// <summary>
         /// Gets the data fragment for the specified item.
         /// </summary>
@@ -102,6 +110,12 @@ namespace Pinakes.Zotero
             return fr;
         }
 
+        /// <summary>
+        /// Gets the item with the specified ID.
+        /// </summary>
+        /// <param name="id">The item identifier.</param>
+        /// <returns>The item or null if not found.</returns>
+        /// <exception cref="ArgumentNullException">id</exception>
         public BiblioItem GetItem(string id)
         {
             if (id is null) throw new ArgumentNullException(nameof(id));
@@ -116,16 +130,28 @@ namespace Pinakes.Zotero
                 GroupId = GroupId,
                 Key = data.GetProperty("key").GetString(),
                 Type = data.GetProperty("itemType").GetString(),
-                // TODO
                 Title = data.GetProperty("title").GetString(),
-                Abstract = GetOptionalString(data, "abstractNote")
+                Abstract = GetOptionalString(data, "abstractNote"),
+                Series = GetOptionalString(data, "series"),
+                SeriesNumber = GetOptionalString(data, "seriesNumber"),
+                Edition = GetOptionalInt16(data, "edition"),
+                Place = GetOptionalString(data, "place"),
+                Publisher = GetOptionalString(data, "publisher"),
+                Year = GetOptionalInt16(data, "date"),
+                Language = GetOptionalString(data, "language"),
+                Isbn = GetOptionalString(data, "ISBN")
             };
 
             // creators
             foreach (JsonElement creator in data.GetProperty("creators")
                 .EnumerateArray())
             {
-                // TODO
+                item.Creators.Add(new BiblioCreator
+                {
+                    Type = GetOptionalString(creator, "creatorType"),
+                    LastName = creator.GetProperty("lastName").GetString(),
+                    FirstName = creator.GetProperty("firstName").GetString()
+                });
             }
 
             return item;

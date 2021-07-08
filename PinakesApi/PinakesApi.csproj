@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pinakes.Search\Pinakes.Search.csproj" />
+    <ProjectReference Include="..\Pinakes.Zotero\Pinakes.Zotero.csproj" />
   </ItemGroup>
 
 </Project>
