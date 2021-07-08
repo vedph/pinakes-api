@@ -85,6 +85,23 @@ namespace Pinakes.Search
                 author.Aliases.Add(d.alias);
         }
 
+        private static void AddKeywordToAuthor(dynamic d, AuthorResult author)
+        {
+            if (d.keywordId == null || d.keywordId == 0) return;
+
+            if (author.Keywords == null)
+                author.Keywords = new List<LookupResult<int>>();
+
+            if (author.Keywords.All(k => k.Id != d.keywordId))
+            {
+                author.Keywords.Add(new LookupResult<int>
+                {
+                    Id = d.keywordId,
+                    Value = d.keywordValue
+                });
+            }
+        }
+
         /// <summary>
         /// Gets the authors.
         /// </summary>
@@ -130,10 +147,35 @@ namespace Pinakes.Search
                 request.PageSize, total, authors);
         }
 
+        /// <summary>
+        /// Gets the details about the author with the specified ID.
+        /// </summary>
+        /// <param name="id">The author identifier.</param>
+        /// <returns>Author or null if not found.</returns>
         public AuthorResult GetAuthorDetail(int id)
         {
-            // TODO
-            throw new NotImplementedException();
+            if (_authorQueryBuilder == null)
+                _authorQueryBuilder = new AuthorQueryBuilder(_connString);
+
+            Query query = _authorQueryBuilder.QueryFactory
+                .Query("auteurs AS a")
+                .LeftJoin("auteurs_alias AS aa", "a.id", "aa.id_auteur")
+                .LeftJoin("keywords_auteurs AS ak", "a.id", "ak.id_auteur")
+                .LeftJoin("keywords AS k", "ak.id_keyword", "k.id")
+                .Select("a.id", "a.nom AS name", "a.siecle AS century",
+                    "a.dates", "a.remarque AS note",
+                    "a.is_categorie AS isCategory",
+                    "aa.nom AS alias", "k.keyword AS keyword")
+                .Where("a.id", id);
+
+            AuthorResult author = null;
+            foreach (dynamic d in query.Get())
+            {
+                if (author == null) author = GetAuthor(d);
+                AddAliasToAuthor(d, author);
+                AddKeywordToAuthor(d, author);
+            }
+            return author;
         }
 
         private static WorkResult GetWork(dynamic d)

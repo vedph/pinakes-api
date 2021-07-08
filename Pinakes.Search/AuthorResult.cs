@@ -44,6 +44,11 @@ namespace Pinakes.Search
         public bool IsCategory { get; set; }
 
         /// <summary>
+        /// Gets or sets the keywords.
+        /// </summary>
+        public List<LookupResult<int>> Keywords { get; set; }
+
+        /// <summary>
         /// Converts to string.
         /// </summary>
         /// <returns>

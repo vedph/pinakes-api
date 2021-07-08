@@ -34,5 +34,19 @@ namespace PinakesApi.Controllers
         {
             return Ok(_searcher.GetAuthors(model.ToRequest()));
         }
+
+        /// <summary>
+        /// Gets the details about the specified author.
+        /// </summary>
+        /// <returns>Author.</returns>
+        [HttpPost("api/authors/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public ActionResult<AuthorResult> GetAuthor([FromRoute] int id)
+        {
+            AuthorResult author = _searcher.GetAuthorDetail(id);
+            if (author == null) return NotFound();
+            return Ok(author);
+        }
     }
 }
