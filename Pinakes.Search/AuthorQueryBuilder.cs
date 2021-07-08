@@ -84,7 +84,7 @@ namespace Pinakes.Search
         protected override Query GetDataQuery(AuthorSearchRequest request,
             Query idQuery)
         {
-            return QueryFactory.Query()
+            Query result = QueryFactory.Query()
                 .From(idQuery)
                 .As("q")
                 .Join("auteurs", "auteurs.id", "q.id")
@@ -96,9 +96,14 @@ namespace Pinakes.Search
                     "auteurs.dates",
                     "auteurs.remarque AS note",
                     "auteurs.is_categorie AS isCategory")
-                .OrderBy("auteurs.nom", "auteurs.id")
-                .Offset(request.GetSkipCount())
-                .Limit(request.PageSize);
+                .OrderBy("auteurs.nom", "auteurs.id");
+
+            if (request.PageSize > 0)
+            {
+                result.Offset(request.GetSkipCount())
+                      .Limit(request.PageSize);
+            }
+            return result;
         }
 
         /// <summary>

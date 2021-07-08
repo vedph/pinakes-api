@@ -22,7 +22,7 @@ namespace Pinakes.Search
         /// Initializes a new instance of the <see cref="PinakesSearcher"/> class.
         /// </summary>
         /// <param name="connString">The connection string.</param>
-        /// <exception cref="System.ArgumentNullException">connString</exception>
+        /// <exception cref="ArgumentNullException">connString</exception>
         public PinakesSearcher(string connString)
         {
             _connString = connString
@@ -130,6 +130,12 @@ namespace Pinakes.Search
                 request.PageSize, total, authors);
         }
 
+        public AuthorResult GetAuthorDetail(int id)
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
+
         private static WorkResult GetWork(dynamic d)
         {
             return new WorkResult
@@ -225,6 +231,11 @@ namespace Pinakes.Search
 
             return new DataPage<WorkResult>(request.PageNumber,
                 request.PageSize, total, works);
+        }
+
+        public WorkResult GetWorkDetail(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -141,9 +141,13 @@ namespace Pinakes.Search
                     // optional keyword(s)
                     "keywords.id AS keywordId",
                     "keywords.keyword AS keywordValue")
-                .OrderBy("auteurs.nom", "oeuvres.titre", "oeuvres.id")
-                .Offset(request.GetSkipCount())
-                .Limit(request.PageSize);
+                .OrderBy("auteurs.nom", "oeuvres.titre", "oeuvres.id");
+
+            if (request.PageSize > 0)
+            {
+                query.Offset(request.GetSkipCount())
+                     .Limit(request.PageSize);
+            }
 
 #if DEBUG
             Debug.WriteLine("---DATA:\n" +
