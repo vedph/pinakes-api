@@ -2,6 +2,16 @@
 
 An API wrapping an essential search engine for the RAP subset of the Pinakes database.
 
+## Docker
+
+Quick Docker image build:
+
+```bash
+docker build . -t vedph2020/pinakes-api:1.0.0 -t vedph2020/pinakes-api:latest
+```
+
+(replace with the current version).
+
 ## Quick Start
 
 1. have your Pinakes DB imported in MySql under a database named `pinakes`. Should you want to use MySql in a Docker container, do something like:

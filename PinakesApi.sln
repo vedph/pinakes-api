@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinakes.Index.Test", "Pinak
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9DC31AD-CC7A-41F3-8E4E-3FC6CB9E50D5}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 		README.md = README.md
 		schema.png = schema.png
 	EndProjectSection
@@ -21,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PinakesApi", "PinakesApi\Pi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinakes.Search.Test", "Pinakes.Search.Test\Pinakes.Search.Test.csproj", "{0B29942B-9439-43CB-9747-54D4BF1BAA81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinakes.Zotero", "Pinakes.Zotero\Pinakes.Zotero.csproj", "{CF21A0EC-9B27-44A6-B46B-86AD92543483}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pinakes.Zotero", "Pinakes.Zotero\Pinakes.Zotero.csproj", "{CF21A0EC-9B27-44A6-B46B-86AD92543483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
