@@ -340,13 +340,12 @@ namespace Pinakes.Search
                 .Join("identifiants AS i", "wi.id_identifiant", "i.id")
                 .Join("mobigen_auteurs AS ma", "a.id", "ma.id_auteur")
                 .Join("mobigen AS m", "ma.id_mobigen", "m.id")
-                .Select("m.cle_zotero AS id");
+                .Select("m.cle_zotero AS id").Distinct();
 
             if (setId > 0) query.Where("i.id_type", setId);
 
             List<string> ids = new List<string>();
-            foreach (dynamic d in query.Get())
-                ids.Add(d.id);
+            foreach (dynamic d in query.Get()) ids.Add(d.id);
             return ids;
         }
 
@@ -368,13 +367,12 @@ namespace Pinakes.Search
                 .Join("identifiants AS i", "wi.id_identifiant", "i.id")
                 .Join("mobigen_oeuvres AS mw", "w.id", "mw.id_oeuvre")
                 .Join("mobigen AS m", "mw.id_mobigen", "m.id")
-                .Select("m.cle_zotero AS id");
+                .Select("m.cle_zotero AS id").Distinct();
 
             if (setId > 0) query.Where("i.id_type", setId);
 
             List<string> ids = new List<string>();
-            foreach (dynamic d in query.Get())
-                ids.Add(d.id);
+            foreach (dynamic d in query.Get()) ids.Add(d.id);
             return ids;
         }
     }
