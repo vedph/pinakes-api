@@ -86,8 +86,10 @@ Works:
 
 Bibliography:
 
-- `GET ​/api​/biblio-items​/{id}`: gets the bibliography item with the specified ID.
-- `GET api/biblio-items-set`: gets the set of bibliographic items having the specified IDs.
+- `GET ​/api​/biblio/items​/{id}`: gets the bibliography item with the specified ID.
+- `GET api/biblio/items-set`: gets the set of bibliographic items having the specified IDs.
+- `GET api/biblio/authors/{id}`: gets the bibliography items for the author with the specified ID.
+- `GET api/biblio/works/{id}`: gets the bibliography items for the work with the specified ID.
 
 Keywords:
 

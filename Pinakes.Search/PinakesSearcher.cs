@@ -320,5 +320,62 @@ namespace Pinakes.Search
             }
             return work;
         }
+
+        /// <summary>
+        /// Gets the author's bibliography items IDs in Zotero.
+        /// </summary>
+        /// <param name="id">The author's identifier.</param>
+        /// <param name="setId">The optional set identifier. Set to a value
+        /// greater than 0 to filter bibliography by a subset (e.g. 234 for RAP).
+        /// </param>
+        /// <returns>List of Zotero bibliography items IDs.</returns>
+        public IList<string> GetAuthorBiblioItemIds(int id, int setId)
+        {
+            if (_authorQueryBuilder == null)
+                _authorQueryBuilder = new AuthorQueryBuilder(_connString);
+
+            Query query = _authorQueryBuilder.QueryFactory.Query("auteurs AS a")
+                .Join("oeuvres_auteurs AS wa", "a.id", "wa.id_auteur")
+                .Join("identifiants_oeuvres AS wi", "wi.id_oeuvre", "wa.id_oeuvre")
+                .Join("identifiants AS i", "wi.id_identifiant", "i.id")
+                .Join("mobigen_auteurs AS ma", "a.id", "ma.id_auteur")
+                .Join("mobigen AS m", "ma.id_mobigen", "m.id")
+                .Select("m.cle_zotero AS id");
+
+            if (setId > 0) query.Where("i.id_type", setId);
+
+            List<string> ids = new List<string>();
+            foreach (dynamic d in query.Get())
+                ids.Add(d.id);
+            return ids;
+        }
+
+        /// <summary>
+        /// Gets the work's bibliography items IDs in Zotero.
+        /// </summary>
+        /// <param name="id">The work's identifier.</param>
+        /// <param name="setId">The optional set identifier. Set to a value
+        /// greater than 0 to filter bibliography by a subset (e.g. 234 for RAP).
+        /// </param>
+        /// <returns>List of Zotero bibliography items IDs.</returns>
+        public IList<string> GetWorkBiblioItemIds(int id, int setId)
+        {
+            if (_workQueryBuilder == null)
+                _workQueryBuilder = new WorkQueryBuilder(_connString);
+
+            Query query = _workQueryBuilder.QueryFactory.Query("oeuvres AS w")
+                .Join("identifiants_oeuvres AS wi", "w.id", "wi.id_oeuvre")
+                .Join("identifiants AS i", "wi.id_identifiant", "i.id")
+                .Join("mobigen_oeuvres AS mw", "w.id", "mw.id_oeuvre")
+                .Join("mobigen AS m", "mw.id_mobigen", "m.id")
+                .Select("m.cle_zotero AS id");
+
+            if (setId > 0) query.Where("i.id_type", setId);
+
+            List<string> ids = new List<string>();
+            foreach (dynamic d in query.Get())
+                ids.Add(d.id);
+            return ids;
+        }
     }
 }
