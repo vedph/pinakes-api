@@ -39,10 +39,10 @@ namespace PinakesApi.Controllers
         }
 
         /// <summary>
-        /// Gets the details about the specified work.
+        /// Gets the details about the work with the specified ID.
         /// </summary>
         /// <returns>Work.</returns>
-        [HttpPost("api/works/{id}")]
+        [HttpGet("api/works/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public ActionResult<WorkDetailResult> GetWork([FromRoute] int id)

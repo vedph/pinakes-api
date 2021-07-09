@@ -36,10 +36,10 @@ namespace PinakesApi.Controllers
         }
 
         /// <summary>
-        /// Gets the details about the specified author.
+        /// Gets the details about the author with the specified ID.
         /// </summary>
         /// <returns>Author.</returns>
-        [HttpPost("api/authors/{id}")]
+        [HttpGet("api/authors/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public ActionResult<AuthorResult> GetAuthor([FromRoute] int id)

@@ -12,7 +12,19 @@ docker build . -t vedph2020/pinakes-api:1.0.0 -t vedph2020/pinakes-api:latest
 
 (replace with the current version).
 
+To use the image:
+
+1. ensure you have a Pinakes RAP MySql database dump in a zip file (`dump.zip`). This dump is got from Pinakes, and then processed by the tool included in this project to provide indexes. Place the `dump.zip` file under `/opt/pinakes` in your host machine. This folder will be shared through a volume. You can change the folder via environment variables or by directly setting them in the script. See the `docker-compose.yml` script for more.
+
+2. to access Zotero for bibliography you need to set a read-only private key for Zotero's group `ihrt_grec`. This is specified by the environment variable named `ZOTEROKEY`. As explained above, you can set it in the script or just set it as an environment variable in your host machine.
+
+3. run the `docker-compose.yml` script (`docker-compose up` in the script's folder).
+
+This allows updating the data independently from the API image. Whenever the API starts and does not found the `pinakes` database, it will look for the dump in the specified folder, and use it to populate a newly created database.
+
 ## Quick Start
+
+Steps to prepare the Pinakes database for these API:
 
 1. have your Pinakes DB imported in MySql under a database named `pinakes`. Should you want to use MySql in a Docker container, do something like:
 
@@ -29,8 +41,6 @@ assuming that you have created a folder `c:\data\mysql`.
 ```
 
 Note that this truncates the target `date` table if present; else it creates it. Also, have a check at the log file created by this process, which might notify you about errors in the source data (or eventually in the parsing algorithm).
-
-Both operations take less than 1 minute in my computer.
 
 3. build the Zotero index using the Pinakes RAP CLI:
 
@@ -58,9 +68,36 @@ ORDER BY oc DESC,value;
 
 5. start the API project in this solution, and experiment with queries pointing your browser to <http://localhost:59658/swagger/index.html>.
 
-## Deployment
+## API Quick Reference
 
-The planned deployment is via Docker. The database will not be included in the image; rather, it will be imported from a zipped dump, which can be put in a Docker volume. On startup, the API will look for the `pinakes` database; if it does not find it, it will create it and then import the data from the directory specified by `Data:SourceDir`, where it expects to find a file named `data.zip`.
+Here I'm just listing the endpoints. Run the API and point your browser to its Swagger UI to get the details.
+
+All the endpoints use the `GET` verb except for the search proper, which requires a `POST` to send all its parameters.
+
+Authors:
+
+- `POST /api/authors`: gets the specified page of authors.
+- `GET /api/authors/{id}`: gets the details about the author with the specified ID.
+
+Works:
+
+- `POST api/works`: gets the specified page of works.
+- `GET api/works/{id}`: gets the details about the work with the specified ID.
+
+Bibliography:
+
+- `GET ​/api​/biblio-items​/{id}`: gets the bibliography item with the specified ID.
+- `GET api/biblio-items-set`: gets the set of bibliographic items having the specified IDs.
+
+Keywords:
+
+- `GET api/keywords/authors`: gets all the keywords related to authors.
+- `GET api/keywords/works`: gets all the keywords related to works.
+
+Relations:
+
+- `GET api/relations/parent`: gets all the relations on the parent's edge.
+- `GET api/relations/child`: gets all the relations on the child's edge.
 
 ## Pinakes Database
 

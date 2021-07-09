@@ -29,11 +29,16 @@ services:
       - PORT:80
     depends_on:
       - pinakes-mysql
+    volumes:
+      # this is used to pass the data to the API service
+      - opt/pinakes:opt/pinakes
     environment:
       # for Windows use : as separator, for non Windows use __
       # (see https://github.com/aspnet/Configuration/issues/469)
       - CONNECTIONSTRINGS__DEFAULT=Server=pinakes-mysql;port=3306;Database={0};Uid=root;Pwd=mysql
       - SEED__INDEXDELAY=25
+      - ZOTEROKEY=TODO
+      - DATA__SOURCEDIR=opt/pinakes
     networks:
       - pinakes-network
 

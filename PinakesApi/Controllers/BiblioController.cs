@@ -25,7 +25,7 @@ namespace PinakesApi.Controllers
         }
 
         /// <summary>
-        /// Gets the specified bibliography item.
+        /// Gets the bibliography item with the specified ID.
         /// </summary>
         /// <returns>List of authors</returns>
         [HttpGet("api/biblio-items/{id}")]
@@ -38,7 +38,7 @@ namespace PinakesApi.Controllers
         }
 
         /// <summary>
-        /// Gets the specified set of bibliographic items.
+        /// Gets the set of bibliographic items having the specified IDs.
         /// </summary>
         /// <param name="ids">The comma-delimited list of item IDs</param>
         /// <returns></returns>
