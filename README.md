@@ -72,7 +72,7 @@ ORDER BY oc DESC,value;
 
 Here I'm just listing the endpoints. Run the API and point your browser to its Swagger UI to get the details.
 
-All the endpoints use the `GET` verb except for the search proper, which requires a `POST` to send all its parameters.
+All the endpoints use the `GET` verb except for the search proper, which requires a `POST` to send all its parameters. Whenever the `setId` parameter is found in the filters model, set it to 234 to search only within the RAP data.
 
 Authors:
 
@@ -100,6 +100,48 @@ Relations:
 
 - `GET api/relations/parent`: gets all the relations on the parent's edge.
 - `GET api/relations/child`: gets all the relations on the child's edge.
+
+### Text-Based Search
+
+Text-based search for authors and works relies on a common engine. The search is intended to quickly find author or works by just typing a word or part of it, eventually in combination with other filtering criteria.
+
+The text to be found accepted by the API (`text` parameter) is just a string, where one or more words can be separated by space. If more words are present, the API will match either all of them or just any of them, according to the `isMatchAnyEnabled` flag.
+
+Each word can be prefixed by an operator. When no operator is specified, `=` is assumed. Operators are:
+
+- `=` = equal
+- `<>` = not equal
+- `*=` = contains
+- `^=` = starts with
+- `$=` = ends with
+- `?=` = match wildcards
+- `~=` = regular expression match
+- `%=` = fuzzy match (optionally suffixing the value with `:minimumTreshold`)
+
+For instance, `*=ha` finds all the authors including letters `ha` in their text. According to the operator, the text received will be eventually filtered in the same way adopted by the indexing process, so that any rumor feature is discarded.
+
+The text defined as the scope of the search can vary according to the `textScope` parameter. Each scope is identified by a code, as follows:
+
+Author scopes:
+
+- `aunam` = author name
+- `aanam` = alias
+- `aunot` = note
+- `zaaut` = bibliography author
+- `zattl` = bibliography title
+- `zaabs` = bibliography abstract
+
+Work scopes:
+
+- `wkttl` = work title
+- `wattl` = title alias
+- `wkinc` = incipit
+- `wkdes` = desinit
+- `wkplc` = place
+- `wknot` = note
+- `zwaut` = bibliography author
+- `zwttl` = bibliography title
+- `zwabs` = bibliography abstract
 
 ## Pinakes Database
 
