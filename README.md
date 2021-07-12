@@ -12,17 +12,19 @@ docker build . -t vedph2020/pinakes-api:1.0.0 -t vedph2020/pinakes-api:latest
 
 (replace with the current version).
 
-To use the image:
+## Quick Start
 
-1. ensure you have a Pinakes RAP MySql database dump in a zip file (`dump.zip`). This dump is got from Pinakes, and then processed by the tool included in this project to provide indexes. Place the `dump.zip` file under `/opt/pinakes` in your host machine. This folder will be shared through a volume. You can change the folder via environment variables or by directly setting them in the script. See the `docker-compose.yml` script for more.
+To use the API:
 
-2. to access Zotero for bibliography you need to set a read-only private key for Zotero's group `ihrt_grec`. This is specified by the environment variable named `ZOTEROKEY`. As explained above, you can set it in the script or just set it as an environment variable in your host machine.
+1. ensure you have a Pinakes RAP MySql database dump in a zip file (`dump.zip`; the name of the SQL file inside the ZIP is not relevant, as far as it has an `.sql` extension). This dump is got from Pinakes, and then processed by the tool included in this project (plus the [Embix CLI](https://github.com/vedph/embix#embix-cli)) to provide indexes. Place the `dump.zip` file under `/opt/pinakes` in your host machine. This folder will be shared through a volume. You can change the folder via environment variables or by directly setting them in the script. See the `docker-compose.yml` script for more.
+
+2. to access Zotero for bibliography you need to set a read-only private key for Zotero's group `ihrt_grec`. This is specified by the environment variable named `ZOTEROKEY`. As explained above, you can set it in the script, or just set it as an environment variable in your host machine.
 
 3. run the `docker-compose.yml` script (`docker-compose up` in the script's folder).
 
-This allows updating the data independently from the API image. Whenever the API starts and does not found the `pinakes` database, it will look for the dump in the specified folder, and use it to populate a newly created database.
+The fact that the image is separated from its data has the advantage that the image is smaller, and can be mantained independently from its data. When only the software is updated, there is no need to update the data; and vice-versa. Also, you might even move the MySql service out of the Docker stack, and host the database there, by just editing the Docker compose script.
 
-## Quick Start
+## Building the Database
 
 Steps to prepare the Pinakes database for these API:
 
