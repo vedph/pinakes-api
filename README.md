@@ -7,7 +7,7 @@ An API wrapping an essential search engine for the RAP subset of the Pinakes dat
 Quick Docker image build:
 
 ```bash
-docker build . -t vedph2020/pinakes-api:1.0.0 -t vedph2020/pinakes-api:latest
+docker build . -t vedph2020/pinakes-api:1.0.1 -t vedph2020/pinakes-api:latest
 ```
 
 (replace with the current version).
@@ -21,6 +21,8 @@ To use the API:
 2. to access Zotero for bibliography you need to set a read-only private key for Zotero's group `ihrt_grec`. This is specified by the environment variable named `ZOTEROKEY`. As explained above, you can set it in the script, or just set it as an environment variable in your host machine.
 
 3. run the `docker-compose.yml` script (`docker-compose up` in the script's folder).
+
+4. point your browser to `localhost:59658/swagger/index.html` to browse the API functions.
 
 The fact that the image is separated from its data has the advantage that the image is smaller, and can be mantained independently from its data. When only the software is updated, there is no need to update the data; and vice-versa. Also, you might even move the MySql service out of the Docker stack, and host the database there, by just editing the Docker compose script.
 

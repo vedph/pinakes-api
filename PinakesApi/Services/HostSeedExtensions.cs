@@ -54,6 +54,7 @@ namespace PinakesApi.Services
                 string path = Path.Combine(
                     config.GetValue<string>("Data:SourceDir"),
                     "data.zip");
+                Serilog.Log.Information("ZIP data path: " + path);
 
                 if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 {
