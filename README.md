@@ -80,8 +80,8 @@ All the endpoints use the `GET` verb except for the search proper, which require
 
 Authors:
 
-- `POST /api/authors`: gets the specified page of authors.
-- `GET /api/authors/{id}`: gets the details about the author with the specified ID.
+- `POST api/authors`: gets the specified page of authors.
+- `GET api/authors/{id}`: gets the details about the author with the specified ID.
 
 Works:
 
@@ -90,7 +90,7 @@ Works:
 
 Bibliography:
 
-- `GET ​/api​/biblio/items​/{id}`: gets the bibliography item with the specified ID.
+- `GET api​/biblio/items​/{id}`: gets the bibliography item with the specified ID.
 - `GET api/biblio/items-set`: gets the set of bibliographic items having the specified IDs.
 - `GET api/biblio/authors/{id}`: gets the bibliography items for the author with the specified ID.
 - `GET api/biblio/works/{id}`: gets the bibliography items for the work with the specified ID.
