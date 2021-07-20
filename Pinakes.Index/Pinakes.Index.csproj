@@ -27,9 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Embix.Core" Version="1.0.15" />
+    <PackageReference Include="Embix.Core" Version="1.1.0" />
     <PackageReference Include="Fusi.Antiquity" Version="1.2.0" />
-    <PackageReference Include="MySql.Data" Version="8.0.25" />
+    <PackageReference Include="MySql.Data" Version="8.0.26" />
     <PackageReference Include="Proteus.Core" Version="1.2.5" />
   </ItemGroup>
 

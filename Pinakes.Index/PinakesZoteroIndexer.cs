@@ -37,7 +37,7 @@ namespace Pinakes.Index
             cmd.CommandText = LoadResourceText("Zotero.mysql");
             cmd.ExecuteNonQuery();
 
-            cmd.CommandText = "TRUNCATE TABLE zotero;";
+            cmd.CommandText = "TRUNCATE TABLE pix_zotero;";
             cmd.ExecuteNonQuery();
         }
 
@@ -45,7 +45,7 @@ namespace Pinakes.Index
             IDbConnection connection)
         {
             using IDbCommand cmd = connection.CreateCommand();
-            cmd.CommandText = 
+            cmd.CommandText =
                 "SELECT DISTINCT a.id, m.cle_zotero FROM auteurs a " +
                 "INNER JOIN oeuvres_auteurs wa ON a.id=wa.id_auteur " +
                 "INNER JOIN identifiants_oeuvres wi ON wi.id_oeuvre=wa.id_oeuvre " +
@@ -99,10 +99,10 @@ namespace Pinakes.Index
                     Logger?.LogError($"Zotero item with ID {t.Item2} not found");
                     continue;
                 }
-                ((DbParameter)command.Parameters["@zoteroId"]).Value = fr.ZoteroId;
-                ((DbParameter)command.Parameters["@authorTarget"]).Value =
+                ((DbParameter)command.Parameters["@zotero_id"]).Value = fr.ZoteroId;
+                ((DbParameter)command.Parameters["@author_target"]).Value =
                     fr.IsAuthorTarget;
-                ((DbParameter)command.Parameters["@targetId"]).Value = fr.TargetId;
+                ((DbParameter)command.Parameters["@target_id"]).Value = fr.TargetId;
                 ((DbParameter)command.Parameters["@authors"]).Value = fr.Authors;
                 ((DbParameter)command.Parameters["@title"]).Value = fr.Title;
                 ((DbParameter)command.Parameters["@abstract"]).Value = fr.Abstract;
@@ -143,14 +143,14 @@ namespace Pinakes.Index
 
             // prepare insert command
             IDbCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO `zotero`\n" +
-                "(`zoteroId`, `authorTarget`, `targetId`, `authors`, `title`, " +
+            command.CommandText = "INSERT INTO `pix_zotero`\n" +
+                "(`zotero_id`, `author_target`, `target_id`, `authors`, `title`, " +
                 "`abstract`)\n" +
                 "VALUES" +
-                "(@zoteroId, @authorTarget, @targetId, @authors, @title, @abstract);";
-            AddParameter("@zoteroId", command, DbType.String);
-            AddParameter("@authorTarget", command, DbType.Boolean);
-            AddParameter("@targetId", command, DbType.Int32);
+                "(@zotero_id, @author_target, @target_id, @authors, @title, @abstract);";
+            AddParameter("@zotero_id", command, DbType.String);
+            AddParameter("@author_target", command, DbType.Boolean);
+            AddParameter("@target_id", command, DbType.Int32);
             AddParameter("@authors", command, DbType.String);
             AddParameter("@title", command, DbType.String);
             AddParameter("@abstract", command, DbType.String);

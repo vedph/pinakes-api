@@ -33,7 +33,7 @@ namespace Pinakes.Index
             cmd.CommandText = LoadResourceText("Date.mysql");
             cmd.ExecuteNonQuery();
 
-            cmd.CommandText = "TRUNCATE TABLE date;";
+            cmd.CommandText = "TRUNCATE TABLE pix_date;";
             cmd.ExecuteNonQuery();
         }
 
@@ -74,9 +74,9 @@ namespace Pinakes.Index
                 }
 
                 ((DbParameter)command.Parameters["@field"]).Value = field;
-                ((DbParameter)command.Parameters["@targetid"]).Value = s.Item1;
-                ((DbParameter)command.Parameters["@datetxt"]).Value = date.ToString();
-                ((DbParameter)command.Parameters["@dateval"]).Value = date.GetSortValue();
+                ((DbParameter)command.Parameters["@target_id"]).Value = s.Item1;
+                ((DbParameter)command.Parameters["@date_txt"]).Value = date.ToString();
+                ((DbParameter)command.Parameters["@date_val"]).Value = date.GetSortValue();
                 ((DbParameter)command.Parameters["@source"]).Value = s.Item2;
                 command.ExecuteNonQuery();
 
@@ -112,13 +112,13 @@ namespace Pinakes.Index
             InitTarget(connection);
 
             // insert data from authors and works
-            const string parameters = "@field,@targetid,@datetxt,@dateval,@source";
+            const string parameters = "@field,@target_id,@date_txt,@date_val,@source";
             IDbCommand cmd = connection.CreateCommand();
-            cmd.CommandText = "INSERT INTO `date`" +
-                "(`field`,`targetid`,`datetxt`,`dateval`,`source`) " +
+            cmd.CommandText = "INSERT INTO `pix_date`" +
+                "(`field`,`target_id`,`date_txt`,`date_val`,`source`) " +
                 $"VALUES({parameters});";
             foreach (string p in parameters.Split(','))
-                AddParameter(p, cmd, p == "@dateval" ? DbType.Double : DbType.String);
+                AddParameter(p, cmd, p == "@date_val" ? DbType.Double : DbType.String);
 
             var sources = CollectSources(connection, "auteurs");
             WriteDates(sources, cmd, "aut", cancel, progress);

@@ -1,8 +1,8 @@
-﻿CREATE TABLE IF NOT EXISTS `zotero` (
+﻿CREATE TABLE IF NOT EXISTS `pix_zotero` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `zoteroId` VARCHAR(16) NOT NULL,
-  `authorTarget` BIT(1) NOT NULL,
-  `targetId` INT NOT NULL,
+  `zotero_id` VARCHAR(16) NOT NULL,
+  `author_target` BIT(1) NOT NULL,
+  `target_id` INT NOT NULL,
   `authors` VARCHAR(300) NOT NULL,
   `title` VARCHAR(500) NOT NULL,
   `abstract` TEXT NULL,

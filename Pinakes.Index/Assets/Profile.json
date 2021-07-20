@@ -61,7 +61,7 @@
     {
       "Id": "author",
       "CountSql": "SELECT COUNT(a.id) FROM auteurs a LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur;",
-      "DataSql": "SELECT a.id AS m_targetid,a.nom AS aunam,a.remarque AS aunot,aa.nom AS aanam FROM auteurs a LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur ORDER BY a.id LIMIT {1} OFFSET {0};",
+      "DataSql": "SELECT a.id AS m_target_id,a.nom AS aunam,a.remarque AS aunot,aa.nom AS aanam FROM auteurs a LEFT JOIN auteurs_alias aa ON a.id=aa.id_auteur ORDER BY a.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },
@@ -77,7 +77,7 @@
     {
       "Id": "work",
       "CountSql": "SELECT COUNT(w.id) FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id;",
-      "DataSql": "SELECT w.id AS m_targetid,w.titre AS wkttl,ws.titre AS wattl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wknot FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id ORDER BY w.id LIMIT {1} OFFSET {0};",
+      "DataSql": "SELECT w.id AS m_target_id,w.titre AS wkttl,ws.titre AS wattl,w.titulus AS wktit,w.incipit AS wkinc,w.desinit AS wkdes,w.lieu AS wkplc,w.remarque AS wknot FROM oeuvres w LEFT JOIN oeuvres_alias ws ON ws.id_oeuvre=w.id ORDER BY w.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },
@@ -96,8 +96,8 @@
     },
     {
       "Id": "zotero-author",
-      "CountSql": "SELECT COUNT(a.id) FROM auteurs a INNER JOIN zotero z ON a.id=z.targetId WHERE z.authorTarget=1;",
-      "DataSql": "SELECT a.id AS m_targetid,z.authors AS zaaut,z.title AS zattl,z.abstract AS zaabs FROM auteurs a INNER JOIN zotero z ON a.id=z.targetId WHERE z.authorTarget=1 ORDER BY a.id LIMIT {1} OFFSET {0};",
+      "CountSql": "SELECT COUNT(a.id) FROM auteurs a INNER JOIN pix_zotero z ON a.id=z.target_id WHERE z.author_target=1;",
+      "DataSql": "SELECT a.id AS m_target_id,z.authors AS zaaut,z.title AS zattl,z.abstract AS zaabs FROM auteurs a INNER JOIN pix_zotero z ON a.id=z.target_id WHERE z.author_target=1 ORDER BY a.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },
@@ -112,8 +112,8 @@
     },
     {
       "Id": "zotero-work",
-      "CountSql": "SELECT COUNT(w.id) FROM oeuvres w INNER JOIN zotero z ON w.id=z.targetId WHERE z.authorTarget=0;",
-      "DataSql": "SELECT w.id AS m_targetid,z.authors AS zwaut,z.title AS zwttl,z.abstract AS zwabs FROM oeuvres w INNER JOIN zotero z ON w.id=z.targetId WHERE z.authorTarget=0 ORDER BY w.id LIMIT {1} OFFSET {0};",
+      "CountSql": "SELECT COUNT(w.id) FROM oeuvres w INNER JOIN pix_zotero z ON w.id=z.target_id WHERE z.author_target=0;",
+      "DataSql": "SELECT w.id AS m_target_id,z.authors AS zwaut,z.title AS zwttl,z.abstract AS zwabs FROM oeuvres w INNER JOIN pix_zotero z ON w.id=z.target_id WHERE z.author_target=0 ORDER BY w.id LIMIT {1} OFFSET {0};",
       "TextFilterChains": {
         "*": "tag-sep-wsp-std"
       },

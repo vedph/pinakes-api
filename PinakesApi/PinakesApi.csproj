@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fusi.DbManager.MySql" Version="1.0.6" />
+    <PackageReference Include="Fusi.DbManager.MySql" Version="1.0.7" />
     <PackageReference Include="MySQLBackupNetCore" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="Fusi.Tools" Version="1.1.16" />

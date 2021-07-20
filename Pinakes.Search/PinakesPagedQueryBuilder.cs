@@ -67,7 +67,7 @@ namespace Pinakes.Search
                     break;
             }
             if (value.Length > 0)
-                _clauseBuilder.AddClause(query, "token.value", op, value);
+                _clauseBuilder.AddClause(query, "eix_token.value", op, value);
         }
 
         /// <summary>
@@ -133,14 +133,14 @@ namespace Pinakes.Search
                 foreach (string token in request.Text.Split())
                 {
                     Query tokenQuery = GetNonTextQuery(request, ++n);
-                    tokenQuery.Join("occurrence", "occurrence.targetid", $"t{n}.id");
-                    tokenQuery.Join("token", "occurrence.tokenid", "token.id");
+                    tokenQuery.Join("eix_occurrence", "eix_occurrence.target_id", $"t{n}.id");
+                    tokenQuery.Join("eix_token", "eix_occurrence.token_id", "eix_token.id");
 
                     IList<string> fields = GetFields(request);
                     if (fields.Count == 1)
-                        tokenQuery.Where("occurrence.field", fields[0]);
+                        tokenQuery.Where("eix_occurrence.field", fields[0]);
                     else
-                        tokenQuery.WhereIn("occurrence.field", fields);
+                        tokenQuery.WhereIn("eix_occurrence.field", fields);
 
                     AddTextClause(token, tokenQuery);
                     queries.Add(tokenQuery);

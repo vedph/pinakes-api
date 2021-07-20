@@ -2,6 +2,29 @@
 
 An API wrapping an essential search engine for the RAP subset of the Pinakes database.
 
+- [Pinakes API](#pinakes-api)
+  - [Docker](#docker)
+  - [Quick Start](#quick-start)
+  - [Building the Database](#building-the-database)
+  - [API Quick Reference](#api-quick-reference)
+    - [Text-Based Search](#text-based-search)
+  - [Pinakes Database](#pinakes-database)
+    - [Keyword](#keyword)
+    - [Work](#work)
+    - [Author](#author)
+    - [Recensions](#recensions)
+    - [Manuscripts](#manuscripts)
+  - [Search](#search)
+    - [Text Pipeline](#text-pipeline)
+    - [Other Metadata](#other-metadata)
+    - [Subset](#subset)
+    - [Search Author](#search-author)
+    - [Search Work](#search-work)
+    - [Bibliography](#bibliography)
+    - [Embix Profile](#embix-profile)
+  - [Consuming API](#consuming-api)
+  - [Details](#details)
+
 ## Docker
 
 Quick Docker image build:
@@ -44,7 +67,7 @@ assuming that you have created a folder `c:\data\mysql`.
 ./pinix index-date pinakes
 ```
 
-Note that this truncates the target `date` table if present; else it creates it. Also, have a check at the log file created by this process, which might notify you about errors in the source data (or eventually in the parsing algorithm).
+Note that this truncates the target `pix_date` table if present; else it creates it. Also, have a check at the log file created by this process, which might notify you about errors in the source data (or eventually in the parsing algorithm).
 
 3. build the Zotero index using the Pinakes RAP CLI:
 
@@ -52,7 +75,7 @@ Note that this truncates the target `date` table if present; else it creates it.
 ./pinix index-zotero pinakes
 ```
 
-Note that this truncates the target `zotero` table if present; else it creates it.
+Note that this truncates the target `pix_zotero` table if present; else it creates it.
 
 4. build the text-based index using the [Embix CLI](https://github.com/vedph/embix#embix-cli). Here I assume that my profile file is named `pinakes-profile.json` and located in my desktop. You can find the profile in this solution under `Pinakes.Index/Assets`.
 
@@ -60,13 +83,13 @@ Note that this truncates the target `zotero` table if present; else it creates i
 ./embix build-index c:\users\dfusi\desktop\pinakes-profile.json pinakes -t mysql -c
 ```
 
-Note that this truncates the target `token` and `occurrence` tables if present; else it creates them. Also, the profile draws data also from the `zotero` table created in the previous step.
+Note that this truncates the target `eix_token` and `eix_occurrence` tables if present; else it creates them. Also, the profile draws data also from the `zotero` table created in the previous step.
 
 Also, currently I'm not excluding any stopword from the index. A useful query to inspect the results for the most frequent tokens is:
 
 ```sql
 SELECT value,
-(SELECT COUNT(*) FROM occurrence WHERE occurrence.tokenId=token.id) AS oc FROM token
+(SELECT COUNT(*) FROM eix_occurrence WHERE eix_occurrence.token_id=token.id) AS oc FROM eix_token
 ORDER BY oc DESC,value;
 ```
 
@@ -152,6 +175,13 @@ Work scopes:
 This section empirically describes a subset of the Pinakes DB, as illustrated by this schema:
 
 ![schema.png](schema.png)
+
+The indexing process adds these tables to the database:
+
+- `eix_token`: tokens (by Embix CLI).
+- `eix_occurrence`: token occurrences (by Embix CLI).
+- `pix_date`: dates index (by Pinakes CLI).
+- `pix_zotero`: Zotero index (by Pinakes CLI).
 
 ### Keyword
 
@@ -241,15 +271,15 @@ Date metadata (for centuries) need to be preprocessed for indexing: in `auteurs.
 These dates are parsed and inserted into a `date` table which gets filled with the original date expression (`source`), its normalized text value and the corresponding approximate numeric value, and the ID of the source author or work having that date (`field` is used to specify a code representing the source table: `aut` or `wrk`). For instance:
 
 ```txt
-field targetid datetxt       dateval source
-wrk   86       XV AD         1450    15
-wrk   89       XIV AD        1350    14
-wrk   355      XI -- XII AD  1100    11-12
-wrk   358      c. 1125 AD    1125    12 (1/2)
+field target_id date_txt       date_val source
+wrk   86        XV AD          1450     15
+wrk   89        XIV AD         1350     14
+wrk   355       XI -- XII AD   1100     11-12
+wrk   358       c. 1125 AD     1125     12 (1/2)
 ...
 ```
 
-Invalid dates are listed in the log, like this (referring to an author, Hierotheus (Iohannes) Comnenus Drystrae metr., where the date has been mistakenly inserted in the century field):
+Invalid dates are listed in the log, like this (referring to an author, `Hierotheus (Iohannes) Comnenus Drystrae metr.`, where the date has been mistakenly inserted in the century field):
 
 ```txt
 2021-06-30 07:38:31.047 +02:00 [ERR] Invalid date at aut#3119: "1657-1719"

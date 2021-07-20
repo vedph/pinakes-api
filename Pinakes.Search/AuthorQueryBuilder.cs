@@ -52,17 +52,17 @@ namespace Pinakes.Search
 
             if (request.CenturyMin != 0)
             {
-                query.Join("date", "date.targetid", $"{tn}.id");
-                query.Where("date.field", "aut");
-                query.Where("date.dateval", ">=", request.CenturyMin);
+                query.Join("pix_date", "pix_date.target_id", $"{tn}.id");
+                query.Where("pix_date.field", "aut");
+                query.Where("pix_date.date_val", ">=", request.CenturyMin);
             }
 
             if (request.CenturyMax != 0)
             {
                 if (request.CenturyMin == 0)
-                    query.Join("date", "date.targetid", $"{tn}.id");
-                query.Where("date.field", "aut");
-                query.Where("date.dateval", "<=", request.CenturyMax);
+                    query.Join("pix_date", "pix_date.target_id", $"{tn}.id");
+                query.Where("pix_date.field", "aut");
+                query.Where("pix_date.date_val", "<=", request.CenturyMax);
             }
 
             if (request.KeywordIds?.Count > 0)

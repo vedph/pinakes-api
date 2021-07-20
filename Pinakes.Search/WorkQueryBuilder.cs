@@ -73,14 +73,14 @@ namespace Pinakes.Search
 
             if (request.CenturyMin != 0)
             {
-                query.Where("date.field", "wrk");
-                query.Where("date.dateval", ">=", request.CenturyMin);
+                query.Where("pix_date.field", "wrk");
+                query.Where("pix_date.date_val", ">=", request.CenturyMin);
             }
 
             if (request.CenturyMax != 0)
             {
-                query.Where("date.field", "wrk");
-                query.Where("date.dateval", "<=", request.CenturyMax);
+                query.Where("pix_date.field", "wrk");
+                query.Where("pix_date.date_val", "<=", request.CenturyMax);
             }
 
             if (request.KeywordIds?.Count > 0)

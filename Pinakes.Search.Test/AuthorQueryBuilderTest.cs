@@ -31,10 +31,10 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
                 "`auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') AND " +
-                "LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') AND " +
+                "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
@@ -61,10 +61,10 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
                 "`auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') AND " +
-                "LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') AND " +
+                "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20 OFFSET 20";
@@ -90,15 +90,15 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` FROM (" +
                 "SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%' " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%' " +
                 "UNION SELECT DISTINCT `t2`.`id` FROM `auteurs` AS `t2` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t2`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%an%') AS `q` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t2`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%an%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
@@ -121,15 +121,15 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "WITH `s0` AS (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%'), " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%'), " +
                 "`s1` AS (SELECT DISTINCT `t2`.`id` FROM `auteurs` AS `t2` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t2`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%an%') " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t2`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%an%') " +
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
                 "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
@@ -164,10 +164,10 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
                 "`auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `occurrence`.`field` IN ('aunam', 'aanam', 'aunot') AND " +
-                "LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam', 'aunot') AND " +
+                "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
@@ -195,11 +195,11 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
                 "WHERE `t1`.`is_categorie` = 1 " +
-                "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` " +
                 "ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
@@ -228,12 +228,12 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `date` ON `date`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `date`.`field` = 'aut' AND `date`.`dateval` >= 15 " +
-                "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "INNER JOIN `pix_date` ON `pix_date`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` >= 15 " +
+                "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
@@ -261,12 +261,12 @@ namespace Pinakes.Search.Test
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `date` ON `date`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
-                "WHERE `date`.`field` = 'aut' AND `date`.`dateval` <= 15 " +
-                "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "INNER JOIN `pix_date` ON `pix_date`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
+                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` <= 15 " +
+                "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
@@ -295,11 +295,11 @@ namespace Pinakes.Search.Test
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
                 "INNER JOIN `keywords_auteurs` ON " +
                 "`t1`.`id` = `keywords_auteurs`.`id_auteur` " +
-                "INNER JOIN `occurrence` ON `occurrence`.`targetid` = `t1`.`id` " +
-                "INNER JOIN `token` ON `occurrence`.`tokenid` = `token`.`id` " +
+                "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
                 "WHERE `keywords_auteurs`.`id_keyword` IN (68) " +
-                "AND `occurrence`.`field` IN ('aunam', 'aanam') " +
-                "AND LOWER(`token`.`value`) like '%he%') AS `q` " +
+                "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
+                "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
                 "LEFT JOIN `auteurs_alias` " +
                 "ON `q`.`id` = `auteurs_alias`.`id_auteur` " +

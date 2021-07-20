@@ -367,6 +367,7 @@ namespace Pinakes.Search
                 .Join("identifiants AS i", "wi.id_identifiant", "i.id")
                 .Join("mobigen_oeuvres AS mw", "w.id", "mw.id_oeuvre")
                 .Join("mobigen AS m", "mw.id_mobigen", "m.id")
+                .Where("w.id", id)
                 .Select("m.cle_zotero AS id").Distinct();
 
             if (setId > 0) query.Where("i.id_type", setId);
