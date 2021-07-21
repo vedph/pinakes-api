@@ -22,6 +22,27 @@ namespace Pinakes.Search
         }
 
         /// <summary>
+        /// Gets the century treshold value for a min/max filter.
+        /// </summary>
+        /// <param name="century">The century.</param>
+        /// <param name="max">If set to <c>true</c>, get the value for the
+        /// maximum filter; else get the value for the minimum filter.</param>
+        /// <returns>Value.</returns>
+        public static int GetCenturyTresholdValue(int century, bool max)
+        {
+            // e.g. 6 BC: min>=-500, max<=-599
+            int b;
+            if (century < 0)
+            {
+                b = (century - 1) * -100;
+                return max ? b - 99 : b;
+            }
+            // e.g. 6 AD: min>=500, max<=599
+            b = (century - 1) * 100;
+            return max ? b + 99 : b;
+        }
+
+        /// <summary>
         /// Gets the Embix fields to search in from the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -73,14 +94,19 @@ namespace Pinakes.Search
 
             if (request.CenturyMin != 0)
             {
+                query.Join("pix_date", $"{tn}.id", "pix_date.target_id");
                 query.Where("pix_date.field", "wrk");
-                query.Where("pix_date.date_val", ">=", request.CenturyMin);
+                query.Where("pix_date.date_val", ">=",
+                    GetCenturyTresholdValue(request.CenturyMin, false));
             }
 
             if (request.CenturyMax != 0)
             {
+                if (request.CenturyMin == 0)
+                    query.Join("pix_date", $"{tn}.id", "pix_date.target_id");
                 query.Where("pix_date.field", "wrk");
-                query.Where("pix_date.date_val", "<=", request.CenturyMax);
+                query.Where("pix_date.date_val", "<=",
+                    GetCenturyTresholdValue(request.CenturyMax, true));
             }
 
             if (request.KeywordIds?.Count > 0)
