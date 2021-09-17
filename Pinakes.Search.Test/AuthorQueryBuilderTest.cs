@@ -26,7 +26,7 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
@@ -36,7 +36,6 @@ namespace Pinakes.Search.Test
                 "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') AND " +
                 "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -56,7 +55,7 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
@@ -66,7 +65,6 @@ namespace Pinakes.Search.Test
                 "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') AND " +
                 "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20 OFFSET 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -86,7 +84,7 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` FROM (" +
                 "SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
@@ -100,7 +98,6 @@ namespace Pinakes.Search.Test
                 "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%an%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -131,14 +128,13 @@ namespace Pinakes.Search.Test
                 "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%an%') " +
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` FROM (" +
                 "SELECT `qs`.`id` FROM `auteurs` AS `qs` " +
                 "INNER JOIN `s0` ON `qs`.`id` = `s0`.`id` " +
                 "INNER JOIN `s1` ON `qs`.`id` = `s1`.`id`) AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -159,7 +155,7 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM " +
@@ -169,7 +165,6 @@ namespace Pinakes.Search.Test
                 "WHERE `eix_occurrence`.`field` IN ('aunam', 'aanam', 'aunot') AND " +
                 "LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -190,7 +185,6 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, " +
                 "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
@@ -201,8 +195,6 @@ namespace Pinakes.Search.Test
                 "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` " +
-                "ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -223,19 +215,17 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, " +
                 "`auteurs`.`siecle` AS `century`, `auteurs`.`dates`, " +
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `pix_date` ON `pix_date`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `pix_date` ON `t1`.`id` = `pix_date`.`target_id` " +
                 "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
                 "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
-                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` >= 15 " +
+                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` >= 1400 " +
                 "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -256,19 +246,17 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, " +
                 "`auteurs`.`siecle` AS `century`, `auteurs`.`dates`, " +
                 "`auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
-                "INNER JOIN `pix_date` ON `pix_date`.`target_id` = `t1`.`id` " +
+                "INNER JOIN `pix_date` ON `t1`.`id` = `pix_date`.`target_id` " +
                 "INNER JOIN `eix_occurrence` ON `eix_occurrence`.`target_id` = `t1`.`id` " +
                 "INNER JOIN `eix_token` ON `eix_occurrence`.`token_id` = `eix_token`.`id` " +
-                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` <= 15 " +
+                "WHERE `pix_date`.`field` = 'aut' AND `pix_date`.`date_val` <= 1499 " +
                 "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);
@@ -289,7 +277,7 @@ namespace Pinakes.Search.Test
         {
             const string sql =
                 "SELECT `auteurs`.`id`, `auteurs`.`nom` AS `name`, " +
-                "`auteurs_alias`.`nom` AS `alias`, `auteurs`.`siecle` AS `century`, " +
+                "`auteurs`.`siecle` AS `century`, " +
                 "`auteurs`.`dates`, `auteurs`.`remarque` AS `note`, " +
                 "`auteurs`.`is_categorie` AS `isCategory` " +
                 "FROM (SELECT DISTINCT `t1`.`id` FROM `auteurs` AS `t1` " +
@@ -301,8 +289,6 @@ namespace Pinakes.Search.Test
                 "AND `eix_occurrence`.`field` IN ('aunam', 'aanam') " +
                 "AND LOWER(`eix_token`.`value`) like '%he%') AS `q` " +
                 "INNER JOIN `auteurs` ON `auteurs`.`id` = `q`.`id` " +
-                "LEFT JOIN `auteurs_alias` " +
-                "ON `q`.`id` = `auteurs_alias`.`id_auteur` " +
                 "ORDER BY `auteurs`.`nom`, `auteurs`.`id` LIMIT 20";
 
             AuthorQueryBuilder builder = new AuthorQueryBuilder(_connString);

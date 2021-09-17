@@ -30,7 +30,7 @@ An API wrapping an essential search engine for the RAP subset of the Pinakes dat
 Quick Docker image build:
 
 ```bash
-docker build . -t vedph2020/pinakes-api:1.0.3 -t vedph2020/pinakes-api:latest
+docker build . -t vedph2020/pinakes-api:1.0.4 -t vedph2020/pinakes-api:latest
 ```
 
 (replace with the current version).
@@ -103,12 +103,12 @@ All the endpoints use the `GET` verb except for the search proper, which require
 
 Authors:
 
-- `POST api/authors`: gets the specified page of authors.
+- `GET api/authors`: gets the specified page of authors.
 - `GET api/authors/{id}`: gets the details about the author with the specified ID.
 
 Works:
 
-- `POST api/works`: gets the specified page of works.
+- `GET api/works`: gets the specified page of works.
 - `GET api/works/{id}`: gets the details about the work with the specified ID.
 
 Bibliography:

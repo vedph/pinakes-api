@@ -10,13 +10,6 @@ namespace Pinakes.Search
     public class WorkSearchRequest : TextBasedRequest
     {
         /// <summary>
-        /// Gets or sets the data set identifier. When greater than 0, this
-        /// represents the id_type from table identifiants, used as a marker
-        /// for a specific subset of Pinakes. For RAP, this ID is 234.
-        /// </summary>
-        public int SetId { get; set; }
-
-        /// <summary>
         /// Gets or sets the author identifier.
         /// </summary>
         public int AuthorId { get; set; }
@@ -54,6 +47,18 @@ namespace Pinakes.Search
         /// by <see cref="RelationIds"/>.
         /// </summary>
         public int RelationTargetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the external identifier to match for a
+        /// work. This is 3=TLG or 234=RAP.
+        /// </summary>
+        public int ExternalIdType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of the external work identifier to match for
+        /// a work.
+        /// </summary>
+        public string ExternalIdValue { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkSearchRequest"/> class.

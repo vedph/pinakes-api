@@ -71,13 +71,6 @@ namespace Pinakes.Search
             Query query = QueryFactory.Query("oeuvres AS " + tn)
                 .Select($"{tn}.id").Distinct();
 
-            if (request.SetId > 0)
-            {
-                query.Join("identifiants_oeuvres AS wi", $"{tn}.id", "wi.id_oeuvre")
-                    .Join("identifiants AS i", "wi.id_identifiant", "i.id")
-                    .Where("i.id_type", request.SetId);
-            }
-
             if (request.AuthorId > 0)
             {
                 query.Join("oeuvres_auteurs", $"{tn}.id", "oeuvres_auteurs.id_oeuvre")
@@ -122,6 +115,15 @@ namespace Pinakes.Search
 
                 if (request.RelationTargetId > 0)
                     query.Where("relations.id_child", request.RelationTargetId);
+            }
+
+            if (request.ExternalIdType > 0)
+            {
+                query.Join("identifiants_oeuvres AS wi", $"{tn}.id", "wi.id_oeuvre")
+                    .Join("identifiants AS i", "wi.id_identifiant", "i.id")
+                    .Where("i.id_type", request.ExternalIdType);
+                if (!string.IsNullOrEmpty(request.ExternalIdValue))
+                    query.Where("i.identifiant", request.ExternalIdValue);
             }
 
             return query;
