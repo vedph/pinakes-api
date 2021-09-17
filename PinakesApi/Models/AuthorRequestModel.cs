@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PinakesApi.Models
 {
@@ -71,10 +72,23 @@ namespace PinakesApi.Models
         public short CenturyMax { get; set; }
 
         /// <summary>
-        /// The IDs of the keywords to be matched. At least one of the keywords
-        /// should be matched.
+        /// The IDs of the keywords to be matched, comma-separated. At least
+        /// one of the keywords should be matched.
         /// </summary>
-        public List<int> KeywordIds { get; set; }
+        public string KeywordIds { get; set; }
+
+        internal static List<int> ParseIntIds(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return null;
+            List<int> ids = new List<int>();
+            foreach (string s in text.Split(",",
+                StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (int.TryParse(s, out int id))
+                    ids.Add(id);
+            }
+            return ids.Count > 0 ? ids : null;
+        }
 
         /// <summary>
         /// Converts this model to the corresponding request.
@@ -93,7 +107,7 @@ namespace PinakesApi.Models
                 IsCategory = IsCategory,
                 CenturyMin = CenturyMin,
                 CenturyMax = CenturyMax,
-                KeywordIds = KeywordIds
+                KeywordIds = ParseIntIds(KeywordIds)
             };
         }
     }

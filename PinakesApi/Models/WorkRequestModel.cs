@@ -1,6 +1,5 @@
 ﻿using Pinakes.Search;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PinakesApi.Models
@@ -78,16 +77,17 @@ namespace PinakesApi.Models
         public short CenturyMax { get; set; }
 
         /// <summary>
-        /// The IDs of the keywords to be matched. At least one
-        /// of the keywords should be matched.
+        /// The IDs of the keywords to be matched, delimited by comma. At
+        /// least one of the keywords should be matched.
         /// </summary>
-        public List<int> KeywordIds { get; set; }
+        public string KeywordIds { get; set; }
 
         /// <summary>
         /// The IDs of the relation(s) to be matched as originating
-        /// from the work being searched. Any of the relations should match.
+        /// from the work being searched, delimited by comma. Any of the
+        /// relations should match.
         /// </summary>
-        public List<int> RelationIds { get; set; }
+        public string RelationIds { get; set; }
 
         /// <summary>
         /// The target work identifier for the relation(s) matched
@@ -121,8 +121,8 @@ namespace PinakesApi.Models
                 DictyonId = DictyonId,
                 CenturyMin = CenturyMin,
                 CenturyMax = CenturyMax,
-                KeywordIds = KeywordIds,
-                RelationIds = RelationIds,
+                KeywordIds = AuthorRequestModel.ParseIntIds(KeywordIds),
+                RelationIds = AuthorRequestModel.ParseIntIds(RelationIds),
                 RelationTargetId = RelationTargetId
             };
         }

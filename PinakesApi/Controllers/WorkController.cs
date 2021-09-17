@@ -30,10 +30,10 @@ namespace PinakesApi.Controllers
         /// Gets the specified page of works.
         /// </summary>
         /// <returns>List of works</returns>
-        [HttpPost("api/works")]
+        [HttpGet("api/works")]
         [ProducesResponseType(200)]
         public ActionResult<DataPage<WorkResult>> GetWorks(
-            [FromBody] WorkRequestModel model)
+            [FromQuery] WorkRequestModel model)
         {
             return Ok(_searcher.GetWorks(model.ToRequest()));
         }

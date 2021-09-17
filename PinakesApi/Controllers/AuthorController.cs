@@ -27,10 +27,10 @@ namespace PinakesApi.Controllers
         /// Gets the specified page of authors.
         /// </summary>
         /// <returns>List of authors</returns>
-        [HttpPost("api/authors")]
+        [HttpGet("api/authors")]
         [ProducesResponseType(200)]
         public ActionResult<DataPage<AuthorResult>> GetAuthors(
-            [FromBody] AuthorRequestModel model)
+            [FromQuery] AuthorRequestModel model)
         {
             return Ok(_searcher.GetAuthors(model.ToRequest()));
         }
