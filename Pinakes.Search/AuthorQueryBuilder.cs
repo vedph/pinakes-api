@@ -39,8 +39,9 @@ namespace Pinakes.Search
 
             if (request.SetId > 0)
             {
-                query.Join("identifiants_auteurs AS ai", $"{tn}.id", "ai.id_auteur")
-                    .Join("identifiants AS i", "ai.id_identifiant", "i.id")
+                query.Join("oeuvres_auteurs AS wa", $"{tn}.id", "wa.id_auteur")
+                    .Join("identifiants_oeuvres AS wi", "wi.id_oeuvre", "wa.id_oeuvre")
+                    .Join("identifiants AS i", "wi.id_identifiant", "i.id")
                     .Where("i.id_type", request.SetId);
             }
 
@@ -92,10 +93,10 @@ namespace Pinakes.Search
                 .From(idQuery)
                 .As("q")
                 .Join("auteurs", "auteurs.id", "q.id")
-                .LeftJoin("auteurs_alias", "q.id", "auteurs_alias.id_auteur")
+                // .LeftJoin("auteurs_alias", "q.id", "auteurs_alias.id_auteur")
                 .Select("auteurs.id",
                     "auteurs.nom AS name",
-                    "auteurs_alias.nom AS alias",
+                    // "auteurs_alias.nom AS alias",
                     "auteurs.siecle AS century",
                     "auteurs.dates",
                     "auteurs.remarque AS note",
