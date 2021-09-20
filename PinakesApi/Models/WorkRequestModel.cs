@@ -61,12 +61,12 @@ namespace PinakesApi.Models
         public int DictyonId { get; set; }
 
         /// <summary>
-        /// The minimum century value.
+        /// The minimum century value; 0=do not filter by century.
         /// </summary>
         public short CenturyMin { get; set; }
 
         /// <summary>
-        /// The maximum century value.
+        /// The maximum century value; 0=do not filter by century.
         /// </summary>
         public short CenturyMax { get; set; }
 
@@ -90,19 +90,22 @@ namespace PinakesApi.Models
         public int RelationTargetId { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the external identifier to match for a
-        /// work. This is 3=TLG or 234=RAP.
+        /// The type of the external identifier to match for a work. For RAP
+        /// purposes, the relevant identifiers are 3=TLG, 234=RAP,
+        /// 120=Psellos, 139=Théologie byzantine II, 142=Regestes des actes du
+        /// Patriarcat de Constantinople (see the <c>identifiants</c> table
+        /// for the complete list).
         /// </summary>
         public int ExternalIdType { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the external work identifier to match for
-        /// a work.
+        /// The value of the external work identifier to match for a work.
         /// </summary>
         public string ExternalIdValue { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorkRequestModel"/> class.
+        /// Initializes a new instance of the <see cref="WorkRequestModel"/>
+        /// class.
         /// </summary>
         public WorkRequestModel()
         {

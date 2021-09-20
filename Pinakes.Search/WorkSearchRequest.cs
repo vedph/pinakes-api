@@ -50,7 +50,10 @@ namespace Pinakes.Search
 
         /// <summary>
         /// Gets or sets the type of the external identifier to match for a
-        /// work. This is 3=TLG or 234=RAP.
+        /// work. For RAP purposes, the relevant identifiers are 3=TLG, 234=RAP,
+        /// 120=Psellos, 139=Théologie byzantine II, 142=Regestes des actes du
+        /// Patriarcat de Constantinople (see the <c>identifiants</c> table
+        /// for the complete list).
         /// </summary>
         public int ExternalIdType { get; set; }
 

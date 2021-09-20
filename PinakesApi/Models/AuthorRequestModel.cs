@@ -32,7 +32,7 @@ namespace PinakesApi.Models
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the text search scope, represented by a comma delimited
+        /// The text search scope, represented by a comma delimited
         /// list of field codes from <c>aunam</c>=author name, <c>aanam</c>=alias,
         /// <c>aunot</c>=note, <c>zaaut</c>=bibliography author, <c>zattl</c>=
         /// bibliography title, <c>zaabs</c>=bibliography abstract.
