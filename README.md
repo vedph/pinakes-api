@@ -30,7 +30,7 @@ An API wrapping an essential search engine for the RAP subset of the Pinakes dat
 Quick Docker image build:
 
 ```bash
-docker build . -t vedph2020/pinakes-api:1.0.4 -t vedph2020/pinakes-api:latest
+docker build . -t vedph2020/pinakes-api:1.0.5 -t vedph2020/pinakes-api:latest
 ```
 
 (replace with the current version).

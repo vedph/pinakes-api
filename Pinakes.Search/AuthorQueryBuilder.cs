@@ -37,12 +37,12 @@ namespace Pinakes.Search
             Query query = QueryFactory.Query("auteurs AS " + tn)
                 .Select($"{tn}.id").Distinct();
 
-            if (request.SetId > 0)
+            if (request.ExternalIdType > 0)
             {
                 query.Join("oeuvres_auteurs AS wa", $"{tn}.id", "wa.id_auteur")
                     .Join("identifiants_oeuvres AS wi", "wi.id_oeuvre", "wa.id_oeuvre")
                     .Join("identifiants AS i", "wi.id_identifiant", "i.id")
-                    .Where("i.id_type", request.SetId);
+                    .Where("i.id_type", request.ExternalIdType);
             }
 
             if (request.IsCategory.HasValue)

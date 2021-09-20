@@ -10,11 +10,15 @@ namespace Pinakes.Search
     public sealed class AuthorSearchRequest : TextBasedRequest
     {
         /// <summary>
-        /// Gets or sets the data set identifier. When greater than 0, this
-        /// represents the id_type from table identifiants, used as a marker
-        /// for a specific subset of Pinakes. For RAP, this ID is 234.
+        /// The type of the external identifier to match for an author's work.
+        /// For RAP purposes, the relevant identifiers are 3=TLG, 234=RAP,
+        /// 120=Psellos, 139=Théologie byzantine II, 142=Regestes des actes du
+        /// Patriarcat de Constantinople (see the <c>identifiants</c> table
+        /// for the complete list). This is a filter for authors, but it refers
+        /// to works as it is the works, not the authors, to be marked for
+        /// a specific subset of the database.
         /// </summary>
-        public int SetId { get; set; }
+        public int ExternalIdType { get; set; }
 
         /// <summary>
         /// Gets or sets the category flag to be matched for the author.
